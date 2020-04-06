@@ -1,0 +1,136 @@
+<resources>
+
+    <!--Vseobecne style-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="btnIcon">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <!--Aktivita Scedule-->
+    <style name="horScrollNav">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">25dp</item>
+    </style>
+    <style name="verScrollNav">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+    </style>
+    <style name="dayBtn">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">1dp</item>
+        <item name="android:layout_marginRight">1dp</item>
+        <item name="android:background">@drawable/day_btns</item>
+        <item name="android:minHeight">30dp</item>
+        <item name="android:backgroundTintMode">src_in</item>
+    </style>
+    <style name="dayBtnHor" parent="dayBtn">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">3dip</item>
+        <item name="android:layout_marginBottom">3dip</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:background">@drawable/day_btns_hor</item>
+    </style>
+
+    <!--Aktivita Screenshot-->
+    <style name="designBtn">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">32dp</item>
+    </style>
+    <style name="hslaTxt">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="hslaTxt_big" parent="hslaTxt">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+    </style>
+    <style name="hslaSlider">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:paddingStart">0dip</item>
+        <item name="android:paddingTop">17dip</item>
+        <item name="android:paddingBottom">17dip</item>
+        <item name="android:paddingEnd">6dp</item>
+        <item name="android:progressDrawable">@drawable/seek_track</item>
+        <item name="android:progressBackgroundTint">@color/scrPrimaryDark</item>
+        <item name="android:progressTint">@color/scrPrimaryDark</item>
+        <item name="android:max">100</item>
+        <item name="android:thumb">@drawable/seek_thumb</item>
+        <item name="android:thumbTint">@color/scrPrimaryDark</item>
+        <item name="android:thumbTintMode">multiply</item>
+        <item name="android:splitTrack">false</item>
+        <item name="android:thumbOffset">0dp</item>
+    </style>
+    <style name="hslaSlider_small" parent="hslaSlider">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:paddingTop">12dip</item>
+        <item name="android:paddingBottom">12dip</item>
+    </style>
+    <style name="hslaVal">
+        <item name="android:layout_width">26dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:hint">0</item>
+    </style>
+    <style name="hslaVal_big" parent="hslaVal">
+        <item name="android:layout_width">36dp</item>
+    </style>
+    <style name="cell_template">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="layout_columnWeight">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="cell" parent="cell_template">
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="lessonEditText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:includeFontPadding">true</item>
+    </style>
+    <style name="subjectEditText" parent="lessonEditText">
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+    <style name="inputBg">
+        <item name="android:layout_width">175dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:background">@drawable/input</item>
+        <item name="android:backgroundTint">#afff</item>
+        <item name="android:backgroundTintMode">src_in</item>
+    </style>
+    <style name="inputFg">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="android:backgroundTint">@color/scrPrimaryDark</item>
+    </style>
+</resources>

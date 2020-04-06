@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF3D00</color>
+    <color name="colorPrimaryDark">#631800</color>
+
+    <color name="homePrimary">#FF3D00</color>
+    <color name="homePrimaryDark">#631800</color>
+
+    <color name="scedPrimary">#FF3D00</color>
+    <color name="scedPrimaryDark">#631800</color>
+    <color name="bgSced">#250900</color>
+
+    <color name="scrPrimary">#BFA050</color>
+    <color name="scrPrimaryDark">#615900</color>
+    <color name="bgScr">#241A00</color>
+
+    <color name="notesPrimary">#FF3D00</color>
+    <color name="notesPrimaryDark">#631800</color>
+    <color name="bgNotes">#250900</color>
+
+    <color name="colorAccent">#000000</color>
+
+    <color name="inactiveDayTab">#BBFF0000</color>
+    <color name="inactiveSubTab">#BBFFBF00</color>
+    <color name="activeTab">#BBFFFFFF</color>
+
+    <!--nastavovatelne farby-->
+    <color name="des_background">#FF330000</color>
+    <color name="des_heading_bg">#FFFFDD00</color>
+    <color name="des_heading_fg">#FFFFFFFF</color>
+    <color name="des_presentations_bg">#FFFF4D4D</color>
+    <color name="des_presentations_fg">#FFFF0000</color>
+    <color name="des_courses_bg">#FFFFDD00</color>
+    <color name="des_courses_fg">#FFFFDD00</color>
+</resources>

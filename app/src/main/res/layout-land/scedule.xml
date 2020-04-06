@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgSced"
+    tools:context="sk.scednote.Scedule">
+
+    <HorizontalScrollView
+        android:id="@+id/dayTabs"
+        style="@style/verScrollNav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fadeScrollbars="true"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/addLesson"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scedList">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/Mon"
+                style="@style/dayBtnHor"
+                android:layout_height="match_parent"
+                android:text="@string/Mon" />
+
+            <Button
+                android:id="@+id/Tue"
+                style="@style/dayBtnHor"
+                android:layout_height="match_parent"
+                android:text="@string/Tue" />
+
+            <Button
+                android:id="@+id/Wed"
+                style="@style/dayBtnHor"
+                android:layout_height="match_parent"
+                android:text="@string/Wed" />
+
+            <Button
+                android:id="@+id/Thu"
+                style="@style/dayBtnHor"
+                android:layout_height="match_parent"
+                android:text="@string/Thu" />
+
+            <Button
+                android:id="@+id/Fri"
+                style="@style/dayBtnHor"
+                android:layout_height="match_parent"
+                android:text="@string/Fri" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/scedList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:background="#6FFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dayTabs"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/addLesson"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/add"
+        android:elegantTextHeight="false"
+        android:gravity="center"
+        android:textIsSelectable="false"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/scedList"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

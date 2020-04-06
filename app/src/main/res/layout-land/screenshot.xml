@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    tools:context="sk.scednote.Screenshot">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/scrBox"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/border"
+        android:paddingStart="4dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/scrImgFitBox"
+        app:layout_constraintDimensionRatio="6:13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/scrDesign"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/testrat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/bgB"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/scrDesignBox"
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:background="@color/scrPrimary"
+        android:scrollbars="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/scrImgFitBox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/scrPrimaryDark"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/H"
+            style="@style/hslaTxt"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:max="360"
+            android:text="@string/Hsla"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bgB" />
+
+        <SeekBar
+            android:id="@+id/rangeH"
+            style="@style/hslaSlider_small"
+            android:max="360"
+            app:layout_constraintBottom_toBottomOf="@+id/H"
+            app:layout_constraintEnd_toStartOf="@+id/valH"
+            app:layout_constraintStart_toEndOf="@+id/H"
+            app:layout_constraintTop_toTopOf="@+id/H" />
+
+        <TextView
+            android:id="@+id/S"
+            style="@style/hslaTxt"
+            android:text="@string/hSla"
+            app:layout_constraintStart_toStartOf="@+id/H"
+            app:layout_constraintTop_toBottomOf="@+id/H" />
+
+        <SeekBar
+            android:id="@+id/rangeS"
+            style="@style/hslaSlider_small"
+            android:progress="75"
+            app:layout_constraintBottom_toBottomOf="@+id/S"
+            app:layout_constraintEnd_toStartOf="@+id/valS"
+            app:layout_constraintStart_toEndOf="@+id/S"
+            app:layout_constraintTop_toTopOf="@+id/S" />
+
+        <TextView
+            android:id="@+id/L"
+            style="@style/hslaTxt"
+            android:text="@string/hsLa"
+            app:layout_constraintStart_toStartOf="@+id/S"
+            app:layout_constraintTop_toBottomOf="@+id/S" />
+
+        <SeekBar
+            android:id="@+id/rangeL"
+            style="@style/hslaSlider_small"
+            android:layout_width="0dp"
+            android:progress="50"
+            app:layout_constraintBottom_toBottomOf="@+id/L"
+            app:layout_constraintEnd_toStartOf="@+id/valL"
+            app:layout_constraintStart_toEndOf="@+id/L"
+            app:layout_constraintTop_toTopOf="@+id/L" />
+
+        <TextView
+            android:id="@+id/A"
+            style="@style/hslaTxt"
+            android:text="@string/hslA"
+            app:layout_constraintStart_toStartOf="@+id/L"
+            app:layout_constraintTop_toBottomOf="@+id/L" />
+
+        <SeekBar
+            android:id="@+id/rangeA"
+            style="@style/hslaSlider_small"
+            android:layout_width="0dp"
+            android:progress="100"
+            app:layout_constraintBottom_toBottomOf="@+id/A"
+            app:layout_constraintEnd_toStartOf="@+id/valA"
+            app:layout_constraintStart_toEndOf="@+id/A"
+            app:layout_constraintTop_toTopOf="@+id/A" />
+
+        <TextView
+            android:id="@+id/valL"
+            style="@style/hslaVal"
+            app:layout_constraintBottom_toBottomOf="@+id/rangeL"
+            app:layout_constraintEnd_toEndOf="@+id/valS"
+            app:layout_constraintTop_toTopOf="@+id/rangeL" />
+
+        <TextView
+            android:id="@+id/valH"
+            style="@style/hslaVal"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/rangeH"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rangeH" />
+
+        <TextView
+            android:id="@+id/valS"
+            style="@style/hslaVal"
+            app:layout_constraintBottom_toBottomOf="@+id/rangeS"
+            app:layout_constraintEnd_toEndOf="@+id/valH"
+            app:layout_constraintTop_toTopOf="@+id/rangeS" />
+
+        <TextView
+            android:id="@+id/valA"
+            style="@style/hslaVal"
+            app:layout_constraintBottom_toBottomOf="@+id/rangeA"
+            app:layout_constraintEnd_toEndOf="@+id/valL"
+            app:layout_constraintTop_toTopOf="@+id/rangeA" />
+
+        <TextView
+            android:id="@+id/Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/bgIcon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+        <ImageView
+            android:id="@+id/bgIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:paddingStart="0dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="2dp"
+            android:paddingBottom="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/bg_fg"
+            app:layout_constraintEnd_toStartOf="@+id/bg_fg"
+            app:layout_constraintTop_toTopOf="@+id/bg_fg"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_bucket" />
+
+        <TextView
+            android:id="@+id/fgIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="serif"
+            android:includeFontPadding="false"
+            android:text="T"
+            android:textAlignment="center"
+            android:textIsSelectable="false"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/Heading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/Heading" />
+
+        <Button
+            android:id="@+id/bgH"
+            style="@style/designBtn"
+            android:background="@drawable/bg_h_x"
+            app:layout_constraintBottom_toBottomOf="@+id/bgB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.375"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bgB" />
+
+        <Button
+            android:id="@+id/bgB"
+            style="@style/designBtn"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_b_x"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.125"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Heading" />
+
+        <Button
+            android:id="@+id/bgC"
+            style="@style/designBtn"
+            android:background="@drawable/bg_c_x"
+            app:layout_constraintBottom_toBottomOf="@+id/bgP"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.875"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bgP" />
+
+        <Button
+            android:id="@+id/bgP"
+            style="@style/designBtn"
+            android:background="@drawable/bg_p_x"
+            app:layout_constraintBottom_toBottomOf="@+id/bgH"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.625"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bgH" />
+
+        <Switch
+            android:id="@+id/bg_fg"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:thumb="@drawable/seek_thumb"
+            android:track="@drawable/seek_track"
+            app:layout_constraintBottom_toBottomOf="@+id/fgIcon"
+            app:layout_constraintEnd_toStartOf="@+id/fgIcon"
+            app:layout_constraintTop_toTopOf="@+id/fgIcon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/scrImgFitBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/scrPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RadioGroup
+            android:id="@+id/imgFit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/imgCover"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/Cover" />
+
+            <RadioButton
+                android:id="@+id/imgContain"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/Contain" />
+
+            <RadioButton
+                android:id="@+id/imgFill"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/Fill" />
+
+        </RadioGroup>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/wallpaper"
+        style="@style/btnIcon"
+        android:background="@drawable/scr_circle"
+        android:foreground="@android:drawable/ic_menu_camera"
+        app:layout_constraintEnd_toEndOf="@+id/photo"
+        app:layout_constraintStart_toStartOf="@+id/photo"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:foregroundGravity="center" />
+
+    <Button
+        android:id="@+id/photo"
+        style="@style/btnIcon"
+        android:background="@drawable/picture"
+        app:layout_constraintBottom_toTopOf="@+id/fitBtn"
+        app:layout_constraintEnd_toEndOf="@+id/scrDesign"
+        app:layout_constraintStart_toStartOf="@+id/scrDesign" />
+
+    <Button
+        android:id="@+id/fitBtn"
+        style="@style/btnIcon"
+        android:background="@drawable/imgfit"
+        app:layout_constraintBottom_toTopOf="@+id/scrDesign"
+        app:layout_constraintEnd_toEndOf="@+id/scrDesign"
+        app:layout_constraintStart_toStartOf="@+id/scrDesign" />
+
+    <Button
+        android:id="@+id/scrDesign"
+        style="@style/btnIcon"
+        android:background="@drawable/palette"
+        app:layout_constraintBottom_toTopOf="@+id/scrImgFitBox"
+        app:layout_constraintStart_toEndOf="@+id/scrDesignBox" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
