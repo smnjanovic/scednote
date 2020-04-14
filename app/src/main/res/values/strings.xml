@@ -50,8 +50,8 @@
     <string name="Contain">Zmestiť</string>
     <string name="Fill">Roztiahnúť</string>
     <string name="title_activity_les_edit">les_edit</string>
+    <string name="permission_denied">Zamietnutý prístup!</string>
 
-    <string name="allowed_letters">0123456789abcdefghijklmnopqrstuvwxyzÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽž</string>
     <string name="cannot_be_empty">Zadajte text!</string>
     <string name="text_too_long">Text je príliš dlhý!</string>
     <string name="text_too_short">Text je príliš krátky!</string>
@@ -69,7 +69,7 @@
     <string name="sub_full">Celý názov predmetu</string>
     <string name="sub_abb">Skratka</string>
     <string name="same_abb">Predmet s touto skratkou už existuje. Chcete ho upraviť?</string>
-    <string name="les_collision">Táto časť rozvrhu je už obsadená:<br/>{list}<br/>Pokračovaním tieto hodiny zmiznú z rozvrhu.</string>
+    <string name="les_collision">Práve sa chystáte nahradiť obsadenú časť rozvrhu. Pokračovať?</string>
     <string name="create">Vytvoriť</string>
     <string name="update">Aktualizovať</string>
     <string name="continue_">Pokračovať</string>

@@ -5,20 +5,20 @@ import sk.scednote.R
 import java.lang.IndexOutOfBoundsException
 
 enum class ScedSort {
-    FREE, COURSE, PRESENTATION;
+    COURSE, PRESENTATION;
 
     companion object {
         operator fun get(n: Int): ScedSort {
             if (n !in 0..2) throw(IndexOutOfBoundsException("Index $n of <<enum>> ScedSort is Out of bounds!"))
-            return arrayOf(COURSE, PRESENTATION, FREE)[n]
+            return arrayOf(COURSE, PRESENTATION)[n]
         }
 
         fun getSorts(context: Context): Array<String> {
-            return arrayOf(PRESENTATION.getSort(context),COURSE.getSort(context))
+            return arrayOf(COURSE.getSort(context), PRESENTATION.getSort(context))
         }
 
         fun getSortByName(ctx: Context, str: String): ScedSort? {
-            val sorts = ScedSort.values()
+            val sorts = values()
             for (s in sorts)
                 if (s.getSort(ctx) == str)
                     return s
@@ -31,11 +31,10 @@ enum class ScedSort {
      */
     fun getSort(context: Context): String {
         return context.resources.getString( when (this) {
-            ScedSort.PRESENTATION -> R.string.lessonP
-            ScedSort.COURSE -> R.string.lessonC
-            else -> R.string.lessonF
+            PRESENTATION -> R.string.lessonP
+            COURSE -> R.string.lessonC
         })
     }
 
-    val position: Int get() = ScedSort.values().indexOf(this)
+    val position: Int get() = values().indexOf(this)
 }

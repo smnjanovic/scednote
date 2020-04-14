@@ -1,12 +1,29 @@
 package sk.scednote.model
 
+import android.content.Context
+import sk.scednote.R
 import sk.scednote.model.data.Ahsl
+import java.util.*
 import kotlin.math.*
 
 /**
  * Tu prebiehaju vypoctove metody zobrazenia obrazku
  */
 object Design {
+    val BACKGROUND = "BACKGROUND"
+    val TABLE_HEAD = "TABLE_HEAD"
+    val PRESENTATIONS = "CELLS_OF_PRESENTATION"
+    val COURSES = "CELLS_OF_COURSES"
+    val FREE = "CELLS_OF_NOTHING"
+
+    class Target (context: Context) {
+        protected val ctx = context
+        val bg_b = ctx.resources.getResourceEntryName(R.color.des_background)!!
+        val bg_h = ctx.resources.getResourceEntryName(R.color.des_heading)!!
+        val bg_p = ctx.resources.getResourceEntryName(R.color.des_presentations)!!
+        val bg_c = ctx.resources.getResourceEntryName(R.color.des_courses)!!
+    }
+
     private fun hex2dec(hex: String): Long {
         val len = hex.length
         val pattern = "[^0-9a-fA-F#]".toRegex()
@@ -22,7 +39,7 @@ object Design {
         }
         //farby
         for (i in 1..3) {
-            var k = 3 - i + 1
+            val k = 3 - i + 1
             number *= 256
             number +=
                 if (len in 4..5) extend(hex[len-k].toString().toInt(16))
@@ -30,7 +47,6 @@ object Design {
         }
         return number
     }
-
     fun hex2hsl(hex: String) : Ahsl {
         var number = hex2dec(hex)
         val b = (number % 256)/255.0; number /= 256
@@ -44,33 +60,24 @@ object Design {
 
         fun dcmp (n1:Double ,n2:Double):Boolean {return abs(n1-n2) < 0.000001}
 
-        var l = (cMax + cMin) / 2
-        var s = if (!dcmp(cMax, cMin)) delta / (1 - abs(2*l - 1)) else 0.0
-        var h = (60 * (when {
+        val l = (cMax + cMin) / 2
+        val s = if (!dcmp(cMax, cMin)) delta / (1 - abs(2*l - 1)) else 0.0
+        val h = (60 * (when {
             dcmp(cMax, cMin) -> 0.0
             dcmp(cMax, r) -> ((g-b)/delta) % 6
             dcmp(cMax, g) -> ((b-r)/delta) + 2
             else -> ((r-g)/delta) + 4
         })).roundToInt()
 
-        return Ahsl(
-            a,
-            h,
-            (s * 100).roundToInt(),
-            (l * 100).roundToInt()
-        )
+        return Ahsl(a, h, (s * 100).roundToInt(), (l * 100).roundToInt())
     }
-
     fun hsl2hex(ahsl: Ahsl) :String {
         return hsl2hex(ahsl.h, ahsl.s, ahsl.l, ahsl.a)
     }
-
     fun hsl2hex(h: Int, s: Int, l:Int, a:Int) :String {
         fun to16(n: Int): String {
-            return (
-                if (n < 16) "0${n.coerceAtLeast(0).toString(16)}"
-                else n.coerceAtMost(255).toString(16)
-            ).toUpperCase()
+            val newHex = n.coerceIn(0, 255).toString(16).toUpperCase(Locale.ROOT)
+            return if (n < 16) "0${newHex}" else newHex
         }
         fun to16(n: Double): String { return to16(n.roundToInt()) }
 
@@ -90,6 +97,14 @@ object Design {
 
             return "#${alpha}${to16(r)}${to16(g)}${to16(b)}"
         }
+    }
+
+    /**
+     * Monochromaticka farebna schema: Odtieň pozadia a farby textu je rovnaký. Snaha udržať kontrast
+     */
+    fun customizedForeground(background: Ahsl): Ahsl {
+        val mid_contrast = if(background.s > 35 && background.h in 45..200) 35 else 50
+        return Ahsl(100, background.h, background.s, if (background.l < mid_contrast) 85 else 15)
     }
 
     //este doplnim funkcie ktore budu pocitat rozlozenie obrazku na stranke

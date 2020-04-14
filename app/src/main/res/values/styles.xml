@@ -133,4 +133,9 @@
         <item name="layout_constraintBottom_toBottomOf">parent</item>
         <item name="android:backgroundTint">@color/scrPrimaryDark</item>
     </style>
+    <style name="restricted">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:backgroundTint">#7fff</item>
+        <item name="android:backgroundTintMode">src_atop</item>
+    </style>
 </resources>

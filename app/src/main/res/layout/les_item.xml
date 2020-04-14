@@ -8,11 +8,12 @@
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/les_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="2dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="#AAFFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,31 +42,31 @@
 
         <ImageButton
             android:id="@+id/del_les"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/colorPrimary"
+            android:contentDescription="@string/del"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_delete"
-            android:contentDescription="@string/del" />
+            app:srcCompat="@android:drawable/ic_menu_delete" />
 
         <ImageButton
             android:id="@+id/edit_les"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/scrPrimary"
+            android:contentDescription="@string/edit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/del_les"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_edit"
-            android:contentDescription="@string/edit" />
+            app:srcCompat="@android:drawable/ic_menu_edit" />
 
         <TextView
             android:id="@+id/time"

@@ -26,10 +26,7 @@
 
     <!--nastavovatelne farby-->
     <color name="des_background">#FF330000</color>
-    <color name="des_heading_bg">#FFFFDD00</color>
-    <color name="des_heading_fg">#FFFFFFFF</color>
-    <color name="des_presentations_bg">#FFFF4D4D</color>
-    <color name="des_presentations_fg">#FFFF0000</color>
-    <color name="des_courses_bg">#FFFFDD00</color>
-    <color name="des_courses_fg">#FFFFDD00</color>
+    <color name="des_heading">#FFFFDD00</color>
+    <color name="des_presentations">#FFFF4D4D</color>
+    <color name="des_courses">#FFFFDD00</color>
 </resources>

@@ -6,7 +6,7 @@ import sk.scednote.model.data.BtnFn;
 
 object Popups {
     fun alert(cont: Context, msg: String, pos:BtnFn, neg: BtnFn? = null, neu: BtnFn? = null) {
-        val builder = AlertDialog.Builder(cont).apply {
+        AlertDialog.Builder(cont).apply {
             setCancelable(false)
             setMessage(msg)
             setPositiveButton(pos.str, pos.fn)

@@ -79,7 +79,7 @@
                 android:maxWidth="400dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView16">
+                app:layout_constraintTop_toBottomOf="@+id/sub_full_label">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txt_full"
@@ -96,7 +96,7 @@
                 android:maxWidth="400dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView17">
+                app:layout_constraintTop_toBottomOf="@+id/sub_abb_label">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txt_abb"
@@ -107,22 +107,22 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/sub_full_label"
                 style="@style/subjectEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="@string/sub_full"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/full_warning" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/sub_abb_label"
                 style="@style/subjectEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="@string/sub_abb"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -4,10 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.sub_edit.*
-import sk.scednote.lists.TxtValid
+import sk.scednote.model.TxtValid
 import sk.scednote.model.Database
 import sk.scednote.model.Popups
 import sk.scednote.model.data.BtnFn
@@ -60,8 +59,24 @@ class EditSubject : AppCompatActivity() {
         else
             sub_confirm.isEnabled = false
 
-        txt_abb.addTextChangedListener(TxtValid(this, "[A-Za-zÀ-ž][0-9A-Za-zÀ-ž]+", 1..5, txt_abb, sub_confirm))
-        txt_full.addTextChangedListener(TxtValid(this, "[0-9A-Za-zÀ-ž ]+", 3..40, txt_full, sub_confirm))
+        txt_full.addTextChangedListener(
+            TxtValid(
+                this,
+                "[A-Za-zÀ-ž][0-9A-Za-zÀ-ž ]*",
+                3..40,
+                txt_full,
+                sub_confirm
+            )
+        )
+        txt_abb.addTextChangedListener(
+            TxtValid(
+                this,
+                "[A-Za-zÀ-ž][0-9A-Za-zÀ-ž]*",
+                1..5,
+                txt_abb,
+                sub_confirm
+            )
+        )
 
         sub_abort.setOnClickListener { success() }
 
@@ -90,6 +105,24 @@ class EditSubject : AppCompatActivity() {
                 else update(subject)
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("abb", txt_abb.text.toString())
+        outState.putString("full", txt_full.text.toString())
+        outState.putString("abb_err", txt_abb.error?.toString() ?: "")
+        outState.putString("full_err", txt_full.error?.toString() ?: "")
+    }
+
+    override fun onRestoreInstanceState(inState: Bundle) {
+        super.onRestoreInstanceState(inState)
+        txt_abb.setText(inState.getString("abb"))
+        txt_full.setText(inState.getString("full"))
+        val abb_err = inState.getString("abb_err") ?: ""
+        val full_err = inState.getString("full_err") ?: ""
+        txt_abb.error = if (abb_err.isNotEmpty()) inState.getString("abb_err") else null
+        txt_full.error = if (full_err.isNotEmpty()) inState.getString("full_err") else null
     }
 
     override fun onDestroy() {

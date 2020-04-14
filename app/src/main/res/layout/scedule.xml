@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/day_tab_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="bottom|center_horizontal"
@@ -26,30 +27,35 @@
                 android:id="@+id/Mon"
                 style="@style/dayBtn"
                 android:layout_height="match_parent"
+                android:onClick="onClick"
                 android:text="@string/Mon" />
 
             <Button
                 android:id="@+id/Tue"
                 style="@style/dayBtn"
                 android:layout_height="match_parent"
+                android:onClick="onClick"
                 android:text="@string/Tue" />
 
             <Button
                 android:id="@+id/Wed"
                 style="@style/dayBtn"
                 android:layout_height="match_parent"
+                android:onClick="onClick"
                 android:text="@string/Wed" />
 
             <Button
                 android:id="@+id/Thu"
                 style="@style/dayBtn"
                 android:layout_height="match_parent"
+                android:onClick="onClick"
                 android:text="@string/Thu" />
 
             <Button
                 android:id="@+id/Fri"
                 style="@style/dayBtn"
                 android:layout_height="match_parent"
+                android:onClick="onClick"
                 android:text="@string/Fri" />
 
         </LinearLayout>
@@ -75,6 +81,7 @@
         android:background="@drawable/add"
         android:elegantTextHeight="false"
         android:gravity="center"
+        android:onClick="onClick"
         android:textIsSelectable="false"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
