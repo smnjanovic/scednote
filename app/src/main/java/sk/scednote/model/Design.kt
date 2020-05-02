@@ -1,28 +1,28 @@
 package sk.scednote.model
 
-import android.content.Context
+import android.os.Handler
+import android.util.DisplayMetrics
+import android.util.Log
+import android.widget.ImageView
+import androidx.core.view.updateLayoutParams
 import sk.scednote.R
+import sk.scednote.ScedNoteApp
 import sk.scednote.model.data.Ahsl
 import java.util.*
-import kotlin.math.*
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 /**
  * Tu prebiehaju vypoctove metody zobrazenia obrazku
  */
 object Design {
-    val BACKGROUND = "BACKGROUND"
-    val TABLE_HEAD = "TABLE_HEAD"
-    val PRESENTATIONS = "CELLS_OF_PRESENTATION"
-    val COURSES = "CELLS_OF_COURSES"
-    val FREE = "CELLS_OF_NOTHING"
-
-    class Target (context: Context) {
-        protected val ctx = context
-        val bg_b = ctx.resources.getResourceEntryName(R.color.des_background)!!
-        val bg_h = ctx.resources.getResourceEntryName(R.color.des_heading)!!
-        val bg_p = ctx.resources.getResourceEntryName(R.color.des_presentations)!!
-        val bg_c = ctx.resources.getResourceEntryName(R.color.des_courses)!!
-    }
+    val bg_b = ScedNoteApp.res.getResourceEntryName(R.color.des_background)!!
+    val bg_h = ScedNoteApp.res.getResourceEntryName(R.color.des_heading)!!
+    val bg_p = ScedNoteApp.res.getResourceEntryName(R.color.des_presentations)!!
+    val bg_c = ScedNoteApp.res.getResourceEntryName(R.color.des_courses)!!
+    const val FREE = "CELLS_OF_NOTHING"
 
     private fun hex2dec(hex: String): Long {
         val len = hex.length
@@ -82,11 +82,10 @@ object Design {
         fun to16(n: Double): String { return to16(n.roundToInt()) }
 
         val alpha = to16(a * 2.55)
-        if (s == 0) {
+        return if (s == 0) {
             val rgb = to16(l * 2.55)
-            return "#$alpha$rgb$rgb$rgb"
-        }
-        else {
+            "#$alpha$rgb$rgb$rgb"
+        } else {
             val c: Double = (1 - abs(0.02 * l - 1)) * s * 0.01
             val x: Double = c * (1- abs((h / 60.0) % 2 - 1))
             val m: Double = 0.01 * l - c / 2
@@ -95,20 +94,124 @@ object Design {
             val g = (m + (if (h >= 240) 0.0 else if (h in 60..179) c else x)) * 255
             val b = (m + (if (h < 120) 0.0 else if (h in 180..299) c else x)) * 255
 
-            return "#${alpha}${to16(r)}${to16(g)}${to16(b)}"
+            "#${alpha}${to16(r)}${to16(g)}${to16(b)}"
         }
     }
+
+    // Zdroj: https://gist.github.com/laaptu/786785
+    fun dpToPx (n: Int) = (n * (ScedNoteApp.res.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
+    fun pxToDp (n: Int) = (n / (ScedNoteApp.res.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
 
     /**
      * Monochromaticka farebna schema: Odtieň pozadia a farby textu je rovnaký. Snaha udržať kontrast
      */
     fun customizedForeground(background: Ahsl): Ahsl {
-        val mid_contrast = if(background.s > 35 && background.h in 45..200) 35 else 50
-        return Ahsl(100, background.h, background.s, if (background.l < mid_contrast) 85 else 15)
+        val midContrast = if(background.s > 35 && background.h in 45..200) 35 else 50
+        return Ahsl(100, background.h, background.s, if (background.l < midContrast) 85 else 15)
     }
 
-    //este doplnim funkcie ktore budu pocitat rozlozenie obrazku na stranke
+    //smer pohybu obrazku ak je ho pomer stran je rozny od pomeru stran platna
+    enum class OverSize { WIDTH, HEIGHT, NONE }
+    //rozlozenie obrazku
+    enum class ImgFit {
+        COVER, CONTAIN, FILL, UNDEFINED;
+        companion object {
+            private val arr = arrayOf(COVER, CONTAIN, FILL, UNDEFINED)
+            operator fun get(n: Int) = arr[n]
+        }
+        val position get() = arr.indexOf(this)
+    }
 
-    //smer pohybu obrazku podla sirky a vysky
-    //nastavenie zvacsenia obrazku vratane jeho pozicie
+    class ImageEditor(private val frmW: Int, private val frmH: Int, private val img: ImageView) {
+        // praca s obrazkom
+        private val imgW: Int get() = img.drawable?.intrinsicWidth ?: 0
+        private val imgH: Int get() = img.drawable?.intrinsicHeight ?: 0
+        private var width = imgW
+        private var height = imgH
+        val overSize: OverSize get() {
+            if (imgW * imgH == 0 || img.drawable == null) return OverSize.NONE
+            val widthRatio = imgW / frmW.toFloat()
+            val heightRatio = imgH / frmH.toFloat()
+            return when {
+                widthRatio < heightRatio -> OverSize.HEIGHT
+                widthRatio > heightRatio -> OverSize.WIDTH
+                else -> OverSize.NONE
+            }
+        }
+        val bounds: ClosedFloatingPointRange<Float> get() = when {
+            overSize == OverSize.WIDTH && getFit() == ImgFit.COVER -> (frmW - width).toFloat()..0F
+            overSize == OverSize.HEIGHT && getFit() == ImgFit.COVER -> (frmH - height).toFloat()..0F
+            overSize == OverSize.WIDTH && getFit() == ImgFit.CONTAIN -> 0F..(frmH - height).toFloat()
+            overSize == OverSize.HEIGHT && getFit() == ImgFit.CONTAIN -> 0F..(frmW - width).toFloat()
+            else -> 0F..0F
+        }
+
+        val horizontalMovement get() = overSize == OverSize.WIDTH && getFit() == ImgFit.COVER ||
+                overSize == OverSize.HEIGHT && getFit() == ImgFit.CONTAIN
+        val verticalMovement get() = overSize == OverSize.HEIGHT && getFit() == ImgFit.COVER ||
+                overSize == OverSize.WIDTH && getFit() == ImgFit.CONTAIN
+
+        private fun computeWidth (p_fit: ImgFit) = when {
+            overSize == OverSize.WIDTH && p_fit == ImgFit.COVER || overSize == OverSize.HEIGHT && p_fit == ImgFit.CONTAIN -> imgW * frmH / imgH
+            else -> frmW
+        }
+        private fun computeHeight (p_fit: ImgFit) = when {
+            overSize == OverSize.WIDTH && p_fit == ImgFit.CONTAIN || overSize == OverSize.HEIGHT && p_fit == ImgFit.COVER -> imgH * frmW / imgW
+            else -> frmH
+        }
+
+        fun getFit(): ImgFit {
+            return when {
+                imgW * imgH == 0 -> ImgFit.UNDEFINED
+                overSize == OverSize.NONE -> ImgFit.FILL
+                overSize == OverSize.WIDTH -> if (width == frmW) ImgFit.CONTAIN else ImgFit.COVER
+                overSize == OverSize.HEIGHT -> if (height == frmH) ImgFit.CONTAIN else ImgFit.COVER
+                else -> ImgFit.UNDEFINED
+            }
+        }
+        fun setFit(value: ImgFit) {
+            if (value != ImgFit.UNDEFINED) {
+                when (value) {
+                    ImgFit.CONTAIN -> {
+                        when (overSize) {
+                            OverSize.WIDTH -> scaleByWidth(value)
+                            OverSize.HEIGHT -> scaleByHeight(value)
+                            else -> contain()
+                        }
+                    }
+                    ImgFit.COVER -> {
+                        when (overSize) {
+                            OverSize.WIDTH -> scaleByHeight(value)
+                            OverSize.HEIGHT -> scaleByWidth(value)
+                            else -> contain()
+                        }
+                    }
+                    else -> contain()
+                }
+                img.updateLayoutParams {
+                    this.width = this@ImageEditor.width
+                    this.height = this@ImageEditor.height
+                }
+                img.postDelayed({
+                    Handler().postDelayed({
+                        img.x = frmW / 2F - width / 2F
+                        img.y = frmH / 2F - height / 2F
+                    }, 0)
+                }, 0)
+            }
+        }
+
+        private fun scaleByWidth(p_fit: ImgFit) {
+            height = computeHeight(p_fit)
+            width = frmW
+        }
+        private fun scaleByHeight(p_fit: ImgFit) {
+            width = computeWidth(p_fit)
+            height = frmH
+        }
+        private fun contain() {
+            width = frmW
+            height = frmH
+        }
+    }
 }

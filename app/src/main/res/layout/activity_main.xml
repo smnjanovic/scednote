@@ -5,68 +5,100 @@
     android:id="@+id/frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
-    android:backgroundTint="#ab000000"
-    android:backgroundTintMode="src_atop"
-    tools:context="sk.scednote.Main">
+    android:background="#333"
+    tools:context="sk.scednote.activities.Main">
 
-    <TableLayout
+    <LinearLayout
         android:id="@+id/timetable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:foreground="@drawable/tbl_border"
         android:gravity="center_horizontal"
         android:layoutMode="opticalBounds"
-        android:shrinkColumns="false"
-        android:stretchColumns="true"
-        app:layout_constraintBottom_toTopOf="@+id/noteBtn"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/scedBtn"
-        style="@style/btnIcon"
-        android:layout_width="wrap_content"
+        style="@style/dp60"
         android:backgroundTint="#A33737"
-        android:onClick="leave"
+        android:contentDescription="@string/icon_sced_desc"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/ic_menu_edit" />
 
     <ImageButton
         android:id="@+id/shotBtn"
-        style="@style/btnIcon"
-        android:layout_width="wrap_content"
+        style="@style/dp60"
         android:backgroundTint="#BFA050"
-        android:onClick="leave"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/scedBtn"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
-
-    <ImageButton
-        android:id="@+id/cleanBtn"
-        style="@style/btnIcon"
-        android:backgroundTint="#5EA0D3"
+        android:contentDescription="@string/icon_scr_desc"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/noteBtn"
-        app:srcCompat="@drawable/sweep" />
+        app:srcCompat="@drawable/ic_screenshot" />
 
-    <ImageButton
-        android:id="@+id/noteBtn"
-        style="@style/btnIcon"
-        android:layout_width="wrap_content"
-        android:backgroundTint="#5AA353"
-        android:onClick="leave"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/shotBtn"
-        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+    <LinearLayout
+        android:id="@+id/noteScreen"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="24dp"
+        android:background="@drawable/pin7days_dark"
+        android:orientation="vertical"
+        android:padding="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/scedBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timetable">
+
+        <LinearLayout
+            android:id="@+id/note_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/pin7days_dark"
+            android:backgroundTintMode="src_in"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/note_heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="4dp"
+                android:text="@string/this_week"
+                android:textColor="#FFFFFF" />
+
+            <ImageButton
+                android:id="@+id/reloader"
+                style="@style/dp40"
+                android:layout_margin="0dp"
+                android:background="#0000"
+                android:contentDescription="@string/update"
+                android:src="@android:drawable/stat_notify_sync" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/no_recent_notes"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_margin="4dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

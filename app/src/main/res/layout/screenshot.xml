@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context="sk.scednote.Screenshot">
+    tools:context="sk.scednote.activities.Screenshot">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
@@ -20,47 +20,33 @@
         app:layout_constraintStart_toEndOf="@+id/scrDesign"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.cardview.widget.CardView
+        <FrameLayout
             android:id="@+id/scrBox"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:foreground="@drawable/border"
+            android:background="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="6:13"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ImageView
+                android:id="@+id/bgImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/bgB"
+                android:scaleType="fitXY" />
+
+            <TableLayout
+                android:id="@+id/timetable"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="64dp" />
 
-                <ImageView
-                    android:id="@+id/bgImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/bgB"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        </FrameLayout>
 
-                <TableLayout
-                    android:id="@+id/timetable"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="80dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="64dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,6 +60,17 @@
         app:layout_constraintEnd_toEndOf="@+id/scrImgFitBox"
         app:layout_constraintStart_toStartOf="@+id/scrImgFitBox">
 
+        <ImageButton
+            android:id="@+id/scrDesignClose"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="#0000"
+            android:contentDescription="@string/collapse"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:tint="@color/scrPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
@@ -82,8 +79,10 @@
             android:background="@color/scrPrimaryDark"
             app:layout_constraintBottom_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/Heading"
@@ -102,16 +101,19 @@
             android:id="@+id/bgB"
             style="@style/designBtn"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:background="@drawable/bg_b_inactive"
+            android:foreground="@drawable/bg_active"
+            android:foregroundTint="#4fff"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/scrDesignClose" />
 
         <Button
             android:id="@+id/bgH"
             style="@style/designBtn"
             android:layout_marginStart="8dp"
             android:background="@drawable/bg_h_inactive"
+            android:foreground="@drawable/bg_active"
+            android:foregroundTint="#4fff"
             app:layout_constraintBottom_toBottomOf="@+id/bgB"
             app:layout_constraintStart_toEndOf="@+id/bgB"
             app:layout_constraintTop_toTopOf="@+id/bgB"
@@ -122,6 +124,8 @@
             style="@style/designBtn"
             android:layout_marginStart="8dp"
             android:background="@drawable/bg_p_inactive"
+            android:foreground="@drawable/bg_active"
+            android:foregroundTint="#4fff"
             app:layout_constraintBottom_toBottomOf="@+id/bgH"
             app:layout_constraintStart_toEndOf="@+id/bgH"
             app:layout_constraintTop_toTopOf="@+id/bgH"
@@ -132,6 +136,8 @@
             style="@style/designBtn"
             android:layout_marginStart="8dp"
             android:background="@drawable/bg_c_inactive"
+            android:foreground="@drawable/bg_active"
+            android:foregroundTint="#4fff"
             app:layout_constraintBottom_toBottomOf="@+id/bgP"
             app:layout_constraintStart_toEndOf="@+id/bgP"
             app:layout_constraintTop_toTopOf="@+id/bgP"
@@ -288,36 +294,27 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/screenshot"
-        style="@style/btnIcon"
-        android:background="@drawable/scr_circle"
-        android:foreground="@android:drawable/ic_menu_camera"
-        android:foregroundGravity="center"
-        app:layout_constraintEnd_toEndOf="@+id/photo"
-        app:layout_constraintStart_toStartOf="@+id/photo"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/photo"
-        style="@style/btnIcon"
-        android:background="@drawable/picture"
-        app:layout_constraintBottom_toTopOf="@+id/fitBtn"
-        app:layout_constraintEnd_toEndOf="@+id/scrDesign"
-        app:layout_constraintStart_toStartOf="@+id/scrDesign" />
-
-    <Button
-        android:id="@+id/fitBtn"
-        style="@style/btnIcon"
-        android:background="@drawable/imgfit"
-        app:layout_constraintBottom_toTopOf="@+id/scrDesign"
-        app:layout_constraintEnd_toEndOf="@+id/scrDesign"
-        app:layout_constraintStart_toStartOf="@+id/scrDesign" />
-
-    <Button
         android:id="@+id/scrDesign"
-        style="@style/btnIcon"
+        style="@style/dp50"
         android:background="@drawable/palette"
         app:layout_constraintBottom_toTopOf="@+id/scrDesignBox"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/imgRemove"
+        style="@style/dp50"
+        android:background="@drawable/picture"
+        android:foreground="@android:drawable/ic_delete"
+        android:foregroundGravity="bottom|right"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/scrDesign"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/gallery"
+        style="@style/dp50"
+        android:background="@drawable/picture"
+        app:layout_constraintBottom_toTopOf="@+id/imgRemove"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

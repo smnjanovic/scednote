@@ -1,41 +1,62 @@
 <resources>
 
-    <!--Titles-->
+    <!--Nazvy-->
     <string name="app_name">ScedNote</string>
     <string name="note_tit">Poznámky</string>
     <string name="scr_tit">Nastavenie pozadia</string>
     <string name="sub_tit">Predmety</string>
     <string name="sced_tit">Nastavenie rozvrhu</string>
     <string name="les_edit_tit">Nastavenia hodiny</string>
-    <string name="sub_edit_tit">Nastavenia predmetu</string>
     <string name="les_new_tit">Nová hodina</string>
+    <string name="sub_edit_tit">Nastavenia predmetu</string>
     <string name="sub_new_tit">Nový predmet</string>
 
-    <!--Main-->
-    <string name="icon_notes_desc">Správa poznámok</string>
-    <string name="icon_sced_desc">Správa rozvrhu</string>
-    <string name="icon_scr_desc">Vytvoriť tapetu</string>
-    <string name="icon_clean_desc">Odstrániť zbytočné dáta</string>
+    <!--Tlačidlá-->
+    <string name="nw">Nový</string>
     <string name="edit">Upraviť</string>
     <string name="del">Vymazať</string>
+    <string name="merge">Zlúčiť</string>
+    <string name="create">Vytvoriť</string>
+    <string name="update">Aktualizovať</string>
+    <string name="save">Uložiť</string>
 
+    <string name="continue_">Pokračovať</string>
     <string name="confirm">Potvrdiť</string>
     <string name="cancel">Zrušiť</string>
-    <string name="nw">Nový</string>
-    <string name="taken_over">Obsadené</string>
+    <string name="back">Späť</string>
 
-
-    <!--Scedule-->
-    <string name="lessonP">Prednáška</string>
-    <string name="lessonC">Cvičenie</string>
-    <string name="lessonF">Voľno</string>
-
-    <!--Notes-->
     <string name="Mon">Pondelok</string>
     <string name="Tue">Utorok</string>
     <string name="Wed">Streda</string>
     <string name="Thu">Štvrtok</string>
     <string name="Fri">Piatok</string>
+
+    <!--Validacia textu-->
+    <string name="cannot_be_empty">Zadajte text!</string>
+    <string name="text_too_long">Text je príliš dlhý!</string>
+    <string name="text_too_short">Text je príliš krátky!</string>
+    <string name="invalid_chars">Nepovolené znaky!</string>
+
+    <!--NEPOUŽITÉ-->
+    <string name="icon_notes_desc">Správa poznámok</string>
+    <string name="icon_sced_desc">Správa rozvrhu</string>
+    <string name="icon_scr_desc">Vytvoriť tapetu</string>
+    <string name="icon_clean_desc">Odstrániť zbytočné dáta</string>
+    <string name="gallery">Galéria</string>
+
+    <!--Main-->
+    <string name="clean_up_msg">Predmety, ktoré nie sú v rozvrhu a nie su k nim ani pripnuté poznánky, budú odstránené. Prajete si pokračovať?</string>
+    <string name="obsolete_subjects_gone">Nadbytočné predmety boli odstránené!</string>
+    <string name="remove_obsolete">Odstrániť nepotrebné dáta</string>
+    <string name="this_week">Tento týždeň</string>
+    <string name="subjects">Predmety</string>
+    <string name="notes">Poznámky</string>
+
+    <!--Scedule-->
+    <string name="lessonP">Prednáška</string>
+    <string name="lessonC">Cvičenie</string>
+    <string name="lessonF">Voľno</string>
+    <string name="taken_over">Obsadené</string>
 
     <!--Screenshot-->
     <string name="Hsla">Odtieň</string>
@@ -49,13 +70,9 @@
     <string name="Cover">Vyplniť</string>
     <string name="Contain">Zmestiť</string>
     <string name="Fill">Roztiahnúť</string>
-    <string name="title_activity_les_edit">les_edit</string>
     <string name="permission_denied">Zamietnutý prístup!</string>
-
-    <string name="cannot_be_empty">Zadajte text!</string>
-    <string name="text_too_long">Text je príliš dlhý!</string>
-    <string name="text_too_short">Text je príliš krátky!</string>
-    <string name="invalid_chars">Nepovolené znaky!</string>
+    <string name="image_loading_error">Pokus o načítanie obrázku zlyhal</string>
+    <string name="wallpaper_set_success">Obrázok bol pridaný na pozadie</string>
 
     <!--Lesson setter-->
     <string name="day">Deň</string>
@@ -64,14 +81,27 @@
     <string name="subName">Predmet</string>
     <string name="sort">Forma výučby</string>
     <string name="room">Miestnosť</string>
+    <string name="les_collision">Práve sa chystáte nahradiť obsadenú časť rozvrhu. Pokračovať?</string>
 
-    <!--!Subject setter-->
+    <!--Predmety-->
     <string name="sub_full">Celý názov predmetu</string>
     <string name="sub_abb">Skratka</string>
-    <string name="same_abb">Predmet s touto skratkou už existuje. Chcete ho upraviť?</string>
-    <string name="les_collision">Práve sa chystáte nahradiť obsadenú časť rozvrhu. Pokračovať?</string>
-    <string name="create">Vytvoriť</string>
-    <string name="update">Aktualizovať</string>
-    <string name="continue_">Pokračovať</string>
-    <string name="back">Späť</string>
+    <string name="same_abb">Predmet s touto skratkou už existuje. Chcete ich zlúčiť?</string>
+    <string name="used_abb">Predmet s touto skratkou už existuje. Chcete upraviť pôvodný?</string>
+    <string name="subject_not_obsolete">Predmet sa stratí z rozvrhu a poznámky a budíky súvisiace s týmto predmetom budú navždy odstránené. Pokračovať?</string>
+
+    <!--Poznámky-->
+    <string name="subject_related">Predmet</string>
+    <string name="today">Dnes</string>
+    <string name="tomorow">Zajtra</string>
+    <string name="forever">Dlhodobé</string>
+    <string name="late">Oneskrené</string>
+    <string name="time_out">Čas vypršal</string>
+    <string name="set_datetime">Zvoliť dátum a čas</string>
+    <string name="clear_datetime">odstrániť dátum a čas</string>
+    <string name="collapse">skryť</string>
+    <string name="no_recent_notes">Žiadne úlohy</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="configure">Configure</string>
 </resources>

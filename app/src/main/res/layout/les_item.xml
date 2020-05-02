@@ -42,11 +42,8 @@
 
         <ImageButton
             android:id="@+id/del_les"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
+            style="@style/dp40"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:backgroundTint="@color/colorPrimary"
             android:contentDescription="@string/del"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -56,11 +53,8 @@
 
         <ImageButton
             android:id="@+id/edit_les"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
+            style="@style/dp40"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
             android:backgroundTint="@color/scrPrimary"
             android:contentDescription="@string/edit"
             app:layout_constraintBottom_toBottomOf="parent"

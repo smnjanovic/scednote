@@ -1,39 +1,25 @@
 package sk.scednote.model.data
 
-import android.content.Context
-import sk.scednote.R.string.*
-import java.lang.IndexOutOfBoundsException
+import sk.scednote.R
+import sk.scednote.ScedNoteApp
 
 enum class Day {
     MON, TUE, WED, THU, FRI;
     companion object {
+        private val days = arrayOf(MON, TUE, WED, THU, FRI)
+        private fun exp(n: Int) = "Index $n of <<enum>> Day is Out of bounds!"
         operator fun get(n: Int): Day {
-            if (n !in 0..4) throw(IndexOutOfBoundsException("Index $n of <<enum>> Day is Out of bounds!"))
-            return arrayOf(MON, TUE, WED, THU, FRI)[n]
+            try { return days[n] }
+            catch (i: IndexOutOfBoundsException) { throw(java.lang.IndexOutOfBoundsException(exp(n))) }
         }
-        fun getTitles(context: Context): Array<String> {
-            return arrayOf(
-                MON.getTitle(context),
-                TUE.getTitle(context),
-                WED.getTitle(context),
-                THU.getTitle(context),
-                FRI.getTitle(context)
-            )
-        }
-
-        fun getDayByName(ctx: Context, str: String): Day? {
-            val days = Day.values()
-            for (d in days)
-                if (d.getTitle(ctx) == str)
-                    return d
-            return null
-        }
+        val titles: Array<String> get() = arrayOf(MON.title, TUE.title, WED.title, THU.title, FRI.title)
     }
-    val position: Int get() = Day.values().indexOf(this)
-
-    fun getTitle(context: Context): String {
-        return context.resources.getString( when (this) {
-            MON -> Mon; TUE -> Tue; WED -> Wed; THU -> Thu; FRI -> Fri
-        })
-    }
+    val position: Int get() = values().indexOf(this)
+    val title: String get() = ScedNoteApp.res.getString( when (this) {
+        MON -> R.string.Mon
+        TUE -> R.string.Tue
+        WED -> R.string.Wed
+        THU -> R.string.Thu
+        FRI -> R.string.Fri
+    })
 }

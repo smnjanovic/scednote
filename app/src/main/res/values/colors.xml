@@ -2,31 +2,26 @@
 <resources>
     <color name="colorPrimary">#FF3D00</color>
     <color name="colorPrimaryDark">#631800</color>
-
-    <color name="homePrimary">#FF3D00</color>
-    <color name="homePrimaryDark">#631800</color>
-
-    <color name="scedPrimary">#FF3D00</color>
-    <color name="scedPrimaryDark">#631800</color>
     <color name="bgSced">#250900</color>
-
-    <color name="scrPrimary">#BFA050</color>
-    <color name="scrPrimaryDark">#615900</color>
-    <color name="bgScr">#241A00</color>
-
-    <color name="notesPrimary">#FF3D00</color>
-    <color name="notesPrimaryDark">#631800</color>
-    <color name="bgNotes">#250900</color>
-
     <color name="colorAccent">#000000</color>
 
+
+    <color name="scrPrimary">#e6c000</color>
+    <color name="scrPrimaryDark">#665500</color>
+    <color name="bgScr">#241e00</color>
+
+    <color name="notesPrimary">#42ff87</color>
+    <color name="notesPrimaryDark">#006625</color>
+    <color name="bgNotes">#00240d</color>
+
+
     <color name="inactiveDayTab">#BBFF0000</color>
-    <color name="inactiveSubTab">#BBFFBF00</color>
-    <color name="activeTab">#BBFFFFFF</color>
+    <color name="inactiveNoteTab">#BB00FF5E</color>
+    <color name="inactiveSubTab">#BBDFBF20</color>
 
     <!--nastavovatelne farby-->
-    <color name="des_background">#FF330000</color>
-    <color name="des_heading">#FFFFDD00</color>
-    <color name="des_presentations">#FFFF4D4D</color>
-    <color name="des_courses">#FFFFDD00</color>
+    <color name="des_background">#330C00</color>
+    <color name="des_heading">#FF4F1A</color>
+    <color name="des_presentations">#FFB19A</color>
+    <color name="des_courses">#FFD9CD</color>
 </resources>

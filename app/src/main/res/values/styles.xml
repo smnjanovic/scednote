@@ -6,15 +6,45 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="btnIcon">
+
+    <style name="NoteTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/notesPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/bgNotes</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ScreenshotTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/scrPrimary</item>
+        <item name="colorPrimaryDark">@color/scrPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="dp60">
         <item name="android:layout_width">60dp</item>
         <item name="android:layout_height">60dp</item>
         <item name="android:layout_margin">8dp</item>
     </style>
 
+    <style name="dp50">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <style name="dp40">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <style name="dp25">
+        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_height">25dp</item>
+    </style>
+
     <!--Aktivita Scedule-->
     <style name="horScrollNav">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">25dp</item>
     </style>

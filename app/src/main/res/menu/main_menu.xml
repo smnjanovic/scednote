@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/cleanBtn"
+        android:icon="@drawable/sweep"
+        android:title="@string/remove_obsolete"
+        app:showAsAction="ifRoom"></item>
+    <item
+        android:id="@+id/noteBtn"
+        android:title="@string/notes"></item>
+    <item
+        android:id="@+id/subBtn"
+        android:title="@string/subjects"></item>
+</menu>

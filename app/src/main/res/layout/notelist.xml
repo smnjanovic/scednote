@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2C0000"
-    tools:context="sk.scednote.NoteList">
+    android:background="@color/bgNotes"
+    tools:context="sk.scednote.activities.NoteList">
 
     <HorizontalScrollView
-        android:id="@+id/subjectTabs"
+        android:id="@+id/noteTabs"
         style="@style/horScrollNav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/noteList"
+        app:layout_constraintStart_toStartOf="@+id/noteList"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -21,43 +22,75 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/Mon"
+                android:id="@+id/subject_related"
                 style="@style/dayBtn"
-                android:layout_height="match_parent" />
+                android:layout_width="wrap_content"
+                android:background="@drawable/cat_btns"
+                android:backgroundTintMode="src_in"
+                android:text="@string/subject_related" />
+
+            <Button
+                android:id="@+id/today"
+                style="@style/dayBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/cat_btns"
+                android:backgroundTint="@color/inactiveNoteTab"
+                android:backgroundTintMode="src_in"
+                android:text="@string/today" />
+
+            <Button
+                android:id="@+id/tomorrow"
+                style="@style/dayBtn"
+                android:layout_width="wrap_content"
+                android:background="@drawable/cat_btns"
+                android:backgroundTint="@color/inactiveNoteTab"
+                android:backgroundTintMode="src_in"
+                android:text="@string/tomorow" />
+
+            <Button
+                android:id="@+id/forever"
+                style="@style/dayBtn"
+                android:layout_height="match_parent"
+                android:background="@drawable/cat_btns"
+                android:backgroundTint="@color/inactiveNoteTab"
+                android:backgroundTintMode="src_in"
+                android:text="@string/forever" />
+
+            <Button
+                android:id="@+id/late"
+                style="@style/dayBtn"
+                android:layout_height="match_parent"
+                android:background="@drawable/cat_btns"
+                android:backgroundTint="@color/inactiveNoteTab"
+                android:backgroundTintMode="src_in"
+                android:text="@string/late" />
 
         </LinearLayout>
     </HorizontalScrollView>
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/subjectTabs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/noteList"
+        app:layout_constraintStart_toStartOf="@+id/noteList"
+        app:layout_constraintTop_toBottomOf="@+id/noteTabs" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/noteList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="90dp"
+        android:layout_marginBottom="8dp"
+        android:background="#1fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subjectTabs">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
-
-    <Button
-        android:id="@+id/addLesson"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/add"
-        android:elegantTextHeight="false"
-        android:gravity="center"
-        android:textIsSelectable="false"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/subjectTabs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

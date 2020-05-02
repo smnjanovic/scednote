@@ -5,14 +5,7 @@ import android.os.Parcelable
 import android.util.Log
 import kotlin.properties.Delegates
 
-data class Lesson (
-    val id: Long,
-    val day: Day,
-    val time: IntRange,
-    val sort: ScedSort,
-    val subject: Subject,
-    val room: String
-) : Parcelable {
+data class Lesson (val id: Long, val day: Day, val time: IntRange, val sort: ScedSort, val subject: Subject, val room: String) : Parcelable {
     constructor(id: Long, day_: Int, start: Int, end: Int, sort_: Int, sub_id:Long, sub_abb: String, sub_full: String, room: String)
             : this(id, Day[day_], start..end, ScedSort[sort_], Subject(sub_id, sub_abb, sub_full), room)
 
@@ -27,6 +20,7 @@ data class Lesson (
         parcel.readString() ?: "",
         parcel.readString() ?: ""
     )
+
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeLong(id)
@@ -45,6 +39,8 @@ data class Lesson (
     }
 
     companion object CREATOR : Parcelable.Creator<Lesson> {
+        val OPENING_HOURS = 7..21
+
         override fun createFromParcel(parcel: Parcel): Lesson {
             return Lesson(parcel)
         }
@@ -58,5 +54,22 @@ data class Lesson (
         if (other == null) return false
         if(other !is Lesson) return false
         return day == other.day && sort == other.sort && room == other.room && subject == other.subject
+    }
+
+    /**
+     * zistenie ci je medzi predmetmi nejaky casovy odstup
+     */
+    fun breaksBetween(les: Lesson): Boolean {
+        return this.day == les.day && (this.time.first - 1 == les.time.last || this.time.last + 1 == les.time.first)
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + day.hashCode()
+        result = 31 * result + time.hashCode()
+        result = 31 * result + sort.hashCode()
+        result = 31 * result + subject.hashCode()
+        result = 31 * result + room.hashCode()
+        return result
     }
 }

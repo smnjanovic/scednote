@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#333"
+    tools:context="sk.scednote.activities.Main">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:id="@+id/noteScreen"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="12dp"
+            android:layout_weight="3"
+            android:background="@drawable/pin7days_dark"
+            android:orientation="vertical"
+            android:padding="0dp">
+
+            <LinearLayout
+                android:id="@+id/note_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/pin7days_dark"
+                android:backgroundTintMode="src_in"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/note_heading"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/this_week"
+                    android:textColor="#FFFFFF" />
+
+                <ImageButton
+                    android:id="@+id/reloader"
+                    style="@style/dp25"
+                    android:layout_margin="0dp"
+                    android:background="#0000"
+                    android:contentDescription="@string/update"
+                    android:src="@android:drawable/stat_notify_sync" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/no_recent_notes"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5">
+
+            <LinearLayout
+                android:id="@+id/timetable"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="center_horizontal"
+                android:layoutMode="opticalBounds"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/shotBtn"
+                style="@style/dp50"
+                android:backgroundTint="#BFA050"
+                android:contentDescription="@string/icon_scr_desc"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_screenshot" />
+
+            <ImageButton
+                android:id="@+id/scedBtn"
+                style="@style/dp50"
+                android:backgroundTint="#A33737"
+                android:contentDescription="@string/icon_sced_desc"
+                app:layout_constraintBottom_toBottomOf="@+id/shotBtn"
+                app:layout_constraintEnd_toStartOf="@+id/shotBtn"
+                app:layout_constraintTop_toTopOf="@+id/shotBtn"
+                app:srcCompat="@android:drawable/ic_menu_edit" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
