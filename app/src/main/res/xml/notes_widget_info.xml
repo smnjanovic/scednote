@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:configure="sk.scednote.activities.NotesWidgetConfiguration"
+    android:configure="sk.scednote.activities.NotesWidgetConf"
     android:initialKeyguardLayout="@layout/notes_widget"
     android:initialLayout="@layout/notes_widget"
     android:minWidth="110dp"
     android:minHeight="110dp"
-    android:previewImage="@drawable/example_appwidget_preview"
+    android:previewImage="@drawable/note_widget"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="10800000"
     android:widgetCategory="home_screen" />

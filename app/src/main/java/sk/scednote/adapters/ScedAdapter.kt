@@ -7,16 +7,26 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.les_item.view.*
 import sk.scednote.R
 import sk.scednote.model.Database
-import sk.scednote.model.data.Day
-import sk.scednote.model.data.Lesson
+import sk.scednote.model.Day
+import sk.scednote.model.Lesson
 
+/**
+ * Adapter nacitava zaznamy o vyucovacich hodinach podla vybraneho dna
+ */
 class ScedAdapter(list: ArrayList<Lesson>? = null): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val db = Database()
     var items = list?.also { notifyDataSetChanged() } ?: ArrayList()
     private var delete: View.OnClickListener? = null
     private var update: View.OnClickListener? = null
 
+    /**
+     * Nastavenie co sa ma stat ak tuknem na ikonu uprav
+     */
     fun onUpdate(fn: (View) -> Unit) { update = View.OnClickListener { fn(it) } }
+
+    /**
+     * Nastavenie co sa ma stat ak tuknem na ikonu odstranit
+     */
     fun onDelete(fn: (View) -> Unit) { delete = View.OnClickListener { fn(it) } }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -25,28 +35,33 @@ class ScedAdapter(list: ArrayList<Lesson>? = null): RecyclerView.Adapter<Recycle
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as ScedHolder).bind()
     }
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount() = items.size
+    override fun getItemId(position: Int) = if (position !in 0 until items.size) -1 else items[position].id
 
-    override fun getItemId(position: Int): Long {
-        if (position !in 0 until items.size) return -1
-        return items[position].id
-    }
-
+    /**
+     * Odstranenie polozky
+     */
     fun removeItem(pos: Int): Boolean {
         if (items.size > 0 && pos in 0..items.size) {
             db.removeLesson(items[pos].id)
             items.removeAt(pos)
-            notifyDataSetChanged()
+            notifyItemRemoved(pos)
             return true
         }
         return false
     }
+
+    /**
+     * Nacitanie cerstvych dat
+     */
     fun loadData(day: Day?) {
         items = db.getScedule(day)
         this.notifyDataSetChanged()
     }
+
+    /**
+     * Zavretie databazy
+     */
     fun closeDb() {
         db.close()
     }
@@ -58,6 +73,9 @@ class ScedAdapter(list: ArrayList<Lesson>? = null): RecyclerView.Adapter<Recycle
         private val edit = itemView.edit_les
         private val del = itemView.del_les
 
+        /**
+         * Tvorba viewHoldera
+         */
         fun bind() {
             val les = items[adapterPosition]
             val f = les.time.first
@@ -73,6 +91,5 @@ class ScedAdapter(list: ArrayList<Lesson>? = null): RecyclerView.Adapter<Recycle
             del.setOnClickListener(delete)
             edit.setOnClickListener(update)
         }
-
     }
 }

@@ -2,12 +2,10 @@ package sk.scednote.model
 
 import android.os.Handler
 import android.util.DisplayMetrics
-import android.util.Log
 import android.widget.ImageView
 import androidx.core.view.updateLayoutParams
 import sk.scednote.R
 import sk.scednote.ScedNoteApp
-import sk.scednote.model.data.Ahsl
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
@@ -24,6 +22,9 @@ object Design {
     val bg_c = ScedNoteApp.res.getResourceEntryName(R.color.des_courses)!!
     const val FREE = "CELLS_OF_NOTHING"
 
+    /**
+     * Konverzia farieb z hex do decimalneho kodu
+     */
     private fun hex2dec(hex: String): Long {
         val len = hex.length
         val pattern = "[^0-9a-fA-F#]".toRegex()
@@ -47,6 +48,10 @@ object Design {
         }
         return number
     }
+
+    /**
+     * Konverzia farby z hex do hsl
+     */
     fun hex2hsl(hex: String) : Ahsl {
         var number = hex2dec(hex)
         val b = (number % 256)/255.0; number /= 256
@@ -69,48 +74,61 @@ object Design {
             else -> ((r-g)/delta) + 4
         })).roundToInt()
 
-        return Ahsl(a, h, (s * 100).roundToInt(), (l * 100).roundToInt())
+        return Ahsl(
+            a,
+            h,
+            (s * 100).roundToInt(),
+            (l * 100).roundToInt()
+        )
     }
-    fun hsl2hex(ahsl: Ahsl) :String {
-        return hsl2hex(ahsl.h, ahsl.s, ahsl.l, ahsl.a)
-    }
-    fun hsl2hex(h: Int, s: Int, l:Int, a:Int) :String {
-        fun to16(n: Int): String {
-            val newHex = n.coerceIn(0, 255).toString(16).toUpperCase(Locale.ROOT)
-            return if (n < 16) "0${newHex}" else newHex
-        }
-        fun to16(n: Double): String { return to16(n.roundToInt()) }
-
-        val alpha = to16(a * 2.55)
-        return if (s == 0) {
-            val rgb = to16(l * 2.55)
-            "#$alpha$rgb$rgb$rgb"
-        } else {
-            val c: Double = (1 - abs(0.02 * l - 1)) * s * 0.01
-            val x: Double = c * (1- abs((h / 60.0) % 2 - 1))
-            val m: Double = 0.01 * l - c / 2
-
-            val r = (m + (if (h in 120..239) 0.0 else if (h < 60 || h >= 300) c else x)) * 255
-            val g = (m + (if (h >= 240) 0.0 else if (h in 60..179) c else x)) * 255
-            val b = (m + (if (h < 120) 0.0 else if (h in 180..299) c else x)) * 255
-
-            "#${alpha}${to16(r)}${to16(g)}${to16(b)}"
-        }
-    }
-
-    // Zdroj: https://gist.github.com/laaptu/786785
-    fun dpToPx (n: Int) = (n * (ScedNoteApp.res.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
-    fun pxToDp (n: Int) = (n / (ScedNoteApp.res.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
 
     /**
-     * Monochromaticka farebna schema: Odtieň pozadia a farby textu je rovnaký. Snaha udržať kontrast
+     * Konverzia z hsl do hex
+     */
+    fun hsl2hex(ahsl: Ahsl) :String {
+
+        fun to16(n: Int) = with(n.coerceIn(0, 255).toString(16).toUpperCase(Locale.ROOT)) { if (n < 16) "0${this}" else this }
+        fun to16(n: Double) = to16(n.roundToInt())
+
+        with (ahsl) {
+            val alpha = to16(a * 2.55)
+            return if (s == 0) {
+                val rgb = to16(l * 2.55)
+                "#$alpha$rgb$rgb$rgb"
+            } else {
+                val c: Double = (1 - abs(0.02 * l - 1)) * s * 0.01
+                val x: Double = c * (1- abs((h / 60.0) % 2 - 1))
+                val m: Double = 0.01 * l - c / 2
+
+                val r = (m + (if (h in 120..239) 0.0 else if (h < 60 || h >= 300) c else x)) * 255
+                val g = (m + (if (h >= 240) 0.0 else if (h in 60..179) c else x)) * 255
+                val b = (m + (if (h < 120) 0.0 else if (h in 180..299) c else x)) * 255
+
+                return "#${alpha}${to16(r)}${to16(g)}${to16(b)}"
+            }
+        }
+    }
+
+    /**
+     * prevod dp na px
+     * Zdroj: https://gist.github.com/laaptu/786785
+     */
+    fun dp(n: Int) = (n * (ScedNoteApp.res.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
+
+    /**
+     * nastavenie farby popredia k farbe pozadia s co najvyssim kontrastom
      */
     fun customizedForeground(background: Ahsl): Ahsl {
         val midContrast = if(background.s > 35 && background.h in 45..200) 35 else 50
-        return Ahsl(100, background.h, background.s, if (background.l < midContrast) 85 else 15)
+        return Ahsl(
+            100,
+            background.h,
+            background.s,
+            if (background.l < midContrast) 85 else 15
+        )
     }
 
-    //smer pohybu obrazku ak je ho pomer stran je rozny od pomeru stran platna
+    //smer pohybu obrazku ak je jeho pomer stran je rozny od pomeru stran platna
     enum class OverSize { WIDTH, HEIGHT, NONE }
     //rozlozenie obrazku
     enum class ImgFit {
@@ -122,6 +140,9 @@ object Design {
         val position get() = arr.indexOf(this)
     }
 
+    /**
+     * Stara sa o umiestnenie a zvacsenie obrazku na pozadi
+     */
     class ImageEditor(private val frmW: Int, private val frmH: Int, private val img: ImageView) {
         // praca s obrazkom
         private val imgW: Int get() = img.drawable?.intrinsicWidth ?: 0
@@ -160,7 +181,7 @@ object Design {
             else -> frmH
         }
 
-        fun getFit(): ImgFit {
+        private fun getFit(): ImgFit {
             return when {
                 imgW * imgH == 0 -> ImgFit.UNDEFINED
                 overSize == OverSize.NONE -> ImgFit.FILL
@@ -169,6 +190,10 @@ object Design {
                 else -> ImgFit.UNDEFINED
             }
         }
+
+        /**
+         * Nastavi rozlozenie obrazka na pozadi a centruje ho
+         */
         fun setFit(value: ImgFit) {
             if (value != ImgFit.UNDEFINED) {
                 when (value) {

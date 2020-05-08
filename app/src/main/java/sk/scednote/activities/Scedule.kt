@@ -10,17 +10,19 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.scedule.*
 import sk.scednote.R
-import sk.scednote.activities.EditLesson
 import sk.scednote.adapters.ScedAdapter
-import sk.scednote.model.data.Day
+import sk.scednote.model.Day
 import kotlin.properties.Delegates
 
+/**
+ * Tu sa vykonava predpriprava pozadia, prefarbenie buniek tabulky a pozadia,
+ * vkladanie a transformacia obrazku na pozadi, a vysledny obrazok mozno dat na pozadie
+ */
 
 class Scedule : AppCompatActivity() {
     companion object {
@@ -66,9 +68,9 @@ class Scedule : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == ADDED_CHANGED && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == ADDED_CHANGED && resultCode == Activity.RESULT_OK && data != null)
             btns[data.getIntExtra(EditLesson.INTENT_DAY, 0)].performClick()
-        }
+        else lesAdapt.loadData(day)
     }
 
     override fun onResume() {
@@ -96,6 +98,9 @@ class Scedule : AppCompatActivity() {
         super.onDestroy()
     }
 
+    /**
+     * Tlacidla pre prepinanie sa medzi dnami a tlacidlo na pridanie hodiny
+     */
     fun onClick (view: View) {
         when(view) {
             in btns -> {
@@ -166,5 +171,4 @@ class Scedule : AppCompatActivity() {
                 dayTabs.scrollY = view.bottom - dayTabs.height + view.height/2
         }
     }
-
 }

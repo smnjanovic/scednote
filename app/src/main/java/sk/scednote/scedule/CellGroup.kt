@@ -1,10 +1,16 @@
+package sk.scednote.scedule
+
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.tbl_cell.view.*
+import sk.scednote.model.Ahsl
 import sk.scednote.model.Design
-import sk.scednote.model.data.Ahsl
-import java.util.ArrayList
+import java.util.*
+
+/**
+ * Trieda ziskava, uchovava, aktualizuje farby z databazy SQL.
+ * Viditelne menia farby pozadia danej bunke
+ */
 
 class CellGroup(private val target: String? = null, color: Ahsl) {
     private val cells = ArrayList<View>()
@@ -13,14 +19,28 @@ class CellGroup(private val target: String? = null, color: Ahsl) {
     private var bgHex = Design.hsl2hex(bgHsl)
     private var fgHex = Design.hsl2hex(fgHsl)
 
+    /**
+     * Pridanie malovatelnej grafiky
+     */
     operator fun plusAssign(view: Any?) {
         if (view is View)
             cells.add(view)
     }
+
+    /**
+     * Ziskanie n-tej farby
+     */
     operator fun get(n: Int) = cells[n]
 
+    //kontrola ci je ake polia prefarbovat
     val empty: Boolean get() = cells.size == 0
-    fun updateColors(ahsl: Ahsl) {
+
+    /**
+     * nastavena farba uz mozno neplati, metoda vezme z databazy aktualne nastavenu. Je to
+     * vyuzite hlavne po navrate z aktivity Screenshot na hlavnu aktivitu, kte zostali este
+     * stare farby buniek
+     */
+    fun accessNewColors(ahsl: Ahsl) {
         target?.let {
             bgHsl = ahsl
             fgHsl = Design.customizedForeground(bgHsl)
@@ -28,10 +48,17 @@ class CellGroup(private val target: String? = null, color: Ahsl) {
             fgHex = Design.hsl2hex(fgHsl)
         }
     }
+
+    /**
+     * vycistit zoznam farebnych blokov
+     */
     fun clear() {
         cells.clear()
     }
-    //uchovat farbu v databaze. Nenastavitelne farby maju target null
+
+    /**
+     * Ulozit zmenu farby do tatabazy
+     */
     fun storeColor(ahsl: Ahsl) {
         target?.let {
             bgHsl = ahsl
@@ -41,10 +68,16 @@ class CellGroup(private val target: String? = null, color: Ahsl) {
         }
     }
 
+    /**
+     * ziskanie farby v hsl
+     */
     fun getHsl(): Ahsl {
         return bgHsl
     }
-    //prefarbit ramec
+
+    /**
+     * Zmena farby pohladu, (bez aktualizacie v databaze pre lepsi vykon)
+     */
     fun recolor(ahsl: Ahsl? = null) {
         if (cells.size > 0) {
             val color = ahsl ?: bgHsl

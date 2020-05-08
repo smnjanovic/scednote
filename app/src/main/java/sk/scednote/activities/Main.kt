@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.facebook.stetho.Stetho
 import kotlinx.android.synthetic.main.activity_main.*
-import sk.scednote.*
+import sk.scednote.R
 import sk.scednote.adapters.RecentNotesAdapter
 import sk.scednote.fragments.Confirm
 import sk.scednote.model.Database
@@ -37,9 +37,7 @@ class Main : AppCompatActivity() {
             R.id.cleanBtn -> {
                 val confirm = Confirm.newInstance(resources.getString(R.string.clean_up_msg))
                 confirm.setOnConfirm { _, _ -> cleanUp() }
-                confirm.show(supportFragmentManager,
-                    CLEAN_UP
-                )
+                confirm.show(supportFragmentManager, CLEAN_UP)
             }
             R.id.noteBtn -> startActivity(Intent(this, NoteList::class.java))
             R.id.subBtn -> startActivity(Intent(this, SubList::class.java))
@@ -48,7 +46,14 @@ class Main : AppCompatActivity() {
         return true
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        parent?.finish()
+        finish()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        parent?.finish()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Stetho.initializeWithDefaults(this) //sluzi na pristup k databaze pomocou adresy: chrome://inspect/#devices
@@ -73,8 +78,7 @@ class Main : AppCompatActivity() {
             }, 250)
         }
 
-
-        recent.apply {
+        today.apply {
             layoutManager = LinearLayoutManager(this@Main)
             noteAdapt = RecentNotesAdapter(data, savedInstanceState)
             adapter = noteAdapt
@@ -93,7 +97,7 @@ class Main : AppCompatActivity() {
     override fun onRestart() {
         super.onRestart()
         noteAdapt.reload()
-        scedule.updateColors()
+        scedule.accessNewColors()
     }
 
     override fun onStart() {
@@ -106,6 +110,9 @@ class Main : AppCompatActivity() {
         }
     }
 
+    /**
+     * posledne zmeny vizoru
+     */
     override fun onResume() {
         super.onResume()
         shotBtn.visibility = if (scedule.empty) View.GONE else View.VISIBLE
@@ -122,12 +129,13 @@ class Main : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        scedule.close() // zavrie databazu v rozbehnutej instancii
+        scedule.close() // zavrie databazu
+        noteAdapt.close()
         super.onDestroy()
     }
 
     private fun cleanUp() {
-        data.removeObsoleteSubjects()
+        data.removeObsoleteData()
         Toast.makeText(this, resources.getString(R.string.obsolete_subjects_gone), Toast.LENGTH_SHORT).show()
     }
 }

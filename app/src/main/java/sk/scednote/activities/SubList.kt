@@ -1,27 +1,19 @@
 package sk.scednote.activities
 
 import android.app.Activity
-import android.appwidget.AppWidgetManager
-import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.RemoteViews
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.subjects.*
 import sk.scednote.R
-import sk.scednote.ScedNoteApp
 import sk.scednote.adapters.SubjectAdapter
 import sk.scednote.fragments.Confirm
-import sk.scednote.scedule.TimetableImage
-import sk.scednote.widgets.ScedWidget
 
 
 class SubList : AppCompatActivity() {
     companion object {
         private const val SUBLIST = "SUBLIST"
-        const val OLD_DATA = "OLD DATA"
         const val DELETE_DIALOG = "DELETE_DIALOG"
     }
 
@@ -40,15 +32,12 @@ class SubList : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         savedInstanceState?.let { removalId = it.getLong(DELETE_DIALOG, -1) }
 
-        subAdapt = SubjectAdapter(
-            SubjectAdapter.VIEW_TYPE_ITEM,
-            savedInstanceState?.getParcelableArrayList(OLD_DATA)
-        )
+        subAdapt = SubjectAdapter(SubjectAdapter.ADAPTER_TYPE_ITEM, intent.extras)
         //nasledujuca aktivita musi vratit vysledok, a tuto metodu mozno zavolat len v aktivite
-        subAdapt.setEditEvent(View.OnClickListener {
+        subAdapt.onEdit {
             with(it.tag as SubjectAdapter.ItemHolder) { customizeSubject(subAdapt.getItemId(adapterPosition)) }
-        })
-        subAdapt.setDeleteEvent(View.OnClickListener {button ->
+        }
+        subAdapt.onDelete { button ->
             try {
                 (button.tag as SubjectAdapter.ItemHolder).also {holder->
                     val pos = holder.adapterPosition
@@ -70,7 +59,7 @@ class SubList : AppCompatActivity() {
             catch (ex: ClassCastException) {
                 throw (ClassCastException("${ex.message}! Tag must be a reference to the viewHolder!"))
             }
-        })
+        }
 
         subList.apply {
             layoutManager = LinearLayoutManager(this@SubList)
@@ -88,6 +77,9 @@ class SubList : AppCompatActivity() {
         addSubject.setOnClickListener { customizeSubject() }
     }
 
+    /**
+     * Uprava zoznamu, ak bol predmet pridany, upraveny alebo vymazany
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == EditSubject.SUB_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
@@ -107,9 +99,7 @@ class SubList : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        subAdapt.backupData(outState,
-            OLD_DATA
-        )
+        subAdapt.backupData(outState)
         outState.putLong(DELETE_DIALOG, removalId)
     }
 

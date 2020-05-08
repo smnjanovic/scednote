@@ -1,9 +1,7 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/noteScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="24dp"
     android:background="@drawable/pin7days_dark"
     android:orientation="vertical"
     android:padding="0dp">
@@ -22,36 +20,40 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingStart="12dp"
-            android:paddingTop="8dp"
             android:paddingEnd="12dp"
-            android:paddingBottom="4dp"
             android:text="@string/this_week"
             android:textColor="#FFFFFF" />
 
-        <ImageButton
-            android:id="@+id/reloader"
-            style="@style/dp40"
-            android:layout_margin="0dp"
-            android:background="#0000"
-            android:contentDescription="@string/update"
-            android:src="@android:drawable/stat_notify_sync" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="8dp"
         android:text="@string/no_recent_notes"
         android:textAlignment="center"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:visibility="visible" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recent"
+    <ListView
+        android:id="@+id/widget_note_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_margin="4dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:visibility="gone">
+
+    </ListView>
+
+    <ListView
+        android:id="@+id/widget_note_list_small"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_margin="4dp"
+        android:layout_weight="1"
+        android:visibility="gone" />
 
 </LinearLayout>

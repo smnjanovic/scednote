@@ -1,5 +1,6 @@
 package sk.scednote.adapters
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,37 +10,78 @@ import kotlinx.android.synthetic.main.sub_item.view.*
 import kotlinx.android.synthetic.main.tab_button.view.*
 import sk.scednote.R
 import sk.scednote.model.Database
-import sk.scednote.model.data.Subject
+import sk.scednote.model.Subject
 
-open class SubjectAdapter(private val itemType: Int, subjects: ArrayList<Subject>? = null): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+/**
+ * Adapter na zobrazenie suborov
+ * Polozky mozu byt zobrazovane ako polozky menu alebo ako zoznam upravitelnych predmetov
+ */
+open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
-        const val VIEW_TYPE_TAB = 1000  // tlacidlo v navigacii
-        const val VIEW_TYPE_ITEM = 1001 // polozka v zozname
+        const val ADAPTER_TYPE_TAB = 1000  // tlacidlo v navigacii
+        const val ADAPTER_TYPE_ITEM = 1001 // polozka v zozname
+        private const val HIGHLIGHTED_SUBJECT_POSITION = "HIGHLIGHTED SUBJECT"
+        private const val SUBJECT_LIST = "SUBJECT LIST"
+        private val HIGHLIGHT = Color.parseColor("#aaffffff")
     }
 
     private val data = Database()
-    private var items: ArrayList<Subject> = subjects ?: data.loadSubjects()
+    private var items: ArrayList<Subject> = bundle?.getParcelableArrayList(SUBJECT_LIST) ?: data.loadSubjects()
 
-    //kliknutie na ikonu edit - uprava predmetu
-    private var editEvent: View.OnClickListener? = null
-    //kliknutie na polozku v navigacii
+    var markedHolder: TabHolder? = null
+    var marked: Int = bundle?.getInt(HIGHLIGHTED_SUBJECT_POSITION) ?: -1
+        set(value) {
+            markedHolder?.itemView?.tab?.background?.setTintList(null)
+            field = value
+            if (field in items.indices) notifyItemChanged(field)
+        }
+
     private var choiceEvent: View.OnClickListener? = null
+    private var editEvent: View.OnClickListener? = null
     private var deleteEvent: View.OnClickListener? = null
 
-    //editor uprav sa nastavi len raz
-    fun setEditEvent(edit: View.OnClickListener) {
-        editEvent = editEvent ?: edit
-    }
-    fun setDeleteEvent(delete: View.OnClickListener) {
-        deleteEvent = deleteEvent ?: delete
-    }
-    fun setChoiceEvent(choice: View.OnClickListener) {
-        choiceEvent = choiceEvent ?: choice
-    }
-    fun backupData(bundle: Bundle, key: String) {
-        bundle.putParcelableArrayList(key, items)
+    /**
+     * Co sa stane ak sa v menu prekliknem na tento predmet
+     *
+     * @switch funkcia, co sa ma stat, s pohladom vo formalnom parametri
+     */
+    fun onSwitch(switch: (View) -> Unit) {
+        choiceEvent = View.OnClickListener(switch)
     }
 
+    /**
+     * Co sa stane ak sa pokusim upravit dany predmet
+     *
+     * @edit funkcia, co sa ma stat, s pohladom vo formalnom parametri
+     */
+    fun onEdit(edit: (View) -> Unit) {
+        editEvent = View.OnClickListener(edit)
+    }
+
+    /**
+     * Co sa stane ak sa pokusim vymazat dany predmet
+     *
+     * @edit funkcia, co sa ma stat, s pohladom vo formalnom parametri
+     */
+    fun onDelete(delete: (View) -> Unit) {
+        deleteEvent = View.OnClickListener(delete)
+    }
+
+    /**
+     * Zalohovanie dat adaptera
+     *
+     * @bundle funkcia, balik kam sa ulozia zalohovane subory
+     */
+    fun backupData(bundle: Bundle) {
+        bundle.putParcelableArrayList(SUBJECT_LIST, items)
+        bundle.putInt(HIGHLIGHTED_SUBJECT_POSITION, marked)
+    }
+
+    /**
+     * Aktualizovany predmet sa zmeni vo viditelnom zozname
+     *
+     * @id id aktualizovaneho predmetu
+     */
     fun updatedRecord(id: Long) {
         val position = getPositionById(id)
         if (position in 0 until itemCount) {
@@ -47,7 +89,11 @@ open class SubjectAdapter(private val itemType: Int, subjects: ArrayList<Subject
             notifyItemChanged(position)
         }
     }
-    //zaznam bol vlozeny, dostal som jeho id
+    /**
+     * Pridany predmet sa prida do viditelneho zoznamu
+     *
+     * @id id pridaneho predmetu
+     */
     fun insertedRecord(id: Long) {
         data.getSubject(id)?.let {
             items.add(it)
@@ -55,18 +101,29 @@ open class SubjectAdapter(private val itemType: Int, subjects: ArrayList<Subject
         }
     }
 
-    //vymazavame priamo v aktivite
+    /**
+     * Predmet zmizne z viditelneho zoznamu
+     *
+     * @pos pozicia v zozname
+     */
     fun deleteRecord(pos:Int) {
         if (pos in items.indices) {
-            data.removeSubject(items[pos].id!!)
+            data.removeSubject(items[pos].id)
             items.removeAt(pos)
             notifyItemRemoved(pos)
         }
     }
+
+    /**
+     * Nacitanie cerstvych dat
+     */
     fun reload() {
         items = data.loadSubjects().also { notifyDataSetChanged() }
     }
 
+    /**
+     * Ziskanie pozicie predmetu s danym id
+     */
     fun getPositionById(id: Long): Int {
         for (i in items.indices) {
             if (items[i].id == id) {
@@ -76,6 +133,11 @@ open class SubjectAdapter(private val itemType: Int, subjects: ArrayList<Subject
         return -1
     }
 
+    /**
+     * Ziska nazov predmetu na danej pozicii
+     */
+    fun getSubjectNameAt(position: Int) = items[position].full
+
     fun close() {
         data.close()
     }
@@ -83,28 +145,24 @@ open class SubjectAdapter(private val itemType: Int, subjects: ArrayList<Subject
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when(itemType) {
-            VIEW_TYPE_ITEM -> ItemHolder(inflater.inflate(R.layout.sub_item, parent, false))
-            VIEW_TYPE_TAB -> TabHolder(inflater.inflate(R.layout.tab_button, parent, false))
+            ADAPTER_TYPE_ITEM -> ItemHolder(inflater.inflate(R.layout.sub_item, parent, false))
+            ADAPTER_TYPE_TAB -> TabHolder(inflater.inflate(R.layout.tab_button, parent, false))
             else -> throw Exception("NO SUCH TYPE ON SUBJECT ADAPTER!")
         }
     }
-    override fun getItemCount(): Int {
-        return items.size
-    }
+    override fun getItemCount() = items.size
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is SubjectHolder) holder.bind()
     }
-
-    override fun getItemId(position: Int): Long {
-        return if (position in items.indices) items[position].id ?: -1 else -1
-    }
+    override fun getItemId(position: Int) = if (position in items.indices) items[position].id else -1
 
     abstract inner class SubjectHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         abstract fun bind()
-        fun getSubject(): Subject {
-            return items[adapterPosition]
-        }
     }
+
+    /**
+     * Pohlad pre polozku umoznujucu upravu a odstranenie predmetu
+     */
     inner class ItemHolder(itemView: View): SubjectHolder(itemView) {
         private val abbreviation = itemView.abb
         private val fullSubName = itemView.full
@@ -121,17 +179,27 @@ open class SubjectAdapter(private val itemType: Int, subjects: ArrayList<Subject
             trash.tag = this
         }
 
-        fun isObsolete(): Boolean {
-            return data.isSubjectObsolete(items[adapterPosition].id!!)
-        }
+        /**
+         * Zisti ci je dany predmet nadbytocnym (nie je v rozvrhu, nie su k nemu ziadne ulohy)
+         */
+        fun isObsolete() = data.isSubjectObsolete(items[adapterPosition].id)
     }
+
+    /**
+     * pohlad pre neupravitelnu polozku v menu
+     */
     inner class TabHolder(itemView: View): SubjectHolder(itemView) {
         private val button = itemView.tab
+        //vyplnit tlacidlo skratkou, prip. ho zvyraznit ak bolo posledne stlacene
         override fun bind() {
             with (button) {
                 text = items[adapterPosition].abb
-                tag = this@TabHolder
                 setOnClickListener(choiceEvent)
+                tag = this@TabHolder
+                if (adapterPosition == marked) {
+                    this.background.setTint(HIGHLIGHT)
+                    markedHolder = this@TabHolder
+                }
             }
         }
     }

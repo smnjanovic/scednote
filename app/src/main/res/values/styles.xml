@@ -1,18 +1,15 @@
 <resources>
-
     <!--Vseobecne style-->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
     <style name="NoteTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/notesPrimaryDark</item>
         <item name="colorPrimaryDark">@color/bgNotes</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
     <style name="ScreenshotTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/scrPrimary</item>
         <item name="colorPrimaryDark">@color/scrPrimaryDark</item>
@@ -24,19 +21,16 @@
         <item name="android:layout_height">60dp</item>
         <item name="android:layout_margin">8dp</item>
     </style>
-
     <style name="dp50">
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_margin">8dp</item>
     </style>
-
     <style name="dp40">
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_margin">8dp</item>
     </style>
-
     <style name="dp25">
         <item name="android:layout_width">25dp</item>
         <item name="android:layout_height">25dp</item>
@@ -84,11 +78,6 @@
         <item name="android:textAlignment">textEnd</item>
         <item name="android:textSize">14sp</item>
     </style>
-    <style name="hslaTxt_big" parent="hslaTxt">
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">40dp</item>
-        <item name="android:layout_marginTop">0dp</item>
-    </style>
     <style name="hslaSlider">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">40dp</item>
@@ -119,18 +108,12 @@
         <item name="android:textAlignment">textEnd</item>
         <item name="android:hint">0</item>
     </style>
-    <style name="hslaVal_big" parent="hslaVal">
-        <item name="android:layout_width">36dp</item>
-    </style>
     <style name="cell_template">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
         <item name="layout_columnWeight">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
-    </style>
-    <style name="cell" parent="cell_template">
-        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="lessonEditText">
@@ -163,9 +146,6 @@
         <item name="layout_constraintBottom_toBottomOf">parent</item>
         <item name="android:backgroundTint">@color/scrPrimaryDark</item>
     </style>
-    <style name="restricted">
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:backgroundTint">#7fff</item>
-        <item name="android:backgroundTintMode">src_atop</item>
-    </style>
+
+    <style name="notify_on_time">Upozorniť v predstihu</style>
 </resources>

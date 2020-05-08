@@ -1,20 +1,25 @@
-package sk.scednote.model.data
+package sk.scednote.model
 
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Subject(val id: Long?, val abb: String, val full: String) : Parcelable {
+
+/**
+ * Uchovava data o urcitom predmete
+ */
+
+data class Subject(val id: Long, val abb: String, val full: String) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readValue(Long::class.java.classLoader) as? Long,
+        parcel.readLong(),
         parcel.readString() ?: "",
         parcel.readString() ?: ""
-    ) {
-    }
+    )
 
+    /**
+     * porovnava, ci sa jedna o 2 rovnake predmety
+     */
     override fun equals(other: Any?): Boolean {
-        if (other == null) return false
-        if(other !is Subject) return false
-        return abb == other.abb && full == other.full
+        return other != null && other is Subject && abb == other.abb && full == other.full
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -23,8 +28,13 @@ data class Subject(val id: Long?, val abb: String, val full: String) : Parcelabl
         parcel.writeString(full)
     }
 
-    override fun describeContents(): Int {
-        return 0
+    override fun describeContents() = 0
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + abb.hashCode()
+        result = 31 * result + full.hashCode()
+        return result
     }
 
     companion object CREATOR : Parcelable.Creator<Subject> {

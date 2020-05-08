@@ -1,27 +1,19 @@
 package sk.scednote.scedule
 
-import CellGroup
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.view.updateLayoutParams
 import kotlinx.android.synthetic.main.tbl_cell.view.*
 import sk.scednote.R
 import sk.scednote.ScedNoteApp
-import sk.scednote.model.Database
-import sk.scednote.model.Design
-import sk.scednote.model.data.Ahsl
-import sk.scednote.model.data.Lesson
-import sk.scednote.model.data.ScedSort
+import sk.scednote.model.*
 import java.util.*
+
+/**
+ * Trieda vybuduje obsah tabulky podla dát o rozvrhu
+ */
 
 class TimetableBuilder(private val table: LinearLayout, background: View? = null, database: Database = Database()) {
     private val context = ScedNoteApp.ctx
@@ -45,15 +37,25 @@ class TimetableBuilder(private val table: LinearLayout, background: View? = null
     }
     val empty get() = groups[Design.bg_p]!!.empty && groups[Design.bg_c]!!.empty
 
-    // definovanie vlastnej funkcie, ktora sa vykona po nejakej udalosti
+    /**
+     * Nastavenie udalost, co sa stane ak uzivatel klikne na bunku, ktora popisuje nejaku vyucovaciu hodinu
+     */
     fun setOnLessonClick(fn: (Long)->Unit) { editLesson = fn }
     //vykreslenie tabulky1
-    fun updateColors() {
+
+    /**
+     * znova nacita aktualne farebne nastavenie z SQL databazy
+     */
+    fun accessNewColors() {
         for ((target, group) in groups) {
             if (target != Design.FREE)
-                group.updateColors(data.getColor(target))
+                group.accessNewColors(data.getColor(target))
         }
     }
+
+    /**
+     * Vyplni obsah tabulky, aplikuje udalosti a farby.
+     */
     fun fillTable() {
         table.removeAllViews()
         for ((_, group) in groups)
@@ -169,7 +171,9 @@ class TimetableBuilder(private val table: LinearLayout, background: View? = null
         return LayoutInflater.from(parent.context).inflate(R.layout.tbl_cell, parent, false).cell_layout
     }
 
-    //zmeria sirku tabulky a stlpcom v neviditelnom riadku nastavi rovnake sirky (poslednemu prida zvysok)
+    /**
+     * sirky buniek sa prepocitaju na rovny diel tak, aby vyuzili celu sirku tabulky
+     */
     fun scaleByWidth(tableWidth: Int) {
         val cellWidth = tableWidth / data.getScedRange().count()
         val wrap = LinearLayout.LayoutParams.WRAP_CONTENT
@@ -177,19 +181,34 @@ class TimetableBuilder(private val table: LinearLayout, background: View? = null
             for (cell in group)
                 cell.layoutParams = LinearLayout.LayoutParams(wrap, wrap).apply { width = cellWidth * size }
     }
+
+    /**
+     * Bez aktualizacie zmeni farbu vybranej skupine buniek
+     */
     fun recolor(color: Ahsl, target: String) {
         groups[target]?.recolor(color)
     }
+
+    /**
+     * Aktualizuje farby v databaze
+     */
     fun storecolor(color: Ahsl, target: String) {
         groups[target]?.let {
             data.setColor(target, color)
             it.storeColor(color)
         }
     }
+
+    /**
+     * Ziska farbu v modeli HSL
+     */
     fun getHsl(target: String): Ahsl? {
         return groups[target]?.getHsl()
     }
-    //zavriet databazu v ramci triedy
+
+    /**
+     * uzavrie databazu
+     */
     fun close() {
         data.close()
     }

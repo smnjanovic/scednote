@@ -5,11 +5,15 @@
         android:id="@+id/cleanBtn"
         android:icon="@drawable/sweep"
         android:title="@string/remove_obsolete"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="always" />
     <item
         android:id="@+id/noteBtn"
-        android:title="@string/notes"></item>
+        android:icon="?attr/actionModePasteDrawable"
+        android:title="@string/notes"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/subBtn"
-        android:title="@string/subjects"></item>
+        android:icon="@drawable/ic_books"
+        android:title="@string/subjects"
+        app:showAsAction="ifRoom" />
 </menu>

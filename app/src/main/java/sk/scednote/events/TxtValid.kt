@@ -15,10 +15,14 @@ import sk.scednote.ScedNoteApp
  */
 
 open class TxtValid(
-    private val txt: EditText? = null,
-    private val regex: String? = null,
-    private val rng: IntRange? = null,
-    private val btn: View? = null,
+    private val txt: EditText? = null, // textove pole ktoreho vstup sa kontroluje
+    private val regex: String? = null, // povolene znaky alebo kombinacie znakom stylom regular expression
+    private val rng: IntRange? = null, // povolena dlzka textu
+    private val btn: View? = null, // tlacidlo, ktore je aktivne ak je format textu spravny a dlzka primerana
+    /**
+     * funkcia, ktora sa vykona navyse, pokial kontrola prebehla uspesne (trebars je viac textovych
+     * poli, ktore vo funkcii skontrolujem, ci su bez erroru ak ano tlacdidlo je volne na stlacenie)
+     */
     private val fn: ()->Boolean = defaultFn
 ): TextWatcher {
     //tlacidlo odoslat
@@ -33,6 +37,11 @@ open class TxtValid(
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+    /**
+     * neprimerana dlzka, nepovolene znaky alebo neplatna kombinacia znakov sposobia, ze textove
+     * pole bude mat nastavene error hlasenie pre uzivatela a tlacidlo na stlacenie sa deaktivuje
+     */
     override fun afterTextChanged(s: Editable?) {
         //neplatne znaky
         val illegal = regex?.let { s?.toString()?.replace(it.toRegex(), "")?.isNotEmpty() ?: false } ?: false

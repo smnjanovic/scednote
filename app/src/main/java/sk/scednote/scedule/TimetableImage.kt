@@ -1,19 +1,18 @@
 package sk.scednote.scedule
 
 import android.graphics.*
-import android.util.Log
-import sk.scednote.model.Database
-import sk.scednote.model.Design
-import sk.scednote.model.data.Ahsl
-import sk.scednote.model.data.Lesson
-import sk.scednote.model.data.ScedSort
+import sk.scednote.model.*
+
+/**
+ * Trieda vytvorí tabuľku s rozvrhom vo forme bitmapy.
+ */
 
 class TimetableImage {
     private val data = Database()
     private val oneColWidth: Int
     private val width: Int
-    private val headingHeight = Design.dpToPx(20)
-    private val dayHeight = Design.dpToPx(35)
+    private val headingHeight = Design.dp(20)
+    private val dayHeight = Design.dp(35)
     private val height: Int = headingHeight + dayHeight * 5
     private val bitmap: Bitmap
     private val canvas: Canvas
@@ -30,7 +29,14 @@ class TimetableImage {
         style = Paint.Style.FILL
     }
     private val free = Paint().apply {
-        color = Color.parseColor(Design.hsl2hex(Ahsl(35, 0, 0, 0)))
+        color = Color.parseColor(Design.hsl2hex(
+            Ahsl(
+                35,
+                0,
+                0,
+                0
+            )
+        ))
         style = Paint.Style.FILL
     }
     private val presentation = Paint().apply {
@@ -61,12 +67,15 @@ class TimetableImage {
         return Paint().apply {
             color = Color.parseColor(Design.hsl2hex(Design.customizedForeground(data.getColor(colorTarget))))
             style = Paint.Style.FILL
-            textSize = Design.dpToPx(n).toFloat()
+            textSize = Design.dp(n).toFloat()
             isElegantTextHeight = true
             textAlign = Paint.Align.CENTER
         }
     }
 
+    /**
+     * Nakresli tabulku s rozvrhom a vrati bitmapu
+     */
     fun drawTable(): Bitmap {
         with(data.getScedRange()) {
             drawHeader(this)
@@ -95,7 +104,7 @@ class TimetableImage {
             canvas.drawRect(rect, head)
             canvas.drawRect(rect, border)
             val txt = "$next"
-            canvas.drawText(txt, 0, txt.length, px + Design.dpToPx(10).toFloat(),  bottom - Design.dpToPx(5).toFloat(), headTxt)
+            canvas.drawText(txt, 0, txt.length, px + Design.dp(10).toFloat(),  bottom - Design.dp(5).toFloat(), headTxt)
             next += step
             px += w
         }
@@ -166,8 +175,8 @@ class TimetableImage {
         val room = shortenText(les.room, r, rect)
         canvas.drawRect(rect, if (les.sort == ScedSort.COURSE) course else presentation)
         canvas.drawRect(rect, border)
-        canvas.drawText(abb, 0, abb.length, px + pw / 2F, py + Design.dpToPx(15).toFloat(), h )
-        canvas.drawText(room, 0, room.length, px + pw / 2F, py + dayHeight - Design.dpToPx(5).toFloat(), r )
+        canvas.drawText(abb, 0, abb.length, px + pw / 2F, py + Design.dp(15).toFloat(), h )
+        canvas.drawText(room, 0, room.length, px + pw / 2F, py + dayHeight - Design.dp(5).toFloat(), r )
         px += pw
     }
 
@@ -182,10 +191,8 @@ class TimetableImage {
             tmpRect = Rect()
             editStr = editStr.substring(0..editStr.length - 2)
             textBox.getTextBounds("${editStr}...", 0, editStr.length + 3, tmpRect)
-            Log.d("moriak", "fitTo: ${fitTo.width()} vs. tmpRect: ${tmpRect.width()} $tmpRect")
             short = true
         }
-        Log.d("moriak", "----------------------- end --------------------------")
         return if (short) "$editStr..." else editStr
     }
 }

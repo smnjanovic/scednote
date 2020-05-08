@@ -2,7 +2,7 @@
 
     <!--Nazvy-->
     <string name="app_name">ScedNote</string>
-    <string name="note_tit">Poznámky</string>
+    <string name="note_tit">Úlohy</string>
     <string name="scr_tit">Nastavenie pozadia</string>
     <string name="sub_tit">Predmety</string>
     <string name="sced_tit">Nastavenie rozvrhu</string>
@@ -16,7 +16,6 @@
     <string name="edit">Upraviť</string>
     <string name="del">Vymazať</string>
     <string name="merge">Zlúčiť</string>
-    <string name="create">Vytvoriť</string>
     <string name="update">Aktualizovať</string>
     <string name="save">Uložiť</string>
 
@@ -38,24 +37,20 @@
     <string name="invalid_chars">Nepovolené znaky!</string>
 
     <!--NEPOUŽITÉ-->
-    <string name="icon_notes_desc">Správa poznámok</string>
     <string name="icon_sced_desc">Správa rozvrhu</string>
     <string name="icon_scr_desc">Vytvoriť tapetu</string>
-    <string name="icon_clean_desc">Odstrániť zbytočné dáta</string>
-    <string name="gallery">Galéria</string>
 
     <!--Main-->
-    <string name="clean_up_msg">Predmety, ktoré nie sú v rozvrhu a nie su k nim ani pripnuté poznánky, budú odstránené. Prajete si pokračovať?</string>
+    <string name="clean_up_msg">Predmety, ktoré nie sú v rozvrhu a nie su k nim ani pripnuté úlohy a úlohy, ktorých čas už vypršal, budú odstránené. Prajete si pokračovať?</string>
     <string name="obsolete_subjects_gone">Nadbytočné predmety boli odstránené!</string>
     <string name="remove_obsolete">Odstrániť nepotrebné dáta</string>
     <string name="this_week">Tento týždeň</string>
     <string name="subjects">Predmety</string>
-    <string name="notes">Poznámky</string>
+    <string name="notes">Úlohy</string>
 
     <!--Scedule-->
     <string name="lessonP">Prednáška</string>
     <string name="lessonC">Cvičenie</string>
-    <string name="lessonF">Voľno</string>
     <string name="taken_over">Obsadené</string>
 
     <!--Screenshot-->
@@ -81,27 +76,31 @@
     <string name="subName">Predmet</string>
     <string name="sort">Forma výučby</string>
     <string name="room">Miestnosť</string>
-    <string name="les_collision">Práve sa chystáte nahradiť obsadenú časť rozvrhu. Pokračovať?</string>
+    <string name="les_collision">Práve sa chystáte nahradiť obsadenú časť rozvrhu. Chcete pokračovať?</string>
 
     <!--Predmety-->
     <string name="sub_full">Celý názov predmetu</string>
     <string name="sub_abb">Skratka</string>
     <string name="same_abb">Predmet s touto skratkou už existuje. Chcete ich zlúčiť?</string>
     <string name="used_abb">Predmet s touto skratkou už existuje. Chcete upraviť pôvodný?</string>
-    <string name="subject_not_obsolete">Predmet sa stratí z rozvrhu a poznámky a budíky súvisiace s týmto predmetom budú navždy odstránené. Pokračovať?</string>
+    <string name="subject_not_obsolete">Predmet a úlohy pripnuté k nemu sa navždy odstránia. Chcete pokračovať?</string>
 
-    <!--Poznámky-->
+    <!--Úlohy-->
     <string name="subject_related">Predmet</string>
     <string name="today">Dnes</string>
     <string name="tomorow">Zajtra</string>
-    <string name="forever">Dlhodobé</string>
+    <string name="forever">Bez termínu</string>
     <string name="late">Oneskrené</string>
     <string name="time_out">Čas vypršal</string>
     <string name="set_datetime">Zvoliť dátum a čas</string>
     <string name="clear_datetime">odstrániť dátum a čas</string>
     <string name="collapse">skryť</string>
     <string name="no_recent_notes">Žiadne úlohy</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
-    <string name="configure">Configure</string>
+    <string name="no_subject_no_note">Pre zaznamenanie úlohy z daného predmetu je nutné, aby existoval aspoň 1 predmet!</string>
+    <string name="category_expired">Úloha už nepatrí do tejto kategórie! Bola presunutá!</string>
+    <string name="disable">Vypnúť</string>
+    <string name="minutes">Minúty</string>
+    <string name="hours">Hodiny</string>
+    <string name="days">Dni</string>
+    <string name="notify_on_time">Predstih upozornení</string>
 </resources>

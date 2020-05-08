@@ -1,8 +1,11 @@
-package sk.scednote.model.data
+package sk.scednote.model
 
 import sk.scednote.R
 import sk.scednote.ScedNoteApp
-import java.lang.IndexOutOfBoundsException
+
+/**
+ * Obsahuje informaciu o sposobe typu hodiny (prednaska, cvicenie), v buducom vyvoji mozu pribudnut prax, a ine
+ */
 
 enum class ScedSort {
     COURSE, PRESENTATION;
@@ -17,9 +20,11 @@ enum class ScedSort {
         val sorts: Array<String> get() = arrayOf(COURSE.sort, PRESENTATION.sort)
     }
 
+    //vrati pouzitelny text
     val sort: String get() = ScedNoteApp.res.getString( when (this) {
         PRESENTATION -> R.string.lessonP
         COURSE -> R.string.lessonC
     })
+
     val position: Int get() = values().indexOf(this)
 }

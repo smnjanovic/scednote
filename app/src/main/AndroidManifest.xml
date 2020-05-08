@@ -13,6 +13,13 @@
         android:roundIcon="@mipmap/scednote_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <receiver android:name=".NoteReminder" />
+
+        <service
+            android:name=".adapters.NoteWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <receiver android:name=".widgets.NotesWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -22,13 +29,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/notes_widget_info" />
         </receiver>
-
-        <activity android:name=".activities.NotesWidgetConfiguration">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
-
         <receiver android:name=".widgets.ScedWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -39,24 +39,37 @@
                 android:resource="@xml/sced_widget_info" />
         </receiver>
 
+        <activity android:name=".activities.NotesWidgetConf">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.SubList"
             android:label="@string/subjects" />
         <activity
             android:name=".activities.EditSubject"
-            android:label="@string/sub_tit" />
+            android:label="@string/sub_tit"
+            android:theme="@style/ScreenshotTheme" />
         <activity
             android:name=".activities.EditLesson"
-            android:label="@string/les_new_tit" />
+            android:label="@string/les_new_tit"
+            android:theme="@style/ScreenshotTheme" />
         <activity
             android:name=".activities.Screenshot"
-            android:label="@string/scr_tit" />
+            android:label="@string/scr_tit"
+            android:theme="@style/ScreenshotTheme" />
         <activity
             android:name=".activities.Scedule"
             android:label="@string/sced_tit" />
         <activity
             android:name=".activities.NoteList"
-            android:label="@string/note_tit" />
+            android:label="@string/note_tit"
+            android:theme="@style/NoteTheme" />
+        <activity android:name=".activities.NotificationAdvance"
+            android:label="@string/notify_on_time"
+            android:theme="@style/NoteTheme"
+            />
         <activity android:name=".activities.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

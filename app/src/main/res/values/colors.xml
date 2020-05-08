@@ -17,7 +17,6 @@
 
     <color name="inactiveDayTab">#BBFF0000</color>
     <color name="inactiveNoteTab">#BB00FF5E</color>
-    <color name="inactiveSubTab">#BBDFBF20</color>
 
     <!--nastavovatelne farby-->
     <color name="des_background">#330C00</color>

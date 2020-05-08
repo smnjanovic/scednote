@@ -8,6 +8,8 @@ import androidx.fragment.app.DialogFragment
 import sk.scednote.R
 
 /**
+ * Dialogove okno, ktore vyskoci pred vaznym rozhodnutim uzivatela, napr. odstranenie niecoho, co vedie
+ * k odstraneniu cohosi dalsieho, alebo ak dojde k comukolvek nenavratnemu
  * https://www.youtube.com/watch?v=r_87U6oHLFc
  */
 
@@ -16,6 +18,10 @@ class Confirm: DialogFragment() {
         private const val MSG = "MSG"
         private const val OK = "OK"
         private const val KO = "KO"
+
+        /**
+         * Vytvori sa nova instancia dialogu s obsahom textu podla parametrov
+         */
         fun newInstance(msg: String, confirm: String? = null, cancel: String? = null): Confirm {
             return Confirm().also {
                 it.arguments = Bundle().apply {
@@ -33,17 +39,14 @@ class Confirm: DialogFragment() {
     private lateinit var confirm: String
     private lateinit var cancel: String
 
+    /**
+     * Priprava dialogu
+     */
     override fun onCreateDialog(saved: Bundle?): Dialog {
         return activity?.let {
-            confirm = arguments?.getString(OK) ?: saved?.getString(
-                OK
-            ) ?: it.resources.getString(R.string.continue_)
-            cancel = arguments?.getString(KO) ?: saved?.getString(
-                KO
-            ) ?: it.resources.getString(R.string.cancel)
-            msg = arguments?.getString(MSG) ?: saved?.getString(
-                MSG
-            ) ?: "$confirm?"
+            confirm = arguments?.getString(OK) ?: saved?.getString(OK) ?: it.resources.getString(R.string.continue_)
+            cancel = arguments?.getString(KO) ?: saved?.getString(KO) ?: it.resources.getString(R.string.cancel)
+            msg = arguments?.getString(MSG) ?: saved?.getString(MSG) ?: "$confirm?"
 
              AlertDialog.Builder(it).apply {
                 setMessage(msg)
@@ -53,6 +56,9 @@ class Confirm: DialogFragment() {
         } ?: throw( NullPointerException("Activity must exist!"))
     }
 
+    /**
+     * ulozenie dat k dialogu
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.apply {
@@ -62,11 +68,14 @@ class Confirm: DialogFragment() {
         }
     }
 
+    /**
+     * udalost, ktora sa vykona ak uzivatel potvrdi, ze chce pokracovat
+     */
     fun setOnConfirm(fn: (DialogInterface, Int) -> Unit) {
         onConfirm = fn
     }
 
-    fun setOnCancel(fn: (DialogInterface, Int) -> Unit) {
+    /*fun setOnCancel(fn: (DialogInterface, Int) -> Unit) {
         onCancel = fn
-    }
+    }*/
 }

@@ -1,115 +1,121 @@
 package sk.scednote.activities
 
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.notelist.*
-import kotlinx.android.synthetic.main.tab_button.view.*
+import sk.scednote.NoteReminder
 import sk.scednote.R
 import sk.scednote.adapters.NoteAdapter
 import sk.scednote.adapters.SubjectAdapter
 import sk.scednote.fragments.DateFragment
 import sk.scednote.fragments.TimeFragment
-import sk.scednote.model.data.Note
+import sk.scednote.model.Note
 import java.util.*
-import kotlin.properties.Delegates
 
 class NoteList : AppCompatActivity() {
     companion object {
-        private const val OLD_DATA = "OLD_DATA"
-        private const val SUB_POS = "SUB_POS"
+        const val OPEN_FROM_WIDGET = "OPEN FROM WIDGET"
         const val TARGET_ID = "TARGET_ID"
         const val CATEGORY = "CATEGORY"
 
         private const val DIALOG_TARGET = "DIALOG_TARGET"
         private const val DATE_DIALOG = "DATE_DIALOG"
         private const val TIME_DIALOG = "TIME_DIALOG"
-        private const val YEAR = "YEAR"
-        private const val MONTH = "MONTH"
-        private const val DAY = "DAY"
-        private const val HOUR = "HOUR"
-        private const val MINUTE = "MINUTE"
-
-        const val DEADLINE_TODAY: Long = 0
-        const val DEADLINE_TOMORROW: Long = -1
-        const val DEADLINE_TIME_OUT: Long = -2
-        const val DEADLINE_LONG_TERM: Long = -3
-        const val NO_DATA: Long = -4
-        //hodnoty vacsie ako nula su id predmetov
     }
 
-    //pri prepinani tlacidiel, aktualne zvyraznene tlacitka znevyraznim priamo - bez zbyt. podmienok a cyklov
-    private var chosenSubject: Button? = null
-    private var chosenCategory: Button? = null
+    private var category: Long = Note.DEADLINE_TODAY
+        set(id) {
+            field = id
+            supportActionBar?.let {
+                it.title = when (id) {
+                    Note.DEADLINE_TODAY -> resources.getString(R.string.today)
+                    Note.DEADLINE_TOMORROW -> resources.getString(R.string.tomorow)
+                    Note.DEADLINE_RECENT -> resources.getString(R.string.this_week)
+                    Note.DEADLINE_LATE -> resources.getString(R.string.late)
+                    Note.DEADLINE_FOREVER -> resources.getString(R.string.forever)
+                    else -> {
+                        val pos = subAdapt.getPositionById(id)
+                        if (pos in 0 until subAdapt.itemCount) {
+                            subAdapt.marked = pos
+                            subAdapt.getSubjectNameAt(pos)
+                        }
+                        else resources.getString(R.string.notes)
+                    }
+                }
+                subjectTabs?.visibility = if (id > 0) View.VISIBLE else View.GONE
+            }
+        }
 
-    private var category: Long = 0 //-2..0 casova zavislost,
-    private var s_position: Int = 0
-
-    private var highlightColor by Delegates.notNull<Int>()
     private lateinit var subAdapt: SubjectAdapter
     private lateinit var noteAdapt: NoteAdapter
+
+    /**
+     * nacita iny zoznam na zaklade vybranej kategorie
+     */
+    fun loadCat(v: MenuItem) {
+        category = when (v.itemId) {
+            R.id.today -> Note.DEADLINE_TODAY
+            R.id.tomorrow -> Note.DEADLINE_TOMORROW
+            R.id.recent -> Note.DEADLINE_RECENT
+            R.id.late -> Note.DEADLINE_LATE
+            R.id.forever -> Note.DEADLINE_FOREVER
+            else -> {
+                if (subAdapt.marked == -1) subAdapt.marked = 0
+                subAdapt.getItemId(subAdapt.marked)
+            }
+        }
+        noteAdapt.loadData(category)
+        showIfEmpty()
+    }
+
+    fun setReminderAdvance(v: MenuItem) = startActivity(Intent(this, NotificationAdvance::class.java))
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.note_cat_list, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setTheme(R.style.NoteTheme)
-        //window.navigationBarColor = resources.getColor(R.color.notesPrimary, null)
-        //window.statusBarColor = resources.getColor(R.color.notesPrimaryDark, null)
-
-        highlightColor = Color.parseColor("#aaffffff")
-        //aka mnozina poznamok sa zobrazi
-
-        category = intent.getLongExtra(
-            CATEGORY, savedInstanceState?.getLong(
-                CATEGORY
-            ) ?: 0)
-        s_position = savedInstanceState?.getInt(SUB_POS) ?: 0
-        intent.removeExtra(CATEGORY)
+    override fun onCreate(saved: Bundle?) {
+        super.onCreate(saved)
         setContentView(R.layout.notelist)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        NoteReminder.createNoteReminderChannel()
+        setAdapters(saved)
+        setEvents()
 
+        //zapamatanie si dialogu nastavenia datumu
         (supportFragmentManager.findFragmentByTag(DATE_DIALOG) as DateFragment?)?.let { onDateChosen(it) }
         (supportFragmentManager.findFragmentByTag(TIME_DIALOG) as TimeFragment?)?.let { onTimeChosen(it) }
-
-        setAdapters(savedInstanceState)
-        setEvents()
     }
+
+    /**
+     * Ulozenie zoznamu a kategorie a aktivnej polozky
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        (subjectTabs.adapter as SubjectAdapter).backupData(outState,
-            OLD_DATA
-        )
+        (subjectTabs.adapter as SubjectAdapter).backupData(outState)
         (noteList.adapter as NoteAdapter).backupData(outState)
         outState.putLong(CATEGORY, category)
-        outState.putInt(SUB_POS, s_position)
     }
 
+    /**
+     * Ak sa odkazujem na konkretnu poznamku, a este stale existuje v zozname, rolujem k nej
+     */
     override fun onResume() {
         super.onResume()
-        //prve nacitanie zoznamu predmetov
-        changeHighlight(when(category) {
-            DEADLINE_TIME_OUT -> late
-            DEADLINE_TODAY -> today
-            DEADLINE_TOMORROW -> tomorrow
-            DEADLINE_LONG_TERM -> forever
-            else -> subject_related
-        })
-        Handler().postDelayed({
-            //scrollnut sa na poziciu vybranej polozky
-            chosenCategory?.let { scrollCat(chosenCategory!!) }
-            if (category > 0) scrollSub()
-            scrollToNote()
-        }, 100)
+        scrollToNote()
     }
 
     override fun onDestroy() {
@@ -119,21 +125,15 @@ class NoteList : AppCompatActivity() {
     }
 
     private fun setAdapters(saved: Bundle?) {
-        subAdapt = SubjectAdapter(
-            SubjectAdapter.VIEW_TYPE_TAB,
-            saved?.getParcelableArrayList(OLD_DATA)
-        )
-        noteAdapt = NoteAdapter(
-            category,
-            saved?.getParcelableArrayList(NoteAdapter.RESTORED_DATA),
-            saved?.getParcelable(NoteAdapter.LAST_EDIT) as Note?,
-            saved?.getParcelable(NoteAdapter.NEW_ITEM) as Note?
-        )
+        subAdapt = SubjectAdapter(SubjectAdapter.ADAPTER_TYPE_TAB, saved)
+        category = intent.getLongExtra(CATEGORY, saved?.getLong(CATEGORY) ?: Note.DEADLINE_TODAY)
+        noteAdapt = NoteAdapter(category, saved)
+        showIfEmpty()
+        intent.removeExtra(CATEGORY)
 
-        //vlozenie layoutu a obsahu do RecyclerView-ov
         subjectTabs.apply {
-            layoutManager = LinearLayoutManager(this@NoteList, LinearLayoutManager.HORIZONTAL, false)
             adapter = subAdapt
+            layoutManager = LinearLayoutManager(this@NoteList, LinearLayoutManager.HORIZONTAL, false)
         }
         noteList.apply {
             layoutManager = LinearLayoutManager(this@NoteList)
@@ -142,76 +142,51 @@ class NoteList : AppCompatActivity() {
         }
     }
 
-    private fun setEvents() {
-        //kliknutie na polozku predmet (pri kategorii "k predmetu")
-        subAdapt.setChoiceEvent(View.OnClickListener{
-            val holder = it.tag as SubjectAdapter.TabHolder
-            category = holder.getSubject().id!!
-            s_position = holder.layoutPosition
-            noteAdapt.loadData(category)
-            changeHighlight(it)
-        })
-
-        noteAdapt.onDateTimeChange {holder, calendar ->
-            val date = DateFragment()
-            date.data.putInt(DIALOG_TARGET, holder.adapterPosition)
-            date.data.putInt(YEAR, calendar.get(Calendar.YEAR))
-            date.data.putInt(MONTH, calendar.get(Calendar.MONTH))
-            date.data.putInt(DAY, calendar.get(Calendar.DAY_OF_MONTH))
-            date.data.putInt(HOUR, calendar.get(Calendar.HOUR_OF_DAY))
-            date.data.putInt(MINUTE, calendar.get(Calendar.MINUTE))
-            date.show(supportFragmentManager,
-                DATE_DIALOG
-            )
-            onDateChosen(date)
+    private fun showIfEmpty() {
+        when {
+            noteAdapt.subjects.size == 0 -> {
+                note_empty.visibility = View.VISIBLE
+                note_empty.text = resources.getString(R.string.no_subject_no_note)
+            }
+            noteAdapt.itemCount == 0 -> {
+                note_empty.visibility = View.VISIBLE
+                note_empty.text = resources.getString(R.string.no_recent_notes)
+            }
+            else -> note_empty.visibility = View.GONE
         }
+    }
 
-        //vyber kategorie
-        val catChoice = View.OnClickListener {btn ->
-            when(btn) {
-                late -> category =
-                    DEADLINE_TIME_OUT
-                today -> category =
-                    DEADLINE_TODAY
-                tomorrow -> category =
-                    DEADLINE_TOMORROW
-                forever -> category =
-                    DEADLINE_LONG_TERM
-                else -> {
-                    s_position = s_position.coerceAtMost(subAdapt.itemCount-1)
-                    category = if (s_position > -1) subAdapt.getItemId(s_position) else NO_DATA
+    private fun setEvents() {
+        //prepinanie predmetov
+        subAdapt.onSwitch { view ->
+            view.tag.also { tag ->
+                if (tag is SubjectAdapter.TabHolder) {
+                    category = subAdapt.getItemId(tag.adapterPosition)
+                    subAdapt.getPositionById(category)
+                    noteAdapt.loadData(category)
+                    showIfEmpty()
                 }
             }
-            noteAdapt.loadData(category)
-            changeHighlight(btn)
         }
-        subject_related.setOnClickListener(catChoice)
-        today.setOnClickListener(catChoice)
-        tomorrow.setOnClickListener(catChoice)
-        forever.setOnClickListener(catChoice)
-        late.setOnClickListener(catChoice)
+
+        //kliknutie na polozku predmet (pri kategorii "k predmetu")
+        noteAdapt.onDateTimeChange {holder, calendar ->
+            val date = DateFragment()
+            date.putCalendar(calendar)
+            date.data.putInt(DIALOG_TARGET, holder.adapterPosition)
+            date.show(supportFragmentManager, DATE_DIALOG)
+            onDateChosen(date)
+        }
+        if (category in 0 until subAdapt.itemCount) {
+            subjectTabs.scrollToPosition(subAdapt.getPositionById(category))
+        }
     }
     private fun onDateChosen(date: DateFragment) {
         date.setOnChoice { year, month, day ->
             val time = TimeFragment()
-            time.data.putInt(
-                DIALOG_TARGET, date.data.getInt(
-                    DIALOG_TARGET
-                ))
-            time.data.putInt(YEAR, year)
-            time.data.putInt(MONTH, month)
-            time.data.putInt(DAY, day)
-            time.data.putInt(
-                HOUR, date.data.getInt(
-                    HOUR
-                ))
-            time.data.putInt(
-                MINUTE, date.data.getInt(
-                    MINUTE
-                ))
-            time.show(supportFragmentManager,
-                TIME_DIALOG
-            )
+            time.putCalendar(date.getCalendar())
+            time.data.putInt(DIALOG_TARGET, date.data.getInt(DIALOG_TARGET))
+            time.show(supportFragmentManager, TIME_DIALOG)
             onTimeChosen(time)
         }
     }
@@ -220,54 +195,18 @@ class NoteList : AppCompatActivity() {
         time.setOnChoice { hour, minute ->
             val pos = time.data.getInt(DIALOG_TARGET)
             if (pos in 0 until noteAdapt.itemCount) {
-                val calendar = Calendar.getInstance().apply {
-                    time.data.let { b -> set(b.getInt(YEAR), b.getInt(
-                        MONTH
-                    ), b.getInt(DAY), hour, minute) }
-                }
-                if (calendar <= Calendar.getInstance())
+                val cal = time.getCalendar()
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                cal.set(Calendar.SECOND, 0)
+                cal.set(Calendar.MILLISECOND, 0)
+                time.putCalendar(cal)
+                if (cal <= Calendar.getInstance())
                     Toast.makeText(this, resources.getString(R.string.time_out), Toast.LENGTH_SHORT).show()
                 else
-                    (noteList.findViewHolderForAdapterPosition(pos) as NoteAdapter.NoteHolder?)?.onSetDeadline(calendar)
+                    (noteList.findViewHolderForAdapterPosition(pos) as NoteAdapter.NoteHolder?)?.onSetDeadline(cal)
             }
         }
-    }
-
-    private fun changeHighlight(v: View) {
-        when (v) {
-            late, today, tomorrow, forever, subject_related -> {
-                chosenCategory?.background?.setTintList(null)
-                chosenCategory = v as Button
-                chosenCategory!!.background.setTint(highlightColor)
-
-                with(v != subject_related, {
-                    subjectTabs.visibility = if (this) View.GONE else View.VISIBLE
-                    scrollCat(v)
-                    if (!this) { highlightSubjectWhenPossible() }
-                })
-            }
-            else -> highlightSubjectWhenPossible()
-        }
-    }
-
-    private fun highlightSubjectWhenPossible() {
-        (subjectTabs.findViewHolderForAdapterPosition(s_position) as SubjectAdapter.TabHolder?)?.let {
-            chosenSubject?.background?.setTintList(null)
-            chosenSubject = it.itemView.tab as Button
-            chosenSubject!!.background.setTint(highlightColor)
-            scrollSub()
-        } ?: Handler().postDelayed({ highlightSubjectWhenPossible() }, 50)
-    }
-    private fun scrollCat(v: View) {
-        when {
-            v.left < noteTabs.scrollX -> noteTabs.scrollX = v.left - v.width / 2
-            v.right > noteTabs.scrollX + noteTabs.width -> noteTabs.scrollX = v.right - noteTabs.width + v.width / 2
-            v.top < noteTabs.scrollY -> noteTabs.scrollY = v.top - v.height / 2
-            v.bottom > noteTabs.scrollY + noteTabs.height -> noteTabs.scrollY = v.bottom - noteTabs.height + v.height / 2
-        }
-    }
-    private fun scrollSub() {
-        subjectTabs.scrollToPosition(s_position)
     }
 
     //ak aktivita zacala za ucelu vyhladania konkretnej poznamky

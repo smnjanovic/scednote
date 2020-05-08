@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="#afff">
+    app:cardBackgroundColor="#0000">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="#AFFF">
+
+        <LinearLayout
+            android:id="@+id/abb_zone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/sub_abb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="4"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <Spinner
+                android:id="@+id/sub_choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/datetimeDisplay"
@@ -34,7 +64,7 @@
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/editDetail"
             app:layout_constraintEnd_toStartOf="@+id/saveNote"
-            app:layout_constraintStart_toEndOf="@+id/sub_abb" />
+            app:layout_constraintStart_toEndOf="@+id/abb_zone" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editDetail"
@@ -46,12 +76,13 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/saveNote"
-            app:layout_constraintStart_toEndOf="@+id/sub_abb">
+            app:layout_constraintStart_toEndOf="@+id/abb_zone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editDetailText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
                 android:scrollbarSize="0dp"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -69,7 +100,7 @@
             android:scaleY="0.75"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/detail"
-            app:layout_constraintStart_toEndOf="@+id/sub_abb"
+            app:layout_constraintStart_toEndOf="@+id/abb_zone"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
@@ -88,30 +119,29 @@
             app:layout_constraintBottom_toTopOf="@+id/detail"
             app:layout_constraintStart_toEndOf="@+id/datetimeDisplay"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
         <ImageButton
             android:id="@+id/editNote"
             style="@style/dp40"
             android:background="#0000"
+            android:contentDescription="@string/edit"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/removeNote"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_edit"
-            android:contentDescription="@string/edit" />
+            app:srcCompat="@android:drawable/ic_menu_edit" />
 
         <ImageButton
             android:id="@+id/removeNote"
             style="@style/dp40"
             android:background="#0000"
+            android:contentDescription="@string/del"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_delete"
-            android:contentDescription="@string/del" />
+            app:srcCompat="@android:drawable/ic_delete" />
 
         <ImageButton
             android:id="@+id/saveNote"
@@ -119,28 +149,12 @@
             android:layout_height="40dp"
             android:layout_marginEnd="8dp"
             android:background="#0000"
+            android:contentDescription="@string/save"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/editNote"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_save"
-            android:contentDescription="@string/save" />
-
-        <TextView
-            android:id="@+id/sub_abb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:ems="4"
-            android:singleLine="true"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:srcCompat="@android:drawable/ic_menu_save" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

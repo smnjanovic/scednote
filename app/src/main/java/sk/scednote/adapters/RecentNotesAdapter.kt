@@ -8,14 +8,14 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.note_item_delete_only.view.*
-import sk.scednote.activities.NoteList
 import sk.scednote.R
 import sk.scednote.model.Database
-import sk.scednote.model.data.Note
-import java.lang.ClassCastException
+import sk.scednote.model.Note
 import java.util.*
-import kotlin.collections.ArrayList
 
+/**
+ * Adapter zobrazujuci zoznam uloh cakajucich tento tyzden
+ */
 class RecentNotesAdapter(db: Database?, bdl: Bundle?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val NOT_HOLDER = "Clickable items need their holders asigned to their tags!"
@@ -23,11 +23,12 @@ class RecentNotesAdapter(db: Database?, bdl: Bundle?): RecyclerView.Adapter<Recy
     }
 
     val data = db ?: Database()
-    val items: ArrayList<Note> = bdl?.getParcelableArrayList(BACKUP) ?: data.getWeekNotes()
+    val items: ArrayList<Note> = bdl?.getParcelableArrayList(BACKUP) ?: data.getNotes(
+        Note.DEADLINE_RECENT)
 
     fun reload() {
         items.clear()
-        items.addAll(data.getWeekNotes())
+        items.addAll(data.getNotes(Note.DEADLINE_RECENT))
         notifyDataSetChanged()
     }
     /**
@@ -40,7 +41,6 @@ class RecentNotesAdapter(db: Database?, bdl: Bundle?): RecyclerView.Adapter<Recy
 
     fun setOnNoteNavigate(fn: (Long, Long)-> Unit) { redirect = fn }
     fun setOnNotifyIfEmpty(fn: ()-> Unit) { fn() }
-
     fun storeBackup(bdl: Bundle) {
         bdl.putParcelableArrayList(BACKUP, items)
     }
@@ -68,16 +68,15 @@ class RecentNotesAdapter(db: Database?, bdl: Bundle?): RecyclerView.Adapter<Recy
                 )
             }
             val category = when {
-                it == itemView.abb || item.deadline == null -> item.sub.id!!
-                item.deadline!! < Calendar.getInstance() -> NoteList.DEADLINE_TIME_OUT
-                item.deadline!! < nextMidnight -> NoteList.DEADLINE_TODAY
-                item.deadline!! < midnightAfter -> NoteList.DEADLINE_TOMORROW
-                else -> item.sub.id!!
+                it == itemView.abb || item.deadline == null -> item.sub.id
+                item.deadline!! < Calendar.getInstance() -> Note.DEADLINE_LATE
+                item.deadline!! < nextMidnight -> Note.DEADLINE_TODAY
+                item.deadline!! < midnightAfter -> Note.DEADLINE_TOMORROW
+                else -> item.sub.id
             }
             redirect(category, item.id)
         }
     }
-
     val onDelete = View.OnClickListener {
         if (it.tag !is RecentNotesHolder) throw (ClassCastException(NOT_HOLDER))
         with(it.tag as RecentNotesHolder) {
@@ -92,13 +91,16 @@ class RecentNotesAdapter(db: Database?, bdl: Bundle?): RecyclerView.Adapter<Recy
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return RecentNotesHolder(LayoutInflater.from(parent.context).inflate(R.layout.note_item_delete_only, parent, false))
     }
-
-    override fun getItemCount(): Int {
-        return items.size
-    }
-
+    override fun getItemCount() = items.size
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as RecentNotesHolder).bind()
+    }
+
+    /**
+     * Zavrieť databázu
+     */
+    fun close() {
+        data.close()
     }
 
     inner class RecentNotesHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -107,6 +109,9 @@ class RecentNotesAdapter(db: Database?, bdl: Bundle?): RecyclerView.Adapter<Recy
         private val info: TextView = itemView.detail
         private val del: ImageButton = itemView.delete
 
+        /**
+         * Vytvorenie viditelnej polozky reprezentujucej urcitu poznamku. Da sa len vymazat a odkazuje na aktivitu, kde sa nachadza
+         */
         fun bind() {
             val item = items[adapterPosition]
             sub.text = item.sub.abb

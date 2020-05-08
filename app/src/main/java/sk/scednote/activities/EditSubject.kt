@@ -6,10 +6,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.sub_edit.*
 import sk.scednote.R
-import sk.scednote.fragments.Confirm
 import sk.scednote.events.TxtValid
+import sk.scednote.fragments.Confirm
 import sk.scednote.model.Database
-import sk.scednote.model.data.Subject
+import sk.scednote.model.Subject
 import java.util.*
 
 class EditSubject : AppCompatActivity() {
@@ -37,11 +37,17 @@ class EditSubject : AppCompatActivity() {
     private lateinit var data: Database
     private var id = (-1).toLong()
 
+    /**
+     * Navrat
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
+    /**
+     * Navrat
+     */
     override fun onBackPressed() {
         submit(CANCELED)
         finish()
@@ -49,30 +55,33 @@ class EditSubject : AppCompatActivity() {
 
     //uspesna zmena alebo vytvorenie predmetu
     private fun submit(action: Int) {
-        setResult(Activity.RESULT_OK, Intent().apply {
+        setResult(if (action != CANCELED) Activity.RESULT_OK else Activity.RESULT_CANCELED, Intent().apply {
             putExtra(SUB_ID, id)
             putExtra(ACTION, action)
         })
         finish()
     }
 
-    private fun parseSubject():Subject {
-        return Subject(id, txt_abb.text.toString().trim().toUpperCase(Locale.ROOT), txt_full.text.toString())
+    private fun parseSubject(): Subject {
+        return Subject(
+            id,
+            txt_abb.text.toString().trim().toUpperCase(Locale.ROOT),
+            txt_full.text.toString()
+        )
     }
     private fun mergeSubjects(inputSubject: Subject, targetSubject: Subject) {
         data.mergeSubjects(inputSubject, targetSubject)
-        id = targetSubject.id!!
+        id = targetSubject.id
         submit(MERGED)
     }
     private fun replaceSubject(inputSubject: Subject, targetSubject: Subject) {
-        data.updateSubject(targetSubject.id!!, targetSubject.abb, inputSubject.full)
+        data.updateSubject(targetSubject.id, targetSubject.abb, inputSubject.full)
         id = targetSubject.id
         submit(REPLACED)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.ScreenshotTheme)
         setContentView(R.layout.sub_edit)
         //vratit spat
         supportActionBar?.let {
@@ -133,7 +142,7 @@ class EditSubject : AppCompatActivity() {
             }
             //aktualizacia
             else {
-                data.updateSubject(resultSub.id!!, resultSub.abb, resultSub.full)
+                data.updateSubject(resultSub.id, resultSub.abb, resultSub.full)
                 submit(UPDATED)
             }
         }

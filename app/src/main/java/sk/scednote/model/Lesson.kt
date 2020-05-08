@@ -1,23 +1,24 @@
-package sk.scednote.model.data
+package sk.scednote.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Log
-import kotlin.properties.Delegates
 
+
+/**
+ * Data o vyucovacej hodine
+ */
 data class Lesson (val id: Long, val day: Day, val time: IntRange, val sort: ScedSort, val subject: Subject, val room: String) : Parcelable {
-    constructor(id: Long, day_: Int, start: Int, end: Int, sort_: Int, sub_id:Long, sub_abb: String, sub_full: String, room: String)
-            : this(id, Day[day_], start..end, ScedSort[sort_], Subject(sub_id, sub_abb, sub_full), room)
 
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readLong(),
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
+        Day[parcel.readInt()],
+        parcel.readInt() .. parcel.readInt(),
+        ScedSort[parcel.readInt()],
+        Subject(
+            parcel.readLong(),
+            parcel.readString() ?: "",
+            parcel.readString() ?: ""
+        ),
         parcel.readString() ?: ""
     )
 
@@ -28,15 +29,13 @@ data class Lesson (val id: Long, val day: Day, val time: IntRange, val sort: Sce
         parcel.writeInt(time.first)
         parcel.writeInt(time.last)
         parcel.writeInt(sort.position)
-        parcel.writeLong(subject.id ?: -1)
+        parcel.writeLong(subject.id)
         parcel.writeString(subject.abb)
         parcel.writeString(subject.full)
         parcel.writeString(room)
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents() = 0
 
     companion object CREATOR : Parcelable.Creator<Lesson> {
         val OPENING_HOURS = 7..21
@@ -50,6 +49,9 @@ data class Lesson (val id: Long, val day: Day, val time: IntRange, val sort: Sce
         }
     }
 
+    /**
+     * Porovnanie hodin, ci su rovnake (nie ci su v rovnakom case)
+     */
     override fun equals(other: Any?): Boolean {
         if (other == null) return false
         if(other !is Lesson) return false
@@ -57,7 +59,7 @@ data class Lesson (val id: Long, val day: Day, val time: IntRange, val sort: Sce
     }
 
     /**
-     * zistenie ci je medzi predmetmi nejaky casovy odstup
+     * zistenie ci je medzi 2 predmetmi nejaky casovy odstup
      */
     fun breaksBetween(les: Lesson): Boolean {
         return this.day == les.day && (this.time.first - 1 == les.time.last || this.time.last + 1 == les.time.first)

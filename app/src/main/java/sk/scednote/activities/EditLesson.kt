@@ -12,10 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.les_edit.*
 import sk.scednote.R
-import sk.scednote.fragments.Confirm
-import sk.scednote.model.Database
 import sk.scednote.events.TxtValid
-import sk.scednote.model.data.*
+import sk.scednote.fragments.Confirm
+import sk.scednote.model.*
 import kotlin.properties.Delegates
 
 class EditLesson : AppCompatActivity() {
@@ -81,6 +80,9 @@ class EditLesson : AppCompatActivity() {
         }
     }
 
+    /**
+     * Navrat
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -88,7 +90,6 @@ class EditLesson : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.ScreenshotTheme)
         setContentView(R.layout.les_edit)
 
         data = Database()
@@ -109,6 +110,10 @@ class EditLesson : AppCompatActivity() {
         }
         setValuesAndEvents(savedInstanceState)
     }
+
+    /**
+     * Ak bol pocas vytvarania hodiny vytvoreny novy predmet, tak ho treba v Spinneri zvolit
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         if (requestCode == EditSubject.SUB_REQUEST_CODE) {
@@ -119,11 +124,15 @@ class EditLesson : AppCompatActivity() {
                     subSel.adapter = ArrayAdapter(this, layout, parseSubjects())
                     subSel.setSelection(getSubPos(id))
                 }
-                else subSel.setSelection(0)
-                if (subjects.size == 0) finish()
+                else subSel.setSelection(0) // vzdy bude existovat polozka novy - vzdy bude existovat nulty prvok
             }
+            if (subjects.size == 0) finish()
         }
     }
+
+    /**
+     * Ulozenie dat pred ukoncenim aplikacie systemom
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.apply {
@@ -132,7 +141,7 @@ class EditLesson : AppCompatActivity() {
             putInt(BUNDLE_DUR, durSel.selectedItemPosition + 1)
             putInt(BUNDLE_SORT, sortSel.selectedItemPosition)
             val pos = subSel.selectedItemPosition
-            putLong(BUNDLE_SUB, if (pos !in subjects.indices) -1 else subjects[pos].id ?: -1)
+            putLong(BUNDLE_SUB, if (pos !in subjects.indices) -1 else subjects[pos].id)
             putString(BUNDLE_ROOM, locationSet.text.toString())
         }
     }
@@ -148,7 +157,7 @@ class EditLesson : AppCompatActivity() {
             add(resources.getString(R.string.nw))
         }
     }
-    private fun parseLesson():Lesson {
+    private fun parseLesson(): Lesson {
         val id = les?.id ?: -1
         val day = Day[daySel.selectedItemPosition]
         val time = getValidRange()
@@ -162,10 +171,15 @@ class EditLesson : AppCompatActivity() {
         return 0
     }
     private fun getValidRange(): IntRange {
-        val first = (Lesson.OPENING_HOURS.first + startSel.selectedItemPosition).coerceIn(Lesson.OPENING_HOURS)
+        val first = (Lesson.OPENING_HOURS.first + startSel.selectedItemPosition).coerceIn(
+            Lesson.OPENING_HOURS)
         val last = (first + durSel.selectedItemPosition).coerceIn(Lesson.OPENING_HOURS)
         return first..last
     }
+
+    /**
+     * Podla vybraneho zaciatku hodiny sa prenastavi jej maximalne trvanie aby boli dodrzane otvaracie hodiny
+     */
     fun rebuildDurSel() {
         val rng = startSel.selectedItemPosition + Lesson.OPENING_HOURS.first .. Lesson.OPENING_HOURS.last
         durSel.adapter = ArrayAdapter(this, layout, (1..rng.count()).joinToString(",").split(","))
@@ -216,8 +230,7 @@ class EditLesson : AppCompatActivity() {
 
         //vybrat moznosti
 
-        daySel.setSelection(saved?.getInt(BUNDLE_DAY) ?: les?.day?.position ?: intent.getIntExtra(
-            INTENT_DAY, 0))
+        daySel.setSelection(saved?.getInt(BUNDLE_DAY) ?: les?.day?.position ?: intent.getIntExtra(INTENT_DAY, 0))
         startSel.setSelection(saved?.getInt(BUNDLE_START) ?: (les?.time?.first ?: Lesson.OPENING_HOURS.first) - Lesson.OPENING_HOURS.first)
         durSel.setSelection(saved?.getInt(BUNDLE_DUR) ?: ((les?.time?.count() ?: 1) - 1))
         sortSel.setSelection(saved?.getInt(BUNDLE_SORT) ?: les?.sort?.position?.coerceAtLeast(0) ?: 0)
@@ -241,6 +254,9 @@ class EditLesson : AppCompatActivity() {
         delete.setOnClickListener(event)
     }
 
+    /**
+     * Odoslanie zmien a navrat na predoslu aktivitu
+     */
     fun submit() {
         val inputLesson = parseLesson()
         data.insertOrUpdateLesson(inputLesson)

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.NotificationAdvance">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/settters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/actions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <NumberPicker
+            android:id="@+id/days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/days_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/days"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toTopOf="@+id/days"
+            app:layout_constraintEnd_toEndOf="@+id/days"
+            app:layout_constraintStart_toStartOf="@+id/days" />
+
+        <TextView
+            android:id="@+id/hours_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:text="@string/hours"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/days_txt"
+            app:layout_constraintEnd_toEndOf="@+id/hours"
+            app:layout_constraintStart_toStartOf="@+id/hours"
+            app:layout_constraintTop_toTopOf="@+id/days_txt" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:text=":"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/days"
+            app:layout_constraintStart_toEndOf="@+id/days"
+            app:layout_constraintTop_toTopOf="@+id/days"
+            tools:ignore="HardcodedText" />
+
+        <NumberPicker
+            android:id="@+id/hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/days"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="@+id/days" />
+
+        <NumberPicker
+            android:id="@+id/minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/days"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView5"
+            app:layout_constraintTop_toTopOf="@+id/days" />
+
+        <TextView
+            android:id="@+id/minutes_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:text="@string/minutes"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/hours_txt"
+            app:layout_constraintEnd_toEndOf="@+id/minutes"
+            app:layout_constraintStart_toStartOf="@+id/minutes"
+            app:layout_constraintTop_toTopOf="@+id/hours_txt" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:text=":"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/days"
+            app:layout_constraintStart_toEndOf="@+id/hours"
+            app:layout_constraintTop_toTopOf="@+id/days"
+            tools:ignore="HardcodedText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@color/notesPrimary"
+            android:backgroundTint="#6FFF"
+            android:backgroundTintMode="src_atop"
+            android:text="@string/confirm"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/unset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@color/colorPrimary"
+            android:backgroundTint="#6FFF"
+            android:backgroundTintMode="src_atop"
+            android:text="@string/disable"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@color/scrPrimary"
+            android:backgroundTint="#6FFF"
+            android:backgroundTintMode="src_atop"
+            android:text="@string/cancel"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

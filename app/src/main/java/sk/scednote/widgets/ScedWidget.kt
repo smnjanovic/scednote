@@ -11,7 +11,8 @@ import sk.scednote.activities.Main
 import sk.scednote.scedule.TimetableImage
 
 /**
- * Implementation of App Widget functionality.
+ * Jediná úloha tohoto widgetu je zobraziť tabuľku rozvrhu, ktorá po kliknutí otvorí aplikáciu
+ * Zdroj: https://www.youtube.com/playlist?list=PLrnPJCHvNZuDCoET8jL2VK4YVRNhVEy0K
  */
 class ScedWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {

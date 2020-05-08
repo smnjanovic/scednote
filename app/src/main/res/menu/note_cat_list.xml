@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/advance"
+        android:icon="@drawable/white_bell"
+        android:onClick="setReminderAdvance"
+        android:title="@string/notify_on_time"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/today"
+        android:title="@string/today"
+        android:onClick="loadCat"/>
+    <item
+        android:id="@+id/tomorrow"
+        android:title="@string/tomorow"
+        android:onClick="loadCat" />
+    <item
+        android:id="@+id/recent"
+        android:title="@string/this_week"
+        android:onClick="loadCat" />
+    <item
+        android:id="@+id/late"
+        android:title="@string/late"
+        android:onClick="loadCat" />
+    <item
+        android:id="@+id/forever"
+        android:title="@string/forever"
+        android:onClick="loadCat" />
+    <item
+        android:id="@+id/subject_related"
+        android:title="@string/subject_related"
+        android:onClick="loadCat" />
+</menu>

@@ -1,7 +1,6 @@
 package sk.scednote.activities
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.WallpaperManager
 import android.content.Intent
@@ -28,12 +27,15 @@ import kotlinx.android.synthetic.main.screenshot.*
 import sk.scednote.R
 import sk.scednote.ScedNoteApp
 import sk.scednote.events.Movement
+import sk.scednote.model.Ahsl
 import sk.scednote.model.Design
-import sk.scednote.model.data.Ahsl
 import sk.scednote.scedule.TimetableBuilder
 import java.util.*
 import kotlin.properties.Delegates
 
+/**
+ * Aktivita nastavuje dizajn tabulky rozvrhu a dizajn potenciálneho pozadia
+ */
 class Screenshot : AppCompatActivity() {
     companion object {
         private const val CURR_TARGET = "CURR_TARGET"
@@ -51,14 +53,20 @@ class Screenshot : AppCompatActivity() {
     }
 
     //nastavovace farieb
-    data class Target(val title: String, val button: Button)
-    private inner class Targets() {
+    private data class Target(val title: String, val button: Button)
+    //trieda vybera cielovu skupinu zafarbenia
+    private inner class Targets {
         private val inactive = Color.parseColor("#44FFFFFF")
         private val targets = TreeMap<String, Target>()
         private var curr: String? = null
         val button get() = targets[curr ?: ""]?.button
         val target get() = curr
 
+        /**
+         * Vyber kategorie (cielovej skupiny pohladov zafarbenia)
+         *
+         * @tar ciel udavany textovym retazcom, ktory je primarnym klucom v databaze a identifikatorom v resouces/colors
+         */
         fun chooseTarget(tar: String?) {
             //odznacit stare
             targets[target ?: ""]?.button?.foreground?.setTint(inactive)
@@ -90,10 +98,16 @@ class Screenshot : AppCompatActivity() {
             }
         }
 
-        fun chooseTarget(new: Button) {
-            chooseTarget(if (new.tag is String) new.tag as String else null)
-        }
+        /**
+         * Vyber kategorie (cielovej skupiny pohladov zafarbenia)
+         *
+         * @tar tlacidlo, ktore reprezentuje danu cielovu skupinu zafarbenia
+         */
+        fun chooseTarget(tar: Button) = chooseTarget(if (tar.tag is String) tar.tag as String else null)
 
+        /**
+         * Vlozenie novej skupiny cieloveho zafarbenia
+         */
         fun put(btn: Button, title: Int, colorGroup: String) {
             targets[colorGroup] = Target(
                 ScedNoteApp.res.getString(title),
@@ -101,6 +115,7 @@ class Screenshot : AppCompatActivity() {
         }
     }
 
+    //posluchac na zmenu farieb aplikovany 4 SeekBar-om
     private inner class OnRecolorListener: SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar, value: Int, b: Boolean) {
             if (seekBar.tag is TextView) (seekBar.tag as TextView).text = seekBar.progress.toString()
@@ -169,6 +184,9 @@ class Screenshot : AppCompatActivity() {
             editor.overSize == Design.OverSize.WIDTH && fit == Design.ImgFit.CONTAIN
 
 
+    /**
+     * Vytvorenie tlacidla pre screenshot a vlozenie do menu
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.screenshot_menu, menu)
         return true
@@ -180,21 +198,24 @@ class Screenshot : AppCompatActivity() {
         return true
     }
 
+    /**
+     * reakcie na tuknutie na polozku menu
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
+            //nastavenie obrazku na pozadie
             R.id.shotBtn -> setAsWallpaper()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.ScreenshotTheme)
         setContentView(R.layout.screenshot)
 
         // inicializacie a nastavenia
-
         val size = Point()
         this.windowManager.defaultDisplay.getRealSize(size)
         editor = Design.ImageEditor(size.x.coerceAtMost(size.y), size.x.coerceAtLeast(size.y), bgImage)
@@ -293,6 +314,9 @@ class Screenshot : AppCompatActivity() {
         }, 100)
     }
 
+    /**
+     * Ulozenie informacii o pozicii a prisposobeni obrazka
+     */
     override fun onPause() {
         super.onPause()
         savePrefs {
@@ -305,17 +329,26 @@ class Screenshot : AppCompatActivity() {
 
     }
 
+    /**
+     * Zavretie databazy
+     */
     override fun onDestroy() {
         tbleditor.close()
         super.onDestroy()
     }
 
+    /**
+     * Ulozenie informacii o tom ci je rozbaleny panel nastrojov na zmeny farieb
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(CURR_TARGET, targets.target)
         outState.putBoolean(TOOLS_COLLAPSED, toolsCollapsed)
     }
 
+    /**
+     * Pytanie si povolenia na pridavanie obrazkou
+     */
     override fun onRequestPermissionsResult(request: Int, permits: Array<out String>, grantResults: IntArray) {
         when (request) {
             IMG_PERMISSION -> {
@@ -340,8 +373,13 @@ class Screenshot : AppCompatActivity() {
         Handler().postDelayed({ scaleFrame() }, 0)
     }
 
-    private fun readColor():Ahsl {
-        return Ahsl(rangeA.progress, rangeH.progress, rangeS.progress, rangeL.progress)
+    private fun readColor(): Ahsl {
+        return Ahsl(
+            rangeA.progress,
+            rangeH.progress,
+            rangeS.progress,
+            rangeL.progress
+        )
     }
 
     private fun attemptToPickImage() {
@@ -353,7 +391,6 @@ class Screenshot : AppCompatActivity() {
     /**
      * Zdroj: https://stackoverflow.com/questions/9791714/take-a-screenshot-of-a-whole-view
      */
-    @SuppressLint("ResourceAsColor")
     private fun setAsWallpaper() {
         val b = Bitmap.createBitmap(scrBox.width, scrBox.height, Bitmap.Config.ARGB_8888)
         val c = Canvas(b)
