@@ -51,6 +51,8 @@ object Design {
 
     /**
      * Konverzia farby z hex do hsl
+     * @param hex Hexadecimálny kód farby
+     * @return [Ahsl] Hsl kód farby
      */
     fun hex2hsl(hex: String) : Ahsl {
         var number = hex2dec(hex)
@@ -63,6 +65,12 @@ object Design {
         val cMin = min(min(r, g), b)
         val delta = cMax - cMin
 
+        /**
+         * Porovnanie reálnych čísel
+         * @n1 [Double] operand1
+         * @n2 [Double] operand2
+         * @return [Boolean] rovnaju sa, ci nie?
+         */
         fun dcmp (n1:Double ,n2:Double):Boolean {return abs(n1-n2) < 0.000001}
 
         val l = (cMax + cMin) / 2
@@ -74,19 +82,16 @@ object Design {
             else -> ((r-g)/delta) + 4
         })).roundToInt()
 
-        return Ahsl(
-            a,
-            h,
-            (s * 100).roundToInt(),
-            (l * 100).roundToInt()
-        )
+        return Ahsl(a, h, (s * 100).roundToInt(), (l * 100).roundToInt())
     }
 
     /**
      * Konverzia z hsl do hex
+     *
+     * @param ahsl farba v modeli HSL
+     * @return [String] farba v hexadecimálnom tvare
      */
     fun hsl2hex(ahsl: Ahsl) :String {
-
         fun to16(n: Int) = with(n.coerceIn(0, 255).toString(16).toUpperCase(Locale.ROOT)) { if (n < 16) "0${this}" else this }
         fun to16(n: Double) = to16(n.roundToInt())
 
@@ -112,11 +117,17 @@ object Design {
     /**
      * prevod dp na px
      * Zdroj: https://gist.github.com/laaptu/786785
+     *
+     * @param n [Int] Prevedenie n dp na px
+     * @return [Int] px
      */
     fun dp(n: Int) = (n * (ScedNoteApp.res.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
 
     /**
      * nastavenie farby popredia k farbe pozadia s co najvyssim kontrastom
+     *
+     * @param background Ahsl
+     * @return [Ahsl] farba kontrastna s pozadim [background]
      */
     fun customizedForeground(background: Ahsl): Ahsl {
         val midContrast = if(background.s > 35 && background.h in 45..200) 35 else 50
@@ -149,7 +160,7 @@ object Design {
         private val imgH: Int get() = img.drawable?.intrinsicHeight ?: 0
         private var width = imgW
         private var height = imgH
-        val overSize: OverSize get() {
+        private val overSize: OverSize get() {
             if (imgW * imgH == 0 || img.drawable == null) return OverSize.NONE
             val widthRatio = imgW / frmW.toFloat()
             val heightRatio = imgH / frmH.toFloat()
@@ -193,6 +204,7 @@ object Design {
 
         /**
          * Nastavi rozlozenie obrazka na pozadi a centruje ho
+         * @param value spôsob akým má byť obrázok rozmiestnený
          */
         fun setFit(value: ImgFit) {
             if (value != ImgFit.UNDEFINED) {

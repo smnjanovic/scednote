@@ -33,10 +33,10 @@ class NoteReminder : BroadcastReceiver() {
         private const val NOTE_REMINDER_ADVANCE = "NOTE_REMINDER_ADVANCE"
         const val NOTIFICATIONS_ENABLED = "NOTIFICATIONS_ENABLED"
         /**
-         * nastavenie upozornenia vopred
+         * predstih v upozorneniach
          */
         var reminderAdvance: Int
-            get() = ScedNoteApp.ctx.getSharedPreferences(NOTE_REMINDER_ADVANCE, Context.MODE_PRIVATE).getInt(NOTE_REMINDER_ADVANCE, 86400000)
+            get() = ScedNoteApp.ctx.getSharedPreferences(NOTE_REMINDER_ADVANCE, Context.MODE_PRIVATE).getInt(NOTE_REMINDER_ADVANCE, 3600000)
             set(millis) {
                 ScedNoteApp.ctx.getSharedPreferences(NOTE_REMINDER_ADVANCE, Context.MODE_PRIVATE).edit().apply {
                     putInt(NOTE_REMINDER_ADVANCE, millis)
@@ -54,11 +54,11 @@ class NoteReminder : BroadcastReceiver() {
             }
 
         /**
-         * long to Int. Ak je Long pre Integer moc velky, Integer zacina zase od 0. Nepredpoklada sa,
-         * bude mat uzivatel ulozenych 2^32 poznamok, alebo ze k prekroceniu tejto kapacity dojde tak skoro.
-         * A z dovodu, ze kazda notifikacia potrebuje unikatne id aby nenahradila existujucu a musi byt typu int
-         * Z najmenšou pravdepodobnosťou, id notifikacie nahradi uz existujucu "inu" notifikaciu,
-         * co nie je vazny problem
+         * Prevod ID Poznamky typu long na ID notifikacie typu Int. Aky pretecie kapacita, pocita sa
+         * znova od 0.
+         *
+         * @param id [Long] ID of the Note
+         * @return [Int] ID of the notification
          */
         fun noteIdToInt (id: Long) = (id % Int.MAX_VALUE).toInt()
 
@@ -92,6 +92,7 @@ class NoteReminder : BroadcastReceiver() {
 
         /**
          * Nastavit notifikaciu
+         * @param note [Note] poznamka ku ktorej nastavujem pripomienku
          */
         fun setReminder(note: Note) {
             if (enabled) {
@@ -105,6 +106,7 @@ class NoteReminder : BroadcastReceiver() {
 
         /**
          * Zrusit notifikaciu
+         * @param note [Note] Ooznamka, ktorej pripomienku rusim
          */
         fun cancelReminder(note: Note) {
             getAlarmPIntent(note)?.let { (ScedNoteApp.ctx.getSystemService(ALARM_SERVICE) as AlarmManager).cancel(it) }
@@ -112,6 +114,8 @@ class NoteReminder : BroadcastReceiver() {
 
         /**
          * Upravit vsetky notifikacie
+         *
+         * @param notes [ArrayList][Note] Zoznam poznamok
          */
         fun enableReminders(notes: ArrayList<Note>) {
             enabled = true
@@ -130,8 +134,10 @@ class NoteReminder : BroadcastReceiver() {
     }
 
     /**
-     * co sa ma stat ak na notifikaciu uzivatel klikol
-     * odpoved: otvori sa aktivita kde je upravitelny zoznam notifikacii
+     * Metoda na zaklade vstupu rozhodne aku (s akym obsahom) notifikaciu zobrazi
+     *
+     * @param context
+     * @param intent
      */
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == CHANNEL_ID) {

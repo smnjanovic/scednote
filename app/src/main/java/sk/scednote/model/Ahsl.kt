@@ -2,6 +2,11 @@ package sk.scednote.model
 
 /**
  * Uchovava data o farbe reprezentovane v modeli hsl s alfa kanalom
+ *
+ * @param alpha priehladnost [Int]
+ * @param hue odtien [Int]
+ * @param saturation sytost [Int]
+ * @param lightness svetlost [Int]
  */
 data class Ahsl(private val alpha :Int, private val hue :Int, private val saturation: Int, private val lightness :Int) {
     val h = (if (hue < 0) 360 + hue % 360 else hue % 360)

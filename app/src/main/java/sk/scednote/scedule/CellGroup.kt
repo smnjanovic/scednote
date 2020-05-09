@@ -10,6 +10,9 @@ import java.util.*
 /**
  * Trieda ziskava, uchovava, aktualizuje farby z databazy SQL.
  * Viditelne menia farby pozadia danej bunke
+ *
+ * @param target identifikator mnoziny 2D objektov s rovnakou farebnostou
+ * @param color vopred znama nastavena farba
  */
 
 class CellGroup(private val target: String? = null, color: Ahsl) {
@@ -21,6 +24,7 @@ class CellGroup(private val target: String? = null, color: Ahsl) {
 
     /**
      * Pridanie malovatelnej grafiky
+     * @param view Operator pridania pridava novy 2D objekt do mnoziny
      */
     operator fun plusAssign(view: Any?) {
         if (view is View)
@@ -29,6 +33,8 @@ class CellGroup(private val target: String? = null, color: Ahsl) {
 
     /**
      * Ziskanie n-tej farby
+     * @param n index 2D objektu v poli
+     * @return [View] 2D objekt
      */
     operator fun get(n: Int) = cells[n]
 
@@ -39,8 +45,10 @@ class CellGroup(private val target: String? = null, color: Ahsl) {
      * nastavena farba uz mozno neplati, metoda vezme z databazy aktualne nastavenu. Je to
      * vyuzite hlavne po navrate z aktivity Screenshot na hlavnu aktivitu, kte zostali este
      * stare farby buniek
+     *
+     * @param ahsl Nova farba ktora sa nanesie na mnozinu 2D objektov
      */
-    fun accessNewColors(ahsl: Ahsl) {
+    fun setNewColors(ahsl: Ahsl) {
         target?.let {
             bgHsl = ahsl
             fgHsl = Design.customizedForeground(bgHsl)
@@ -58,6 +66,8 @@ class CellGroup(private val target: String? = null, color: Ahsl) {
 
     /**
      * Ulozit zmenu farby do tatabazy
+     *
+     * @param ahsl farba [Ahsl] na ulozenie do databazy
      */
     fun storeColor(ahsl: Ahsl) {
         target?.let {
@@ -70,6 +80,8 @@ class CellGroup(private val target: String? = null, color: Ahsl) {
 
     /**
      * ziskanie farby v hsl
+     *
+     * @return farba v modeli HSL s alfa kanalom
      */
     fun getHsl(): Ahsl {
         return bgHsl
@@ -77,6 +89,8 @@ class CellGroup(private val target: String? = null, color: Ahsl) {
 
     /**
      * Zmena farby pohladu, (bez aktualizacie v databaze pre lepsi vykon)
+     *
+     * @param ahsl Nova farba ktora sa zobrazi na mnozine 2D objetov
      */
     fun recolor(ahsl: Ahsl? = null) {
         if (cells.size > 0) {

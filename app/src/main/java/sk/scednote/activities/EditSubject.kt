@@ -39,6 +39,7 @@ class EditSubject : AppCompatActivity() {
 
     /**
      * Navrat
+     * @return [Boolean] true
      */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -80,8 +81,12 @@ class EditSubject : AppCompatActivity() {
         submit(REPLACED)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    /**
+     * Priprava aktivity
+     * @param saved zaloha
+     */
+    override fun onCreate(saved: Bundle?) {
+        super.onCreate(saved)
         setContentView(R.layout.sub_edit)
         //vratit spat
         supportActionBar?.let {
@@ -164,6 +169,10 @@ class EditSubject : AppCompatActivity() {
         }
     }
 
+    /**
+     * zálohovanie stavu aktivity pred systémom vynútením ukončením
+     * @param outState záloha
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(BUNDLE_ABB, txt_abb.text.toString())
@@ -172,6 +181,10 @@ class EditSubject : AppCompatActivity() {
         outState.putString(BUNDLE_FULL_ERR, txt_full.error?.toString() ?: "")
     }
 
+    /**
+     * obnova predosleho stavu systemom okoncenej aktivity
+     * @param inState zdroj zalohy
+     */
     override fun onRestoreInstanceState(inState: Bundle) {
         super.onRestoreInstanceState(inState)
         txt_abb.setText(inState.getString(BUNDLE_ABB))
@@ -182,6 +195,9 @@ class EditSubject : AppCompatActivity() {
         txt_full.error = if (fullErr.isNotEmpty()) inState.getString(BUNDLE_FULL_ERR) else null
     }
 
+    /**
+     * Zavretie databaz
+     */
     override fun onDestroy() {
         data.close()
         super.onDestroy()

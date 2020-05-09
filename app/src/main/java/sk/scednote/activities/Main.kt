@@ -3,7 +3,6 @@ package sk.scednote.activities
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -24,14 +23,22 @@ class Main : AppCompatActivity() {
         private const val CLEAN_UP = "CLEAN_UP"
     }
     private lateinit var scedule: TimetableBuilder
-    private lateinit var data: Database
     private lateinit var noteAdapt: RecentNotesAdapter
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    /**
+     * Vytvorenie menu
+     * @param menu Menu do ktorého sa vložia položky menu
+     */
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    /**
+     * Reakcia jednotlivých položiek menu na ich voľbu
+     * @param item Položka
+     * @return [Boolean] True
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.cleanBtn -> {
@@ -46,21 +53,17 @@ class Main : AppCompatActivity() {
         return true
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        parent?.finish()
-        finish()
-    }
-
+    /**
+     * Príprava aktivity
+     * @param savedInstanceState uložená záloha pri obnove
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         parent?.finish()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Stetho.initializeWithDefaults(this) //sluzi na pristup k databaze pomocou adresy: chrome://inspect/#devices
-
-        data = Database()
-        scedule = TimetableBuilder(timetable, frame, data)
-
+        scedule = TimetableBuilder(timetable, frame)
+        //sluzi na pristup k databaze pomocou adresy: chrome://inspect/#devices
+        Stetho.initializeWithDefaults(this)
         /**
          * https://stackoverflow.com/questions/11026234/how-to-check-if-the-current-activity-has-a-dialog-in-front
          */
@@ -75,12 +78,12 @@ class Main : AppCompatActivity() {
             Handler().postDelayed({
                 noteAdapt.reload()
                 empty.visibility = if (noteAdapt.itemCount > 0) View.GONE else View.VISIBLE
-            }, 250)
+            }, 750)
         }
 
         today.apply {
             layoutManager = LinearLayoutManager(this@Main)
-            noteAdapt = RecentNotesAdapter(data, savedInstanceState)
+            noteAdapt = RecentNotesAdapter(savedInstanceState)
             adapter = noteAdapt
             noteAdapt.setOnNoteNavigate { category, id ->
                 startActivity(Intent(this@Main, NoteList::class.java).apply {
@@ -94,12 +97,19 @@ class Main : AppCompatActivity() {
         }
     }
 
+    /**
+     * Znovunačítanie farieb tabuľky rozvrhu a zoznamu úloh v priebehu týždňa
+     */
     override fun onRestart() {
         super.onRestart()
         noteAdapt.reload()
         scedule.accessNewColors()
     }
 
+    /**
+     * Načítanie obsahu tabuľky a nastavenie veľkosti stĺpcov podľa jej šírky
+     * Kliknutie na vyučovacie hodiny umožní vykonať úpravu hodiny
+     */
     override fun onStart() {
         super.onStart()
         scedule.fillTable()
@@ -124,18 +134,29 @@ class Main : AppCompatActivity() {
         Handler().postDelayed({ scedule.scaleByWidth(timetable.measuredWidth) }, 100)
     }
 
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+    /**
+     * Zálohovanie dát
+     * @param outState balík zálohy
+     */
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
         noteAdapt.storeBackup(outState)
     }
 
+    /**
+     *  zavretie bežiacej databázy
+     */
     override fun onDestroy() {
-        scedule.close() // zavrie databazu
+        scedule.close()
         noteAdapt.close()
         super.onDestroy()
     }
 
     private fun cleanUp() {
-        data.removeObsoleteData()
+        Database().apply {
+            removeObsoleteData()
+            close()
+        }
         Toast.makeText(this, resources.getString(R.string.obsolete_subjects_gone), Toast.LENGTH_SHORT).show()
     }
 }

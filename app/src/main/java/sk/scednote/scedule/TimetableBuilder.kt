@@ -13,11 +13,13 @@ import java.util.*
 
 /**
  * Trieda vybuduje obsah tabulky podla dát o rozvrhu
+ * @property table Layout, do ktorého sa bude vkladať obsah
+ * @param background Layout na pozadí - nepovinný
  */
 
-class TimetableBuilder(private val table: LinearLayout, background: View? = null, database: Database = Database()) {
+class TimetableBuilder(private val table: LinearLayout, background: View? = null) {
     private val context = ScedNoteApp.ctx
-    private val data = database
+    private val data = Database()
     private val groups = TreeMap<String, CellGroup>().apply {
         this[Design.bg_b] = CellGroup(Design.bg_b, data.getColor(Design.bg_b))
         this[Design.bg_h] = CellGroup(Design.bg_h, data.getColor(Design.bg_h))
@@ -39,6 +41,7 @@ class TimetableBuilder(private val table: LinearLayout, background: View? = null
 
     /**
      * Nastavenie udalost, co sa stane ak uzivatel klikne na bunku, ktora popisuje nejaku vyucovaciu hodinu
+     * @param fn Funkcia so vstupnym parametrom typu [Long], ktory reprezentuje ID suboru toho daneho suboru
      */
     fun setOnLessonClick(fn: (Long)->Unit) { editLesson = fn }
     //vykreslenie tabulky1
@@ -49,7 +52,7 @@ class TimetableBuilder(private val table: LinearLayout, background: View? = null
     fun accessNewColors() {
         for ((target, group) in groups) {
             if (target != Design.FREE)
-                group.accessNewColors(data.getColor(target))
+                group.setNewColors(data.getColor(target))
         }
     }
 
@@ -173,6 +176,8 @@ class TimetableBuilder(private val table: LinearLayout, background: View? = null
 
     /**
      * sirky buniek sa prepocitaju na rovny diel tak, aby vyuzili celu sirku tabulky
+     *
+     * @param tableWidth Na zaklade dlzky tabulky [Int], sa nastavi sirka stlpcov rovnakym dielom
      */
     fun scaleByWidth(tableWidth: Int) {
         val cellWidth = tableWidth / data.getScedRange().count()
@@ -184,6 +189,9 @@ class TimetableBuilder(private val table: LinearLayout, background: View? = null
 
     /**
      * Bez aktualizacie zmeni farbu vybranej skupine buniek
+     *
+     * @param color Farba, ktoru na ktoru sa objekt prefarbi
+     * @param target Identifikator mnoziny ovplyvnenych 2D objektov
      */
     fun recolor(color: Ahsl, target: String) {
         groups[target]?.recolor(color)
@@ -191,6 +199,9 @@ class TimetableBuilder(private val table: LinearLayout, background: View? = null
 
     /**
      * Aktualizuje farby v databaze
+     *
+     * @param color Farba ktora sa ulozi do databazy
+     * @param target Identifikator farby
      */
     fun storecolor(color: Ahsl, target: String) {
         groups[target]?.let {
@@ -201,6 +212,8 @@ class TimetableBuilder(private val table: LinearLayout, background: View? = null
 
     /**
      * Ziska farbu v modeli HSL
+     * @target [String] ktory odkazuje na zaznam v SQL tabulke alebo na farbu v resources/colors
+     * @return Vrati [Ahsl] farbu reprezentovanu modelom HSL s alfa kanalom.
      */
     fun getHsl(target: String): Ahsl? {
         return groups[target]?.getHsl()

@@ -65,7 +65,7 @@ class Screenshot : AppCompatActivity() {
         /**
          * Vyber kategorie (cielovej skupiny pohladov zafarbenia)
          *
-         * @tar ciel udavany textovym retazcom, ktory je primarnym klucom v databaze a identifikatorom v resouces/colors
+         * @param tar ciel udavany textovym retazcom, ktory je primarnym klucom v databaze a identifikatorom v resouces/colors
          */
         fun chooseTarget(tar: String?) {
             //odznacit stare
@@ -101,12 +101,15 @@ class Screenshot : AppCompatActivity() {
         /**
          * Vyber kategorie (cielovej skupiny pohladov zafarbenia)
          *
-         * @tar tlacidlo, ktore reprezentuje danu cielovu skupinu zafarbenia
+         * @param tar tlacidlo, ktore reprezentuje danu cielovu skupinu zafarbenia
          */
         fun chooseTarget(tar: Button) = chooseTarget(if (tar.tag is String) tar.tag as String else null)
 
         /**
          * Vlozenie novej skupiny cieloveho zafarbenia
+         * @param btn Tlačidlo, ktoré prepne cieľovú skupinu Pohľadov (View)
+         * @param title ako sa bude skupina volať
+         * @param colorGroup Identifikator skupiny farieb (skupiny: Prednáška, Cvičenie, Hlavička tabuľky, Pozadie, Voľno)
          */
         fun put(btn: Button, title: Int, colorGroup: String) {
             targets[colorGroup] = Target(
@@ -178,21 +181,22 @@ class Screenshot : AppCompatActivity() {
             scrDesignBox.visibility = if (value) View.GONE else View.VISIBLE
             scrDesign.visibility = if (value) View.VISIBLE else View.GONE
         }
-    private val dxHorizontal get() = editor.overSize == Design.OverSize.WIDTH && fit == Design.ImgFit.COVER ||
-            editor.overSize == Design.OverSize.HEIGHT && fit == Design.ImgFit.CONTAIN
-    private val dyVertical get() = editor.overSize == Design.OverSize.HEIGHT && fit == Design.ImgFit.COVER ||
-            editor.overSize == Design.OverSize.WIDTH && fit == Design.ImgFit.CONTAIN
 
 
     /**
      * Vytvorenie tlacidla pre screenshot a vlozenie do menu
+     * @param menu Menu
      */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.screenshot_menu, menu)
         return true
     }
 
-    //Zdroj: https://devofandroid.blogspot.com/2018/03/add-back-button-to-action-bar-android.html
+    /**
+     * Krok späť
+     * Zdroj: https://devofandroid.blogspot.com/2018/03/add-back-button-to-action-bar-android.html
+     * @return [Boolean] true
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -200,6 +204,7 @@ class Screenshot : AppCompatActivity() {
 
     /**
      * reakcie na tuknutie na polozku menu
+     * @param item položka menu
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
@@ -211,6 +216,9 @@ class Screenshot : AppCompatActivity() {
     }
 
 
+    /**
+     * @param savedInstanceState zaloha na obnovenie
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.screenshot)
@@ -252,7 +260,11 @@ class Screenshot : AppCompatActivity() {
         }
     }
 
+    /**
+     * @param saved zaloha
+     */
     override fun onRestoreInstanceState(saved: Bundle) {
+        //ak bol predtym rozbaleny box nastaveni farieb bude otvoreny aj po otoceni displeja
         targets.chooseTarget(CURR_TARGET)
         toolsCollapsed = saved.getBoolean(TOOLS_COLLAPSED, true)
         targets.target?.let { viewColorTools() }
@@ -260,6 +272,9 @@ class Screenshot : AppCompatActivity() {
 
     /**
      * Ak fotku nie je mozne pridat, stara zostava
+     * @param requestCode kod ziadosti
+     * @param resultCode kod vysledku
+     * @param result vysledne data
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, result: Intent?) {
         super.onActivityResult(requestCode, resultCode, result)
@@ -287,6 +302,9 @@ class Screenshot : AppCompatActivity() {
         }
     }
 
+    /**
+     * nastavenia velkosti a polohy obrazka a polohy tabulky podla ulozenych preferencii
+     */
     override fun onResume() {
         super.onResume()
 
@@ -339,6 +357,7 @@ class Screenshot : AppCompatActivity() {
 
     /**
      * Ulozenie informacii o tom ci je rozbaleny panel nastrojov na zmeny farieb
+     * @param outState zaloha
      */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -347,7 +366,10 @@ class Screenshot : AppCompatActivity() {
     }
 
     /**
-     * Pytanie si povolenia na pridavanie obrazkou
+     * Pytanie si povolenia na pridavanie obrazku
+     * @param request Kod ziadosti
+     * @param permits zoznam ziadosti o povolenie
+     * @param grantResults zoznam povoleni
      */
     override fun onRequestPermissionsResult(request: Int, permits: Array<out String>, grantResults: IntArray) {
         when (request) {
@@ -373,14 +395,7 @@ class Screenshot : AppCompatActivity() {
         Handler().postDelayed({ scaleFrame() }, 0)
     }
 
-    private fun readColor(): Ahsl {
-        return Ahsl(
-            rangeA.progress,
-            rangeH.progress,
-            rangeS.progress,
-            rangeL.progress
-        )
-    }
+    private fun readColor() = Ahsl(rangeA.progress, rangeH.progress, rangeS.progress, rangeL.progress)
 
     private fun attemptToPickImage() {
         startActivityForResult(Intent(Intent.ACTION_PICK).also { it.type = "image/*" },

@@ -5,7 +5,12 @@ import android.os.Parcelable
 import java.util.*
 
 /**
- * Trieda obaluje data o ulohach
+ * Trieda obaluje data o ulohach k predmetom.
+ *
+ * @param id ID ulohy
+ * @param sub Predmet
+ * @param info obsah ulohy
+ * @param deadline termín dokončenia úlohy
  */
 data class Note (val id: Long, val sub: Subject, val info: String, var deadline: Calendar? = null) :
     Parcelable {
@@ -31,6 +36,9 @@ data class Note (val id: Long, val sub: Subject, val info: String, var deadline:
         }
     )
 
+    /**
+     * Prevedenie datumu na Textovy retazec
+     */
     val ddlItem: String get() = deadline?.let {
         fun dig2(n: Int) = "${n/10}${n%10}"
         val year = dig2(deadline!!.get(Calendar.YEAR))
@@ -38,7 +46,7 @@ data class Note (val id: Long, val sub: Subject, val info: String, var deadline:
         val day = dig2(deadline!!.get(Calendar.DAY_OF_MONTH))
         val hour = dig2(deadline!!.get(Calendar.HOUR_OF_DAY))
         val minute = dig2(deadline!!.get(Calendar.MINUTE))
-        "$year-$month-$day $hour:$minute"
+        "$day.$month.$year $hour:$minute"
     } ?: ""
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

@@ -11,38 +11,28 @@ class DateFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
     companion object {
         const val CAL = "CAL"
     }
-    private var dateEvent: (DatePicker?, Int, Int, Int)->Unit = fun(_, _, _, _){}
+    private var dateEvent: (Calendar)->Unit = fun(_){}
     //zachovatelne data posielane z aktivity
     val data: Bundle = Bundle()
 
     /**
      * Odlozenie nastavenia daneho datumu
+     * @param cal dátum na uloženie
      */
     fun putCalendar(cal: Calendar) = data.putLong(CAL, cal.timeInMillis)
 
     /**
-     * Vytiahne ulozeny kalendar
-     */
-    fun getCalendar() = Calendar.getInstance().also { it.timeInMillis = data.getLong(TimeFragment.CAL, 0) }
-
-    /**
      * Udalost nastavitelna zvonka
+     * @param fn Metóda, ktorá sa má vykonať po tom ako bol dátum nastavený
      */
-    fun setOnChoice(fn: (DatePicker?, Int, Int, Int)->Unit) {
+    fun setOnChoice(fn: (Calendar)->Unit) {
         dateEvent = fn
     }
 
     /**
-     * Udalost nastavitelna zvonka
-     */
-    fun setOnChoice(reducedFn: (Int, Int, Int)->Unit) {
-        setOnChoice(fun (_: DatePicker?, year: Int, month: Int, day: Int) {
-            reducedFn(year, month, day)
-        })
-    }
-
-    /**
      * Vytvorenie dialogoveho okna, aplikovanie menitelnej udalosti
+     * @param saved dáta, ktoré sa zachovali pred ukončením fragmentu systémom
+     * @return [Dialog] Vráti dialóg na zobrazenie
      */
     override fun onCreateDialog(saved: Bundle?): Dialog {
         saved?.let { data.putAll(saved) }
@@ -55,18 +45,22 @@ class DateFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     /**
      * pokus o nastavenie datumu
+     * @param view Dialóg na výber dátumu
+     * @param year Nastavenie roku
+     * @param month Nastavenie mesiaca
+     * @param day Nastavenie casu
      */
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {
         val cal = Calendar.getInstance()
-        cal.timeInMillis = data.getLong(CAL)
+        cal.timeInMillis = data.getLong(TimeFragment.CAL, System.currentTimeMillis())
         cal.set(year, month, day)
-        data.putLong(CAL, cal.timeInMillis)
-        //ak bol cas nastaveny uz predtym, system ho nesmie zabudnut aj ked nastavujem iba datum
-        dateEvent(view, year, month, day)
+        putCalendar(cal)
+        dateEvent(cal)
     }
 
     /**
      * po otoceni displeja dialog ostane viditelny
+     * @param outState balik zalohovanych dat
      */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)

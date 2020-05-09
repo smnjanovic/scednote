@@ -79,6 +79,9 @@ class SubList : AppCompatActivity() {
 
     /**
      * Uprava zoznamu, ak bol predmet pridany, upraveny alebo vymazany
+     * @param requestCode kod ziadosti
+     * @param resultCode kod vysledku
+     * @param data ýsledné dáta
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -97,12 +100,19 @@ class SubList : AppCompatActivity() {
         }
     }
 
+    /**
+     * vytvorenie zalohy
+     * @param outState balik zaloh
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         subAdapt.backupData(outState)
         outState.putLong(DELETE_DIALOG, removalId)
     }
 
+    /**
+     * Zavretie databazy
+     */
     override fun onDestroy() {
         subAdapt.close()
         super.onDestroy()

@@ -15,8 +15,10 @@ import sk.scednote.model.Subject
 /**
  * Adapter na zobrazenie suborov
  * Polozky mozu byt zobrazovane ako polozky menu alebo ako zoznam upravitelnych predmetov
+ * @property adapterType Typ adaptera (na výber: menu položky na čítanie, zoznam s povolením úprav)
+ * @param bundle zachované dáta pri obnove aktivity, ktorá adapter používa
  */
-open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+open class SubjectAdapter(private val adapterType: Int, bundle: Bundle?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val ADAPTER_TYPE_TAB = 1000  // tlacidlo v navigacii
         const val ADAPTER_TYPE_ITEM = 1001 // polozka v zozname
@@ -41,9 +43,8 @@ open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerV
     private var deleteEvent: View.OnClickListener? = null
 
     /**
-     * Co sa stane ak sa v menu prekliknem na tento predmet
-     *
-     * @switch funkcia, co sa ma stat, s pohladom vo formalnom parametri
+     * Nastavenie funkcie, co sa ma stat, ak sa v menu prekliknem na dalsi predmet
+     * @param switch Co sa ma stat, s kliknutým objektom
      */
     fun onSwitch(switch: (View) -> Unit) {
         choiceEvent = View.OnClickListener(switch)
@@ -52,7 +53,7 @@ open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerV
     /**
      * Co sa stane ak sa pokusim upravit dany predmet
      *
-     * @edit funkcia, co sa ma stat, s pohladom vo formalnom parametri
+     * @param edit funkcia, co sa ma stat, s pohladom vo formalnom parametri
      */
     fun onEdit(edit: (View) -> Unit) {
         editEvent = View.OnClickListener(edit)
@@ -61,7 +62,7 @@ open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerV
     /**
      * Co sa stane ak sa pokusim vymazat dany predmet
      *
-     * @edit funkcia, co sa ma stat, s pohladom vo formalnom parametri
+     * @param delete funkcia, co sa ma stat, s pohladom vo formalnom parametri
      */
     fun onDelete(delete: (View) -> Unit) {
         deleteEvent = View.OnClickListener(delete)
@@ -69,8 +70,7 @@ open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerV
 
     /**
      * Zalohovanie dat adaptera
-     *
-     * @bundle funkcia, balik kam sa ulozia zalohovane subory
+     * @param bundle funkcia, balik kam sa ulozia zalohovane subory
      */
     fun backupData(bundle: Bundle) {
         bundle.putParcelableArrayList(SUBJECT_LIST, items)
@@ -80,7 +80,7 @@ open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerV
     /**
      * Aktualizovany predmet sa zmeni vo viditelnom zozname
      *
-     * @id id aktualizovaneho predmetu
+     * @param id id aktualizovaneho predmetu
      */
     fun updatedRecord(id: Long) {
         val position = getPositionById(id)
@@ -91,8 +91,7 @@ open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerV
     }
     /**
      * Pridany predmet sa prida do viditelneho zoznamu
-     *
-     * @id id pridaneho predmetu
+     * @param id id pridaneho predmetu
      */
     fun insertedRecord(id: Long) {
         data.getSubject(id)?.let {
@@ -103,8 +102,7 @@ open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerV
 
     /**
      * Predmet zmizne z viditelneho zoznamu
-     *
-     * @pos pozicia v zozname
+     * @param pos pozicia v zozname
      */
     fun deleteRecord(pos:Int) {
         if (pos in items.indices) {
@@ -123,6 +121,8 @@ open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerV
 
     /**
      * Ziskanie pozicie predmetu s danym id
+     * @param id ID položky ktorej pozíiu hľadám
+     * @return [Int] index prvku v zozname
      */
     fun getPositionById(id: Long): Int {
         for (i in items.indices) {
@@ -135,6 +135,7 @@ open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerV
 
     /**
      * Ziska nazov predmetu na danej pozicii
+     * @param position Získanie názvu predmetu na danej pozícii
      */
     fun getSubjectNameAt(position: Int) = items[position].full
 
@@ -142,18 +143,38 @@ open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerV
         data.close()
     }
 
+    /**
+     * Tvorba ViewHoldera
+     * @param parent v com sa viewHolder nachadza
+     * @param viewType o aky typ ViewHoldera sa jedná
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return when(itemType) {
+        return when(adapterType) {
             ADAPTER_TYPE_ITEM -> ItemHolder(inflater.inflate(R.layout.sub_item, parent, false))
             ADAPTER_TYPE_TAB -> TabHolder(inflater.inflate(R.layout.tab_button, parent, false))
             else -> throw Exception("NO SUCH TYPE ON SUBJECT ADAPTER!")
         }
     }
+
+    /**
+     * @return počet záznamov
+     */
     override fun getItemCount() = items.size
+
+    /**
+     * po pridaní viewHoldera
+     * @param holder Typ ViewHolder alebo jeho potomok
+     * @param position pozícia, v zozname
+     */
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is SubjectHolder) holder.bind()
     }
+
+    /**
+     * ziskanie ID záznamu v zozname
+     * @param position index
+     */
     override fun getItemId(position: Int) = if (position in items.indices) items[position].id else -1
 
     abstract inner class SubjectHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -162,6 +183,7 @@ open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerV
 
     /**
      * Pohlad pre polozku umoznujucu upravu a odstranenie predmetu
+     * @param itemView rodičovský 2D objekt s určitým obsahom
      */
     inner class ItemHolder(itemView: View): SubjectHolder(itemView) {
         private val abbreviation = itemView.abb
@@ -169,6 +191,9 @@ open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerV
         private val pencil = itemView.edit
         private val trash = itemView.delete
 
+        /**
+         * Nastavenie obsahu vytvárenemu Template-u
+         */
         override fun bind() {
             val sub = items[adapterPosition]
             abbreviation.text = sub.abb
@@ -187,10 +212,14 @@ open class SubjectAdapter(private val itemType: Int, bundle: Bundle?): RecyclerV
 
     /**
      * pohlad pre neupravitelnu polozku v menu
+     * @param itemView Template, ktorý ViewHolder nadobudne
      */
     inner class TabHolder(itemView: View): SubjectHolder(itemView) {
         private val button = itemView.tab
-        //vyplnit tlacidlo skratkou, prip. ho zvyraznit ak bolo posledne stlacene
+
+        /**
+         * vyplnit tlacidlo skratkou, prip. ho zvyraznit ak bolo posledne stlacene
+         */
         override fun bind() {
             with (button) {
                 text = items[adapterPosition].abb

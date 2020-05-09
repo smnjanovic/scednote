@@ -23,6 +23,8 @@ class NoteWidgetService : RemoteViewsService() {
 
     /**
      * Trieda ktora nacitava a spravuje data jednotlive dáta (dáta o poznámkach)
+     * @property context Kontext - nesmie byť null
+     * @param intent Intent - nesmie byť null
      */
     class NoteWidgetFactory(private val context: Context, intent: Intent): RemoteViewsFactory {
         private val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
@@ -34,6 +36,9 @@ class NoteWidgetService : RemoteViewsService() {
          * Vrati remoteView pre danu polozku
          * Posle informaciu o vykonanej udalosti Správcovi widgetu (trieda: widgets/NotesWidget),
          * ktory rozhodne co sa ma stat
+         *
+         * @param position Pozícia
+         * @return [RemoteViews]
          */
         override fun getViewAt(position: Int):RemoteViews {
             return RemoteViews(context.packageName, R.layout.note_item_delete_only).also { remote ->
@@ -53,18 +58,37 @@ class NoteWidgetService : RemoteViewsService() {
             }
         }
 
+        /**
+         * Vytvorenie databázy
+         */
         override fun onCreate() {
             data = Database()
         }
 
         override fun getLoadingView(): RemoteViews? = null
+
+        /**
+         * Vrátenie ID poznámy na pozíii [position]
+         */
         override fun getItemId(position: Int) = items[position].id
+
+        /**
+         * Znovu načítanie dát
+         */
         override fun onDataSetChanged() {
             items = data.getNotes(category)
         }
         override fun hasStableIds() = true
+
+        /**
+         * @return Počet záznamov v zozname
+         */
         override fun getCount() = items.size
         override fun getViewTypeCount() = 1
+
+        /**
+         * Zavretie databázy
+         */
         override fun onDestroy() {
             data.close()
         }

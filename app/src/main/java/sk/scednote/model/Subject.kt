@@ -6,8 +6,11 @@ import android.os.Parcelable
 
 /**
  * Uchovava data o urcitom predmete
+ *
+ * @param id ID predmetu
+ * @param abb Skratka predmetu
+ * @param full Celý názov predmetu
  */
-
 data class Subject(val id: Long, val abb: String, val full: String) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
@@ -17,6 +20,8 @@ data class Subject(val id: Long, val abb: String, val full: String) : Parcelable
 
     /**
      * porovnava, ci sa jedna o 2 rovnake predmety
+     *
+     * @param other Objekt na porovnanie
      */
     override fun equals(other: Any?): Boolean {
         return other != null && other is Subject && abb == other.abb && full == other.full

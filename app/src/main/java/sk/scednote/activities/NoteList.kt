@@ -57,36 +57,27 @@ class NoteList : AppCompatActivity() {
     private lateinit var noteAdapt: NoteAdapter
 
     /**
-     * nacita iny zoznam na zaklade vybranej kategorie
+     * Vlozenie menu
+     * @param menu Menu
      */
-    fun loadCat(v: MenuItem) {
-        category = when (v.itemId) {
-            R.id.today -> Note.DEADLINE_TODAY
-            R.id.tomorrow -> Note.DEADLINE_TOMORROW
-            R.id.recent -> Note.DEADLINE_RECENT
-            R.id.late -> Note.DEADLINE_LATE
-            R.id.forever -> Note.DEADLINE_FOREVER
-            else -> {
-                if (subAdapt.marked == -1) subAdapt.marked = 0
-                subAdapt.getItemId(subAdapt.marked)
-            }
-        }
-        noteAdapt.loadData(category)
-        showIfEmpty()
-    }
-
-    fun setReminderAdvance(v: MenuItem) = startActivity(Intent(this, NotificationAdvance::class.java))
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.note_cat_list, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    /**
+     * Krok späť
+     * @return Vždy vracia true
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
+    /**
+     * Nastavenia pred spustením aktivity
+     * @param saved záloha dát tejto aktivity, ktorú zastavil systém
+     */
     override fun onCreate(saved: Bundle?) {
         super.onCreate(saved)
         setContentView(R.layout.notelist)
@@ -98,10 +89,26 @@ class NoteList : AppCompatActivity() {
         //zapamatanie si dialogu nastavenia datumu
         (supportFragmentManager.findFragmentByTag(DATE_DIALOG) as DateFragment?)?.let { onDateChosen(it) }
         (supportFragmentManager.findFragmentByTag(TIME_DIALOG) as TimeFragment?)?.let { onTimeChosen(it) }
+        MenuItem.OnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.today -> category = Note.DEADLINE_TODAY
+                R.id.tomorrow -> category = Note.DEADLINE_TOMORROW
+                R.id.recent -> category = Note.DEADLINE_RECENT
+                R.id.late -> category = Note.DEADLINE_LATE
+                R.id.forever -> category = Note.DEADLINE_FOREVER
+                R.id.subject_related -> {
+                    if (subAdapt.marked == -1) subAdapt.marked = 0
+                    category = subAdapt.getItemId(subAdapt.marked)
+                }
+                R.id.advance -> startActivity(Intent(this, NotificationAdvance::class.java))
+            }
+            true
+        }
     }
 
     /**
      * Ulozenie zoznamu a kategorie a aktivnej polozky
+     * @param outState Záloha
      */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -118,12 +125,15 @@ class NoteList : AppCompatActivity() {
         scrollToNote()
     }
 
+    /**
+     * Zavriem vsetko co je otvorene (Databazu)
+     */
     override fun onDestroy() {
         super.onDestroy()
         subAdapt.close()
         noteAdapt.close()
     }
-
+    //nastavenie adapterov
     private fun setAdapters(saved: Bundle?) {
         subAdapt = SubjectAdapter(SubjectAdapter.ADAPTER_TYPE_TAB, saved)
         category = intent.getLongExtra(CATEGORY, saved?.getLong(CATEGORY) ?: Note.DEADLINE_TODAY)
@@ -182,9 +192,9 @@ class NoteList : AppCompatActivity() {
         }
     }
     private fun onDateChosen(date: DateFragment) {
-        date.setOnChoice { year, month, day ->
+        date.setOnChoice { calendar ->
             val time = TimeFragment()
-            time.putCalendar(date.getCalendar())
+            time.putCalendar(calendar)
             time.data.putInt(DIALOG_TARGET, date.data.getInt(DIALOG_TARGET))
             time.show(supportFragmentManager, TIME_DIALOG)
             onTimeChosen(time)
@@ -192,19 +202,15 @@ class NoteList : AppCompatActivity() {
     }
 
     private fun onTimeChosen(time: TimeFragment) {
-        time.setOnChoice { hour, minute ->
+        time.setOnChoice { cal ->
             val pos = time.data.getInt(DIALOG_TARGET)
-            if (pos in 0 until noteAdapt.itemCount) {
-                val cal = time.getCalendar()
-                cal.set(Calendar.HOUR_OF_DAY, hour)
-                cal.set(Calendar.MINUTE, minute)
-                cal.set(Calendar.SECOND, 0)
-                cal.set(Calendar.MILLISECOND, 0)
-                time.putCalendar(cal)
-                if (cal <= Calendar.getInstance())
+            when {
+                cal <= Calendar.getInstance() ->
                     Toast.makeText(this, resources.getString(R.string.time_out), Toast.LENGTH_SHORT).show()
-                else
+                pos in 0 until noteAdapt.itemCount ->
                     (noteList.findViewHolderForAdapterPosition(pos) as NoteAdapter.NoteHolder?)?.onSetDeadline(cal)
+                else ->
+                    Toast.makeText(this, R.string.note_not_on_list, Toast.LENGTH_SHORT).show()
             }
         }
     }

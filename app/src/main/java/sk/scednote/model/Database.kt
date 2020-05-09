@@ -145,6 +145,9 @@ class Database {
 
     /**
      * ziska nastavenu farbu. Prednastavena farba je v resources, takze navratova hodnota je nenullova
+     *
+     * @param target Identifikator farby [String]
+     * @return [Ahsl] farba v modeli HSL
      */
     fun getColor(target: String): Ahsl {
         val query = with(TableSet.Colors) {"SELECT $A, $H, $S, $L FROM $this WHERE $TARGET=?"}
@@ -162,6 +165,7 @@ class Database {
 
     /**
      * Nacita zoznam predmetov
+     * @return [ArrayList] of [Subject] zoznam vsetkych predmetov
      */
     fun loadSubjects(): ArrayList<Subject> {
         val query = with(TableSet.Subjects) {"SELECT * FROM $this ORDER BY $ABBREVIATION"}
@@ -180,6 +184,8 @@ class Database {
 
     /**
      * Vyhlada konkretny predmet podla jeho ID
+     * @param id ID predmetu
+     * @return [Subject] Predmet alebo null
      */
     fun getSubject(id: Long): Subject? {
         val query = with(TableSet.Subjects){"SELECT * FROM $this WHERE ${BaseColumns._ID}=$id"}
@@ -194,6 +200,9 @@ class Database {
 
     /**
      * Vyhlada konkretny predmet podla jeho skratky
+     *
+     * @param abb Skratka predmetu [String]
+     * @return [Subject] Predmet alebo null
      */
     fun getSubject(abb: String): Subject? {
         val query = with(TableSet.Subjects) {"SELECT * FROM $this WHERE UPPER($ABBREVIATION)=?"}
@@ -209,6 +218,8 @@ class Database {
 
     /**
      * Ziska data o vyucovacej hodine s danym ID
+     * @param id ID hodiny [Long]
+     * @return [Lesson] Hodina alebo null
      */
     fun getLesson(id: Long): Lesson? {
         val lID = BaseColumns._ID
@@ -236,6 +247,7 @@ class Database {
 
     /**
      * Zisti najskorsi cas zaciatku vyucovania a najneskorsi cas konca vyucovania
+     * @return [IntRange] čas od najskôršieho začiatku po najneskôrší koniec
      */
     fun getScedRange(): IntRange {
         val query = with(TableSet.Lessons) {"SELECT MIN($START) AS start, MAX($START + $DURATION - 1) AS end FROM $this"}
@@ -244,6 +256,7 @@ class Database {
 
     /**
      * Vrati vsetky vyucivacie hodiny v tabulke, prip. hodiny z konkretneho dna
+     * @param day den [Day], pre ktory sa nacita rozvrh. Ak je hodnota null, nacita sa cely rozvrh
      */
     fun getScedule(day: Day? = null): ArrayList<Lesson> {
         val curs: Cursor
@@ -285,6 +298,9 @@ class Database {
 
     /**
      * Vrati vsetky neobsadene casy v danom dni  (obcas sa neprihliada na predmety, ktore su mozno prave teraz aktualizovane)
+     * @param day poradie dna v tyzdni
+     * @param exception ID predmetu, pre ktorý platí vínimka (Ak sa aktualizuje, sam seba neobsadi)
+     * @return [IntArray] Vrati mnozstvo zatial neobsadenych hodin
      */
     fun getFreeHours(day: Int, exception: Long = -1):IntArray {
         val query = with(TableSet.Lessons){"SELECT $START,$START+$DURATION-1 FROM $this WHERE $DAY=$day and ${BaseColumns._ID}!=$exception ORDER BY $START"}
@@ -315,6 +331,8 @@ class Database {
 
     /**
      * Vrati zoznam dat
+     * @param sub_id ID poznamky
+     * @return [ArrayList] of [Note] Zoznam úloh
      */
     fun getNotes (sub_id: Long): ArrayList<Note> {
         if (sub_id <= Note.NO_DATA) return ArrayList()
@@ -341,6 +359,7 @@ class Database {
 
     /**
      * Ziska vsetky nadchadzajuce ulohy s deadlinom
+     * @return [ArrayList] of [Note] Zoznam úloh
      */
     fun getDeadlinedNotes(): ArrayList<Note> {
         val sql = with (TableSet.Notes) {
@@ -365,6 +384,7 @@ class Database {
 
     /**
      * vyberie vsetky po sebe iduce hodiny s rovnakymi vlastnostami
+     * @return nasleduju za sebou identicke hodiny [ano / nie]
      */
     private fun hasSplitLessons(): Boolean {
         with(TableSet.Lessons) {
@@ -376,7 +396,8 @@ class Database {
     }
 
     /**
-     * Zisti, ci je k predmetu pripnuta poznamka, alebo sa vyucuje
+     * Zisti, ci je k predmetu pripnuta poznamka, alebo ci sa v nejakom case vyucuje
+     * @param id ID kontrolovaneho predmetu
      */
     fun isSubjectObsolete(id: Long): Boolean {
         val count: Boolean
@@ -399,6 +420,9 @@ class Database {
 
     /**
      * Nastavi alebo zmeni farbu pre dany ciel
+     *
+     * @param target Identifikátor farby
+     * @param ahsl Farba, ktorú ukladám do databázy
      */
     fun setColor(target: String, ahsl: Ahsl) {
         wrt.execSQL(
@@ -410,6 +434,11 @@ class Database {
 
     /**
      * Vlozi novy predmet do databazy
+     *
+     * @param abb Skratka vkladaneho suboru
+     * @param full Cely názov vkladaného predmetu
+     *
+     * @return [Long] id vloženého objektu
      */
     fun insertSubject(abb: String, full: String): Long {
         val sub = getSubject(abb)
@@ -422,6 +451,9 @@ class Database {
 
     /**
      * Vlozi alebo aktualizuje vyucovaciu hodinu a zluci po sebe iduce duplicity
+     *
+     * @param les Vyučovacia hodina
+     * @return [Long] ID vloženej alebo upravenej hodiny
      */
     fun insertOrUpdateLesson(les: Lesson): Long {
         val foundId = getLesson(les.id)?.id ?: -1
@@ -453,6 +485,8 @@ class Database {
 
     /**
      * Vlozi novu poznamku k predmetu
+     * @param note Úloha [Note]
+     * @return [Long] ID vloženej poznámky
      */
     fun insertNote(note: Note):Long {
         if (getNote(note.id) != null) throw Exception("Note already exists!")
@@ -475,6 +509,10 @@ class Database {
 
     /**
      * Aktualizuje data o predmete
+     * @param id ID upravovaneho predmetu
+     * @param abb Skratka upravovaneho predmetu
+     * @param full Celý názov predmetu
+     * @return [Long] ID predmetu
      */
     fun updateSubject(id: Long, abb: String, full: String): Long {
         with(TableSet.Subjects) {
@@ -489,6 +527,11 @@ class Database {
 
     /**
      * Zluci 2 duplicitne predmety, ak po sebe nasleduju
+     *
+     * @param updatingSub predmet ktorý sa menil a po zlúčení s druhým zanikne
+     * @param validSub predmet, ktorý sa zachová a prevezme všetky poznámky a čas v rozvrhu
+     * zo zanikajúceho predmetu
+     *
      */
     fun mergeSubjects(updatingSub: Subject, validSub: Subject) {
         //obidva predmety musia existovat aby sa zlucili
@@ -537,7 +580,9 @@ class Database {
     }
 
     /**
-     * po sebe iduce hodiny s rovnakymi vlastnostami sa zlucia dokopy
+     * hodiny s rovnakymi vlastnostami iduce po sebe bez prestavky sa zlucia dokopy
+     *
+     * @param day Deň v ktorom sa tento prípad ošetruje. Ak je hodnota null, kontrolujú sa všetky hodiny z celého týždňa
      */
     fun putLessonsTogether(day: Day? = null) {
         if (hasSplitLessons()) {
@@ -565,6 +610,8 @@ class Database {
 
     /**
      * Aktualizuje ulohu pripnutu k predmetu
+     * @param note Poznámka [Note] s novými platnými vlastnosťami
+     * @return [Long] ID poznámky
      */
     fun updateNote (note: Note): Long {
         if (note.id > -1) {
@@ -613,6 +660,7 @@ class Database {
 
     /**
      * Odstranit predmet
+     * @param id ID predmetu
      */
     fun removeSubject(id: Long) {
         val cond = arrayOf(id.toString())
@@ -641,6 +689,7 @@ class Database {
 
     /**
      * odstranit konkretnu hodinu ak existuje
+     * @param id ID hodiny
      */
     fun removeLesson(id: Long) {
         wrt.delete(TableSet.Lessons.toString(), "${BaseColumns._ID}=?", arrayOf(id.toString()))
@@ -649,6 +698,7 @@ class Database {
 
     /**
      * Odstranit konkretnu poznamku ak existuje
+     * @param id ID poznámky
      */
     fun removeNote (id: Long) {
         getNote(id)?.let{ NoteReminder.cancelReminder(it) }

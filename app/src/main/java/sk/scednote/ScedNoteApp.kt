@@ -50,7 +50,6 @@ class ScedNoteApp: Application() {
                 intent.action = "android.appwidget.action.APPWIDGET_UPDATE"
                 intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
                 ctx.sendBroadcast(intent)
-                //manager.notifyAppWidgetViewDataChanged(ids, R.id.widget_note_list)
             }
         }
     }

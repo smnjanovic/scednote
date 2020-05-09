@@ -19,11 +19,11 @@ class ScedWidget : AppWidgetProvider() {
         val intent = Intent(context, Main::class.java)
         val pintent = PendingIntent.getActivity(context, 0, intent, 0)
 
-        // There may be multiple widgets active, so update all of them
+        // aktualizacia 1 alebo viac rovnakych widgetov
         for (appWidgetId in appWidgetIds) {
             val remote = RemoteViews(context.packageName, R.layout.timetable_widget)
             remote.setImageViewBitmap(R.id.table_image, TimetableImage().drawTable())
-            remote.setOnClickPendingIntent(R.id.table_image, pintent) // zistit co dalej
+            remote.setOnClickPendingIntent(R.id.table_image, pintent)
             appWidgetManager.updateAppWidget(appWidgetId, remote)
         }
     }

@@ -14,58 +14,64 @@ import sk.scednote.model.Note
 import java.util.*
 
 /**
- * Adapter zobrazujuci zoznam uloh cakajucich tento tyzden
+ * Adapter zobrazujuci zoznam uloh v terminoch v tomto tyzdni
+ * @param bdl zalohovane dáta
  */
-class RecentNotesAdapter(db: Database?, bdl: Bundle?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecentNotesAdapter(bdl: Bundle?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val NOT_HOLDER = "Clickable items need their holders asigned to their tags!"
         private const val BACKUP = "BACKUP"
     }
 
-    val data = db ?: Database()
+    val data = Database()
     val items: ArrayList<Note> = bdl?.getParcelableArrayList(BACKUP) ?: data.getNotes(
         Note.DEADLINE_RECENT)
 
+    /**
+     * Načítanie čerstvých dát
+     */
     fun reload() {
         items.clear()
         items.addAll(data.getNotes(Note.DEADLINE_RECENT))
         notifyDataSetChanged()
     }
-    /**
-     * @long1 category
-     * @long2 note ID
-     */
+
     // funkcia ktora presmeruje uzivatela na aktivitu so zoznamom. treba ju nastavit v aktivite
     private var redirect:(Long, Long)-> Unit = fun (_, _) {}
     private var notifyIfEmpty: ()-> Unit = fun () {}
 
+    /**
+     * čo sa má stať po kliknutí na položku
+     * @param fn Funkcia
+     */
     fun setOnNoteNavigate(fn: (Long, Long)-> Unit) { redirect = fn }
+
+    /**
+     * čo sa stane, ak je zoznam prázdny
+     */
     fun setOnNotifyIfEmpty(fn: ()-> Unit) { fn() }
+
+    /**
+     * Zálohovanie dát
+     */
     fun storeBackup(bdl: Bundle) {
         bdl.putParcelableArrayList(BACKUP, items)
     }
 
+    //udalosť presmerovania na inú aktivitu
     val noteRedirect = View.OnClickListener {
         if (it.tag !is RecentNotesHolder) throw (ClassCastException(NOT_HOLDER))
         with (it.tag as RecentNotesHolder) {
             val item = items[adapterPosition]
             val nextMidnight = Calendar.getInstance().apply {
-                set(
-                    this.get(Calendar.YEAR),
-                    this.get(Calendar.MONTH),
-                    this.get(Calendar.DAY_OF_MONTH) + 1,
-                    0,
-                    0
-                )
+                add(Calendar.DAY_OF_MONTH, 1)
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
             }
             val midnightAfter = Calendar.getInstance().apply {
-                set(
-                    nextMidnight.get(Calendar.YEAR),
-                    nextMidnight.get(Calendar.MONTH),
-                    nextMidnight.get(Calendar.DAY_OF_MONTH) + 1,
-                    0,
-                    0
-                )
+                timeInMillis = nextMidnight.timeInMillis + 24 * 60 * 60 * 1000 - 1
             }
             val category = when {
                 it == itemView.abb || item.deadline == null -> item.sub.id
@@ -88,10 +94,25 @@ class RecentNotesAdapter(db: Database?, bdl: Bundle?): RecyclerView.Adapter<Recy
         }
     }
 
+    /**
+     * Tvorba view holdera
+     * @param parent Priamy predok
+     * @param viewType Typ ViewHoldera
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return RecentNotesHolder(LayoutInflater.from(parent.context).inflate(R.layout.note_item_delete_only, parent, false))
     }
+
+    /**
+     * Vráti počet záznamov
+     * @return Počet záznamov
+     */
     override fun getItemCount() = items.size
+
+    /**
+     * @param holder ViewHolder
+     * @param position Pozícia dát v zozname
+     */
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as RecentNotesHolder).bind()
     }

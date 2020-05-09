@@ -22,6 +22,8 @@ import kotlin.collections.ArrayList
 /**
  * Model nacita zoznam uloh podla vybranej kategorie a vytvara pohlady (MVC).
  * Komunikuje s databazou, t.j. vytvara, aktualizuje a vymazava data
+ * @param cat kategória alebo ID predmetu
+ * @param bundle záloha dát
  */
 class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
@@ -49,11 +51,15 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
 
     init { addNewItemIfValid() }
 
-    /**
+    /*
      * handlery udalosti
      */
 
     private var dateSetterFunction: (NoteHolder, Calendar)->Unit = fun(_, _){}
+
+    /**
+     * @param fn Čo sa ná stať po kliknutí na tlačidlo nastavovania času
+     */
     fun onDateTimeChange(fn: (NoteHolder, Calendar)->Unit) {
         dateSetterFunction = fn
     }
@@ -215,6 +221,7 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
 
     /**
      * Nacitanie dat podla novej kategorie
+     * @param cat zvolená kategória alebo ID predmetu
      */
     fun loadData(cat: Long) {
         if (cat > Note.NO_DATA) {
@@ -230,6 +237,7 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
 
     /**
      * Zalohovanie dat (pred otocenim displeja alebo zavretim aplikacie po dlhej necinnosti)
+     * @param b Zdroj zálohy
      */
     fun backupData(b: Bundle) {
         b.putParcelableArrayList(RESTORED_DATA, items)
@@ -240,6 +248,8 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
 
     /**
      * najde na ktorej pozicii sa predmet s danym id nachadza (zlozita funkcia O(n))
+     * @param id ID poznámky
+     * @return pozícia poznámky s id [id]
      */
     fun getItemPositionById(id: Long): Int {
         for (i in items.indices)
@@ -259,6 +269,10 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
      * kod adapteru
      */
 
+    /**
+     * @param parent priamy predok
+     * @param viewType typ ViewHoldera
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when(viewType) {
@@ -267,11 +281,31 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
             else -> throw Exception("NO SUCH TYPE ON SUBJECT ADAPTER!")
         }
     }
+
+    /**
+     * @return [Int] Počet prvkov
+     */
     override fun getItemCount() = items.size
+
+    /**
+     * Tvorba alebo zmena obsahu šablóny pre položku v indexe [position]
+     * @param holder ViewHolder
+     * @param position index
+     */
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is NoteHolder) holder.bind()
     }
+
+    /**
+     * @param position idnex
+     * @return [Long] ID poznámky
+     */
     override fun getItemId(position: Int) = items[position].id
+
+    /**
+     * @param position index
+     * @return [Int] typ ViewHoldera
+     */
     override fun getItemViewType(position: Int) = if (items[position].id < 1) VT_NEW else VT_OLD
 
     /**
@@ -379,6 +413,7 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
 
         /**
          * z dat z viewholdera vytvorim novy objekt Note
+         * @return [Note] úloha v aktuálnom stave
          */
         open fun parseNote() = with(items[adapterPosition]) {
             Note(id, sub, (if (editMode) detailEdit else detailRead).text.toString(), deadline)
@@ -386,6 +421,7 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
 
         /**
          * nastavi a zobrazi datum v danej polozke
+         * @param calendar Dátum
          */
         open fun onSetDeadline(calendar: Calendar) {
             show(clearDate)
@@ -412,6 +448,7 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
     /**
      * ViewType: Old
      * metody a udalosti unikatne pre polozky existujucich poznamok
+     * @param viewItem priamy predok obsahujúci tento layout
      */
     inner class OldNoteHolder(viewItem: View): NoteHolder(viewItem) {
         /**
@@ -436,6 +473,7 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
         /**
          * Ak existujuca poznamka nie je v rezime uprav, okamzite po zmene datumu sa zmena prejavi
          * aj v databaze
+         * @param calendar Dátum
          */
         override fun onSetDeadline(calendar: Calendar) {
             super.onSetDeadline(calendar)
@@ -458,6 +496,7 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
      * ViewType: NEW
      *
      * Funkcie pre view holder vznikajucej polozky
+     * @param viewItem Priamy predok obsahujúci layout šablóny
      */
     inner class NewNoteHolder(viewItem: View): NoteHolder(viewItem) {
         /**
@@ -505,6 +544,7 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
 
         /**
          * Iny sposob ako vytvorit poznamku na zaklade dat vo view holderi.
+         * @return [Note] Úloha v aktuálnom stave
          */
         override fun parseNote() = Note(
             -1, subject ?: Subject(-1, "", ""),

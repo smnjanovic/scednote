@@ -14,7 +14,14 @@ import sk.scednote.model.Database
  * ku koncu
  */
 class NotificationAdvance : AppCompatActivity() {
+    companion object {
+        private const val ADVANCE = "ADVANCE"
+    }
     private lateinit var data: Database
+
+    /**
+     * Predstih upozornení v milisekundách
+     */
     private var millis: Int
         get() = (((days.value * 24) + hours.value) * 60 + minutes.value) * 60000
         set(value ) {
@@ -26,7 +33,16 @@ class NotificationAdvance : AppCompatActivity() {
             days.value = time
         }
 
+    /**
+     * krok späť
+     * @return  [Boolean]
+     */
     override fun onSupportNavigateUp() = onBackPressed().let { true }
+
+    /**
+     * Nastavenie rozsahu ciselnych hodnot a udalosti tlacidiel
+     * @param saved Zachované dáta
+     */
     override fun onCreate(saved: Bundle?) {
         super.onCreate(saved)
         data = Database()
@@ -39,7 +55,7 @@ class NotificationAdvance : AppCompatActivity() {
         hours.minValue = 0
         minutes.maxValue = 59
         minutes.minValue = 0
-        millis = NoteReminder.reminderAdvance
+        millis = saved?.getInt(ADVANCE) ?: NoteReminder.reminderAdvance
 
         set.setOnClickListener {
             NoteReminder.reminderAdvance = millis
@@ -53,6 +69,19 @@ class NotificationAdvance : AppCompatActivity() {
         cancel.setOnClickListener { finish() }
         unset.visibility = if (NoteReminder.enabled) View.VISIBLE else View.GONE
     }
+
+    /**
+     * Uloženie dát pred zavretím systémom
+     * @param outState Balík ukladaných dát
+     */
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(ADVANCE, millis)
+    }
+
+    /**
+     * Zavretie databázy
+     */
     override fun onDestroy() {
         data.close()
         super.onDestroy()

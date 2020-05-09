@@ -75,6 +75,8 @@ class TimetableImage {
 
     /**
      * Nakresli tabulku s rozvrhom a vrati bitmapu
+     *
+     * @return [Bitmap] returns drawn image of scedule in the table
      */
     fun drawTable(): Bitmap {
         with(data.getScedRange()) {

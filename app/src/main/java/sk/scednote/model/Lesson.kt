@@ -6,6 +6,13 @@ import android.os.Parcelable
 
 /**
  * Data o vyucovacej hodine
+ *
+ * @param id ID hodiny [Long]
+ * @param day Ďeň vyučovania [Day]
+ * @param time Časový rozsah vyučovania [IntRange]
+ * @param sort Forma vyučovania [ScedSort]
+ * @param subject Predmet [Subject]
+ * @param room miestnosť [String]
  */
 data class Lesson (val id: Long, val day: Day, val time: IntRange, val sort: ScedSort, val subject: Subject, val room: String) : Parcelable {
 
@@ -51,15 +58,20 @@ data class Lesson (val id: Long, val day: Day, val time: IntRange, val sort: Sce
 
     /**
      * Porovnanie hodin, ci su rovnake (nie ci su v rovnakom case)
+     *
+     * @param other dalsi objekt malo by sa jednat o vyucovaciu hodinu
+     * @throws IllegalArgumentException porovnavat smiem iba Hodinu s hodinou, prip. null
      */
     override fun equals(other: Any?): Boolean {
-        if (other == null) return false
-        if(other !is Lesson) return false
-        return day == other.day && sort == other.sort && room == other.room && subject == other.subject
+        if(other is Lesson?) return day == other?.day && sort == other?.sort && room == other?.room && subject == other?.subject
+        throw IllegalArgumentException("The type of an argument must be Lesson!")
     }
 
     /**
      * zistenie ci je medzi 2 predmetmi nejaky casovy odstup
+     *
+     * @param les Kontrola ci tato hodina a hodina v parametri nasleduju tesne za sebou (bez prestavky medzi nimi)
+     * @return [Boolean] je medzi nimi odstup aspon o 1 hodinu false inak true
      */
     fun breaksBetween(les: Lesson): Boolean {
         return this.day == les.day && (this.time.first - 1 == les.time.last || this.time.last + 1 == les.time.first)

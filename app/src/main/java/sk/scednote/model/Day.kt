@@ -21,6 +21,8 @@ enum class Day {
 
         /**
          * Ziska den v tyzdni
+         * @param n [Int] poradie dna v tyzdni
+         * @return [Day] den
          */
         operator fun get(n: Int): Day {
             try { return days[n] }

@@ -58,6 +58,11 @@ class EditLesson : AppCompatActivity() {
                 }
             }
         }
+
+        /**
+         * Kliknutia
+         * @param v kliknutý objekt
+         */
         override fun onClick(v: View?) {
             when(v) {
                 abort -> finish()
@@ -82,12 +87,17 @@ class EditLesson : AppCompatActivity() {
 
     /**
      * Navrat
+     * @return [Boolean] true
      */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
+    /**
+     * priprava aktivity
+     * @param savedInstanceState zaloha
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.les_edit)
@@ -113,6 +123,9 @@ class EditLesson : AppCompatActivity() {
 
     /**
      * Ak bol pocas vytvarania hodiny vytvoreny novy predmet, tak ho treba v Spinneri zvolit
+     * @param requestCode kod ziadosti
+     * @param resultCode kod vysledku
+     * @param intent vysledne data
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
@@ -132,6 +145,7 @@ class EditLesson : AppCompatActivity() {
 
     /**
      * Ulozenie dat pred ukoncenim aplikacie systemom
+     * @param outState záloha na uloženie
      */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -145,6 +159,10 @@ class EditLesson : AppCompatActivity() {
             putString(BUNDLE_ROOM, locationSet.text.toString())
         }
     }
+
+    /**
+     * Zavretie databáz
+     */
     override fun onDestroy() {
         data.close()
         super.onDestroy()

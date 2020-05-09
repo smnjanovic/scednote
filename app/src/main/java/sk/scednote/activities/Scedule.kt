@@ -39,14 +39,20 @@ class Scedule : AppCompatActivity() {
     private lateinit var day: Day
     private var highlightColor by Delegates.notNull<Int>()
 
-    /*
-        Vytvorenie tlacidla pre navrat na predoslu aktivitu
-        Zdroj: https://devofandroid.blogspot.com/2018/03/add-back-button-to-action-bar-android.html
-    */
+    /**
+     *  Vytvorenie tlacidla pre navrat na predoslu aktivitu
+     *  Zdroj: https://devofandroid.blogspot.com/2018/03/add-back-button-to-action-bar-android.html
+     *  @return true
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
+
+    /**
+     * Príprava aktivity
+     * @param savedInstanceState záloha z predošlej aktivity zrušenej systémom
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.scedule)
@@ -66,6 +72,12 @@ class Scedule : AppCompatActivity() {
         }
     }
 
+    /**
+     * Výsledky iných aktivít
+     * @param requestCode kód žiadosti
+     * @param resultCode výsledný kód
+     * @param data výsledné dáta
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADDED_CHANGED && resultCode == Activity.RESULT_OK && data != null)
@@ -73,19 +85,28 @@ class Scedule : AppCompatActivity() {
         else lesAdapt.loadData(day)
     }
 
+    /**
+     * Pokračovanie
+     */
     override fun onResume() {
         super.onResume()
         //Vypocet scroll pozicie oneskorim az o 0 ms ;-). Vtedy je uz GUI viditelne.
         Handler().postDelayed({ scrollToHighLightedTab() }, 0)
     }
 
+    /**
+     * @param outState Zdroj zálohy
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(recV, lesAdapt.items)
         outState.putParcelable(recP, scedList.layoutManager?.onSaveInstanceState())
         outState.putInt(higL, day.position)
     }
-    // zapamatat posledny zvoleny den
+
+    /**
+     * Zapamätať si naposledy zobrazený deň
+     */
     override fun onStop() {
         super.onStop()
         with(getSharedPreferences(DAYS, Context.MODE_PRIVATE).edit()) {
@@ -93,13 +114,18 @@ class Scedule : AppCompatActivity() {
             commit()
         }
     }
+
+    /**
+     * Zavretie databáz
+     */
     override fun onDestroy() {
         lesAdapt.closeDb()
         super.onDestroy()
     }
 
     /**
-     * Tlacidla pre prepinanie sa medzi dnami a tlacidlo na pridanie hodiny
+     * Prepinanie sa medzi dnami alebo pridanie hodiny
+     * @view Tlačidlo na ktoré sa kliklo
      */
     fun onClick (view: View) {
         when(view) {
@@ -118,6 +144,7 @@ class Scedule : AppCompatActivity() {
     /**
      * RecyclerView - vytvorenie alebo obnovenie zoznamu
      * inspiracia: https://www.youtube.com/watch?v=_jU7vMw3Wcw
+     * @param saved záloha súborov
      */
     private fun setUpRecycleView(saved: Bundle? = null) {
         btns = arrayOf(Mon, Tue, Wed, Thu, Fri)
@@ -137,8 +164,7 @@ class Scedule : AppCompatActivity() {
             catch (ex: ClassCastException) {throw ClassCastException(ex.message + "Item is missing a tag!")}
         }
         lesAdapt.onDelete {
-            try { lesAdapt.removeItem((it.tag as ScedAdapter.ScedHolder).adapterPosition) }
-            catch (ex: ClassCastException) {throw ClassCastException(ex.message + "Item is missing a tag!")}
+            lesAdapt.removeItem((it.tag as ScedAdapter.ScedHolder).adapterPosition)
         }
         scedList.apply {
             layoutManager = LinearLayoutManager(this@Scedule)

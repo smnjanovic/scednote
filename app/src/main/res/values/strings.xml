@@ -103,4 +103,5 @@
     <string name="hours">Hodiny</string>
     <string name="days">Dni</string>
     <string name="notify_on_time">Predstih upozornení</string>
+    <string name="note_not_on_list">Poznámka sa v zozname už nenachádza!</string>
 </resources>

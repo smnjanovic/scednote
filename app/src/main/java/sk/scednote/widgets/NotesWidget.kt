@@ -28,7 +28,13 @@ class NotesWidget : AppWidgetProvider() {
 
         /**
          * metoda je znovu pouzitelna v aktivite ktora konfiguruje widget pri prvom vytvoreni
-         * vola sa pre kazdy widget osobitne. Jej ulohou je aktualizovat obsah widgetu
+         * vola sa pre kazdy widget osobitne. Jej ulohou je aktualizovat obsah widgetu.
+         *
+         * @param ctx Sucasny kontext. Hodnota nesmie byt null
+         * @param widget ID widgetu
+         * @param manager Spravca widgetov
+         * @param category kategoria zoznamu, ktory sa zobrazi vo widgete
+         * @param title Titulok widgetu
          */
         fun confirmUpdate (ctx: Context, widget: Int, manager: AppWidgetManager, category: Long, title: String) {
             val adapterIntent = Intent(ctx, NoteWidgetService::class.java).apply {
@@ -61,6 +67,10 @@ class NotesWidget : AppWidgetProvider() {
 
     /**
      * Aktualizacia obsahu widgetu
+     *
+     * @param context Sucasny kontext. Hodnota nesmie byt null
+     * @param appWidgetManager Spravca widgetov
+     * @param appWidgetIds Mnozina ID widgetov rovnakeho typu
      */
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         for (appWidgetId in appWidgetIds) {
@@ -77,6 +87,9 @@ class NotesWidget : AppWidgetProvider() {
 
     /**
      * pokus o odstranenie zaznamu v zozname vo widgete
+     *
+     * @param context Sucasny kontext. Hodnota nesmie byt null
+     * @param intent Sucasny intent. Nesmie byt null
      */
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == ACTION_DELETE) {

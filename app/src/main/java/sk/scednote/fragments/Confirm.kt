@@ -21,6 +21,10 @@ class Confirm: DialogFragment() {
 
         /**
          * Vytvori sa nova instancia dialogu s obsahom textu podla parametrov
+         * @param msg správa pre uživateľa
+         * @param confirm nápis na tlačidle pre potvrdenie
+         * @param cancel nápis na tlačidle pre zrušenie
+         * @return Confirm Nová inštancia s nastaveným obsahom uvedeným v parametroch
          */
         fun newInstance(msg: String, confirm: String? = null, cancel: String? = null): Confirm {
             return Confirm().also {
@@ -41,6 +45,8 @@ class Confirm: DialogFragment() {
 
     /**
      * Priprava dialogu
+     * @param saved uchované dáta s predošlého zavretia
+     * @return [Dialog] Dialóg na zobrazenie
      */
     override fun onCreateDialog(saved: Bundle?): Dialog {
         return activity?.let {
@@ -58,6 +64,7 @@ class Confirm: DialogFragment() {
 
     /**
      * ulozenie dat k dialogu
+     * @param outState priestor na uloženie zálohy dát
      */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -70,12 +77,17 @@ class Confirm: DialogFragment() {
 
     /**
      * udalost, ktora sa vykona ak uzivatel potvrdi, ze chce pokracovat
+     * @param fn Funkcia, čo sa má stať, keď uživateľ klikne potvrdiť
      */
     fun setOnConfirm(fn: (DialogInterface, Int) -> Unit) {
         onConfirm = fn
     }
 
-    /*fun setOnCancel(fn: (DialogInterface, Int) -> Unit) {
+    /**
+     * udalost, ktora sa vykona ak uzivatel zrusi, to co robil
+     * @param fn Funkcia, čo sa má stať, keď užívateľ klikne zrušiť
+     */
+    fun setOnCancel(fn: (DialogInterface, Int) -> Unit) {
         onCancel = fn
-    }*/
+    }
 }

@@ -34,15 +34,18 @@ class Movement: View.OnTouchListener {
 
     /**
      * Zmena hranic posunu po horizontalnej osi
+     * @param bounds Hranice posuvania sa po osi X
      */
     fun setBoundsX(bounds: ClosedFloatingPointRange<Float>) { bdsX = bounds }
     /**
      * Zmena hranic posunu po vertikálnej osi
+     * @param bounds Hranice posuvania sa po osi Y
      */
     fun setBoundsY(bounds: ClosedFloatingPointRange<Float>) { bdsY = bounds }
 
     /**
      * Nastavenie pomeru zvacsenia / zmensenia rodicovskeho suboru
+     * @param scale Pomer zväčšenia
      */
     fun mentionScale(scale: Float) {
         sclX = scale
@@ -50,15 +53,20 @@ class Movement: View.OnTouchListener {
     }
     /**
      * Nastavenie pomeru zvacsenia / zmensenia rodicovskeho suboru na osi X
+     * @param scaleX Pomer zväčšenia
      */
     fun mentionScaleX(scaleX: Float) { sclX = scaleX }
     /**
      * Nastavenie pomeru zvacsenia / zmensenia rodicovskeho suboru na osi Y
+     * @param scaleY Pomer zväčšenia
      */
     fun mentionScaleY(scaleY: Float) { sclY = scaleY }
 
     /**
      * Samotne posuvanie objektu
+     * @param view Objekt dotyku
+     * @param motion Detaily o dotyku vrátane správania sa dotyku (posuvanie, pustenie, pridrzanie...)
+     * @return [Boolean] Vrati hodnotu true alebo false, podla toho, ci na dany typ dotyku bola nejaka reakcia
      */
     override fun onTouch(view: View, motion: MotionEvent): Boolean {
         val previousEventAction = lastEventAction

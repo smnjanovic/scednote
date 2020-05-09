@@ -25,12 +25,17 @@ class NotesWidgetConf : Activity() {
     }
 
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
-    private val database = Database()
+    private lateinit var database: Database
 
 
+    /**
+     * Tvorba obsahu a udalosti
+     * @param icicle zaloha
+     */
     public override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
         setContentView(R.layout.notes_widget_configure)
+        database = Database()
 
         appWidgetId = intent?.extras?.getInt(
             AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -83,7 +88,11 @@ class NotesWidgetConf : Activity() {
 
             setResult(RESULT_OK, Intent().apply { putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId) })
             finish()
-
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        database.close()
     }
 }

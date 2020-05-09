@@ -16,37 +16,30 @@ class TimeFragment: DialogFragment(), TimePickerDialog.OnTimeSetListener {
     companion object {
         const val CAL = "CAL"
     }
-    private var timeEvent: (TimePicker?, Int, Int)->Unit = fun(_, _, _){}
+    private var timeEvent: (Calendar)->Unit = fun(_){}
     val data = Bundle()
 
     /**
-     * Udalost upravitelna externe
+     * Táto funkcia umožňuje nastaviť, čo sa má stať, keď užívateľ zmení čas
+     *
+     * @param fn
      */
-    fun setOnChoice(fn: (TimePicker?, Int, Int)->Unit) {
+    fun setOnChoice(fn: (Calendar)->Unit) {
         timeEvent = fn
     }
 
     /**
      * Vlozenie kalendarac
+     *
+     * @param calendar vloženie existujueho dátumu [Calendar] do pamäti na ďaľšie úpravy
      */
     fun putCalendar(calendar: Calendar) = data.putLong(CAL, calendar.timeInMillis)
 
     /**
-     * Vlozenie kalendarac
-     */
-    fun getCalendar() = Calendar.getInstance().also { it.timeInMillis = data.getLong(CAL, 0) }
-
-    /**
-     * Udalost upravitelna externe
-     */
-    fun setOnChoice(reducedFn: (Int, Int)->Unit) {
-        setOnChoice(fun (_: TimePicker?, hour: Int, minute: Int) {
-            reducedFn(hour, minute)
-        })
-    }
-
-    /**
      * Vytvorenie dialogu na zobrazenie
+     *
+     * @param saved Zachované dáta fragmentu, ktorý bol systémom zavretý
+     * @return [Dialog] Vráti diaóg
      */
     override fun onCreateDialog(saved: Bundle?): Dialog {
         saved?.let { data.putAll(it) }
@@ -61,23 +54,29 @@ class TimeFragment: DialogFragment(), TimePickerDialog.OnTimeSetListener {
 
     /**
      * Nastavenie casu (vratane datumu, pre pripad ze nastavujem oboje)
+     *
+     * @param view box na nastavovanie času
+     * @param hourOfDay nastavená hodina, nastavená minúta
      */
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        val cal = Calendar.getInstance()
+        //nastavenie hodnôt
+        val cal = Calendar.getInstance().also {
+            it.timeInMillis = data.getLong(CAL, System.currentTimeMillis())
+        }
         cal.set(Calendar.HOUR_OF_DAY, hourOfDay)
         cal.set(Calendar.MINUTE, minute)
         cal.set(Calendar.SECOND, 0)
         cal.set(Calendar.MILLISECOND, 0)
-        data.getLong(CAL, cal.timeInMillis)
-        timeEvent(view, hourOfDay, minute)
+        putCalendar(cal)
+        timeEvent(cal)
     }
 
     /**
      * doteraz zapamatane data si fragment ulozi v pamati
+     * @param outState dáta na odloženie pred zrušením fragmentu systémom
      */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putAll(data)
     }
-
 }
