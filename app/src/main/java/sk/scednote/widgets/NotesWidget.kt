@@ -67,7 +67,6 @@ class NotesWidget : AppWidgetProvider() {
 
     /**
      * Aktualizacia obsahu widgetu
-     *
      * @param context Sucasny kontext. Hodnota nesmie byt null
      * @param appWidgetManager Spravca widgetov
      * @param appWidgetIds Mnozina ID widgetov rovnakeho typu
@@ -87,7 +86,6 @@ class NotesWidget : AppWidgetProvider() {
 
     /**
      * pokus o odstranenie zaznamu v zozname vo widgete
-     *
      * @param context Sucasny kontext. Hodnota nesmie byt null
      * @param intent Sucasny intent. Nesmie byt null
      */
@@ -116,7 +114,5 @@ class NotesWidget : AppWidgetProvider() {
         }
         super.onReceive(context, intent)
     }
-
-
 }
 
