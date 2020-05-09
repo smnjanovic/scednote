@@ -66,6 +66,27 @@ class NoteList : AppCompatActivity() {
     }
 
     /**
+     * funkcie menu poloziek
+     * @param item Menu
+     * @return [Boolean] true
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.today -> category = Note.DEADLINE_TODAY
+            R.id.tomorrow -> category = Note.DEADLINE_TOMORROW
+            R.id.recent -> category = Note.DEADLINE_RECENT
+            R.id.late -> category = Note.DEADLINE_LATE
+            R.id.forever -> category = Note.DEADLINE_FOREVER
+            R.id.subject_related -> {
+                if (subAdapt.marked == -1) subAdapt.marked = 0
+                category = subAdapt.getItemId(subAdapt.marked)
+            }
+            R.id.advance -> startActivity(Intent(this, NotificationAdvance::class.java))
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    /**
      * Krok späť
      * @return Vždy vracia true
      */
@@ -89,21 +110,6 @@ class NoteList : AppCompatActivity() {
         //zapamatanie si dialogu nastavenia datumu
         (supportFragmentManager.findFragmentByTag(DATE_DIALOG) as DateFragment?)?.let { onDateChosen(it) }
         (supportFragmentManager.findFragmentByTag(TIME_DIALOG) as TimeFragment?)?.let { onTimeChosen(it) }
-        MenuItem.OnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.today -> category = Note.DEADLINE_TODAY
-                R.id.tomorrow -> category = Note.DEADLINE_TOMORROW
-                R.id.recent -> category = Note.DEADLINE_RECENT
-                R.id.late -> category = Note.DEADLINE_LATE
-                R.id.forever -> category = Note.DEADLINE_FOREVER
-                R.id.subject_related -> {
-                    if (subAdapt.marked == -1) subAdapt.marked = 0
-                    category = subAdapt.getItemId(subAdapt.marked)
-                }
-                R.id.advance -> startActivity(Intent(this, NotificationAdvance::class.java))
-            }
-            true
-        }
     }
 
     /**
