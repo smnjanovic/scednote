@@ -9,8 +9,7 @@ import androidx.fragment.app.DialogFragment
 import java.util.*
 
 /**
- * Trieda zobrazuje dialog, mozno pomocou nej z vonka nastavit, co sa ma vykonat, po stlaceni daneho
- * tlacidla a obsah aky bude mat
+ * Trieda zobrazuje dialog na nastavenie času. Pred zobrazením do nej možno vložiť predpripravený dátum na úpravu
  */
 class TimeFragment: DialogFragment(), TimePickerDialog.OnTimeSetListener {
     companion object {

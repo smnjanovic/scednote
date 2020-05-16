@@ -16,6 +16,9 @@ import sk.scednote.adapters.RecentNotesAdapter
 import sk.scednote.fragments.Confirm
 import sk.scednote.scedule.TimetableBuilder
 
+/**
+ * Hlavná aktivita zobrazí rozvrh a úlohy s blížiacim sa termínom
+ */
 class Main : ShakeCompatActivity() {
     companion object {
         private const val CLEAN_UP = "CLEAN_UP"

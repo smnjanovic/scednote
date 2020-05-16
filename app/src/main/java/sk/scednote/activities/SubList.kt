@@ -9,7 +9,9 @@ import sk.scednote.R
 import sk.scednote.adapters.SubjectAdapter
 import sk.scednote.fragments.Confirm
 
-
+/**
+ * Načíta zoznam predmetov
+ */
 class SubList : ShakeCompatActivity() {
     companion object {
         private const val SUBLIST = "SUBLIST"

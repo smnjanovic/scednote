@@ -21,6 +21,9 @@ import sk.scednote.model.ScedSort
 import sk.scednote.model.Subject
 import kotlin.properties.Delegates
 
+/**
+ * Editor vyučovacích hodín
+ */
 class EditLesson : AppCompatActivity() {
     companion object {
         const val INTENT_LESSON = "les_id"

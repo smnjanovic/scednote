@@ -16,6 +16,9 @@ import sk.scednote.fragments.TimeFragment
 import sk.scednote.model.Note
 import java.util.*
 
+/**
+ * Načíta zoznam úloh
+ */
 class NoteList : ShakeCompatActivity() {
     companion object {
         const val OPEN_FROM_WIDGET = "OPEN FROM WIDGET"

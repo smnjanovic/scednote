@@ -7,6 +7,9 @@ import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import java.util.*
 
+/**
+ * Trieda zobrazuje dialog na nastavenie dátumu. Pred zobrazením do nej možno vložiť predpripravený dátum na úpravu
+ */
 class DateFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
     companion object {
         const val CAL = "CAL"

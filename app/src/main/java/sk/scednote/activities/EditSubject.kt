@@ -12,6 +12,9 @@ import sk.scednote.fragments.Confirm
 import sk.scednote.model.Subject
 import java.util.*
 
+/**
+ * Editor predmetov
+ */
 class EditSubject : AppCompatActivity() {
     companion object {
         const val SUB_REQUEST_CODE = 1
