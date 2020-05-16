@@ -18,20 +18,19 @@ import sk.scednote.model.Note
 /**
  * K úloham pripnutých k predmetom sa vzťahuju notifikácie na bežiace na pozadí
  */
-
 class NoteReminder : BroadcastReceiver() {
     companion object {
         const val CHANNEL_ID = "CHANNEL_ID"
         private const val CHANNEL_NOTE = "CHANNEL_NOTE"
         private const val CHANNEL_NOTE_DESC = "Note reminder channel!"
-        const val CHANNEL_NOTE_GROUP = "CHANNEL_NOTE_GROUP"
-        const val TITLE = "TITLE"
-        const val CONTENT = "CONTENT"
-        const val NOTE_ID = "NOTE_ID"
-        const val NOTE_WHEN = "WHEN"
+        private const val CHANNEL_NOTE_GROUP = "CHANNEL_NOTE_GROUP"
+        private const val TITLE = "TITLE"
+        private const val CONTENT = "CONTENT"
+        private const val NOTE_ID = "NOTE_ID"
+        private const val NOTE_WHEN = "WHEN"
         private const val TIME = "TIME"
         private const val NOTE_REMINDER_ADVANCE = "NOTE_REMINDER_ADVANCE"
-        const val NOTIFICATIONS_ENABLED = "NOTIFICATIONS_ENABLED"
+        private const val NOTIFICATIONS_ENABLED = "NOTIFICATIONS_ENABLED"
         /**
          * predstih v upozorneniach
          */
@@ -95,11 +94,10 @@ class NoteReminder : BroadcastReceiver() {
          * @param note [Note] poznamka ku ktorej nastavujem pripomienku
          */
         fun setReminder(note: Note) {
-            if (enabled) {
+            if (enabled && note.deadline != null) {
                 getAlarmPIntent(note)?.let { pintent ->
-                    val advance = reminderAdvance
                     val alarm = ScedNoteApp.ctx.getSystemService(ALARM_SERVICE) as AlarmManager
-                    alarm.setExact(RTC_WAKEUP, note.deadline!!.timeInMillis - advance, pintent)
+                    alarm.setExact(RTC_WAKEUP, note.deadline!!.timeInMillis - reminderAdvance, pintent)
                 }
             }
         }

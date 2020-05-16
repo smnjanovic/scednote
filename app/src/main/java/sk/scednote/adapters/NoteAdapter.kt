@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.note_item.view.*
 import sk.scednote.R
 import sk.scednote.ScedNoteApp
 import sk.scednote.events.TxtValid
-import sk.scednote.model.Database
 import sk.scednote.model.Note
 import sk.scednote.model.Subject
 import java.util.*
@@ -37,7 +36,7 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
     }
 
 
-    private val data = Database()
+    private val data = ScedNoteApp.database
     private var category = cat
     val subjects = data.loadSubjects()
 
@@ -91,9 +90,11 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
     private val insertAttempt = View.OnClickListener {
         if (it.tag !is NewNoteHolder) throw Exception(TAG_MISSING_OR_INVALID)
         (it.tag as NewNoteHolder).apply {
-            subject?.let { insertRecord(adapterPosition, parseNote()) } ?: Toast.makeText(
-                ScedNoteApp.ctx, ScedNoteApp.res.getString(R.string.no_subject_no_note), Toast.LENGTH_SHORT
-            ).show()
+            subject?.let {
+                insertRecord(adapterPosition, parseNote())
+                itemView.editDetailText.clearFocus()
+            } ?: Toast.makeText(ScedNoteApp.ctx, ScedNoteApp.res.getString(R.string.no_subject_no_note),
+                Toast.LENGTH_SHORT).show()
         }
     }
     private val updateAttempt = View.OnClickListener {view ->
@@ -409,6 +410,7 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
             show(detailRead)
             show(btnEdit)
             detailEdit.error?.let { detailRead.text = detailEdit.text }
+            detailEdit.clearFocus()
         }
 
         /**

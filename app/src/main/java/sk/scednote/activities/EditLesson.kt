@@ -12,9 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.les_edit.*
 import sk.scednote.R
+import sk.scednote.ScedNoteApp
 import sk.scednote.events.TxtValid
 import sk.scednote.fragments.Confirm
-import sk.scednote.model.*
+import sk.scednote.model.Day
+import sk.scednote.model.Lesson
+import sk.scednote.model.ScedSort
+import sk.scednote.model.Subject
 import kotlin.properties.Delegates
 
 class EditLesson : AppCompatActivity() {
@@ -32,9 +36,8 @@ class EditLesson : AppCompatActivity() {
     private var les: Lesson? = null
     private var subjects = ArrayList<Subject>()
     private var busyTint by Delegates.notNull<Int>()
-    private var layout by Delegates.notNull<Int>()
 
-    private lateinit var data: Database
+    private var data = ScedNoteApp.database
     private val freeHours get() = data.getFreeHours(daySel.selectedItemPosition.coerceIn(0, 4), les?.id ?: -1)
 
     private inner class Event : AdapterView.OnItemSelectedListener, View.OnClickListener {
@@ -102,11 +105,9 @@ class EditLesson : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.les_edit)
 
-        data = Database()
         les = data.getLesson(intent.getLongExtra(INTENT_LESSON, -1))
         subjects = data.loadSubjects()
         busyTint = Color.parseColor("#77FFFFFF")
-        layout = android.R.layout.simple_list_item_1
 
         val fragments = supportFragmentManager.fragments
         for (f in fragments)
@@ -134,7 +135,7 @@ class EditLesson : AppCompatActivity() {
                 val id = intent?.getLongExtra(BUNDLE_SUB, -1) ?: -1
                 if (id > -1) {
                     subjects = data.loadSubjects()
-                    subSel.adapter = ArrayAdapter(this, layout, parseSubjects())
+                    subSel.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, parseSubjects())
                     subSel.setSelection(getSubPos(id))
                 }
                 else subSel.setSelection(0) // vzdy bude existovat polozka novy - vzdy bude existovat nulty prvok
@@ -200,7 +201,7 @@ class EditLesson : AppCompatActivity() {
      */
     fun rebuildDurSel() {
         val rng = startSel.selectedItemPosition + Lesson.OPENING_HOURS.first .. Lesson.OPENING_HOURS.last
-        durSel.adapter = ArrayAdapter(this, layout, (1..rng.count()).joinToString(",").split(","))
+        durSel.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, (1..rng.count()).joinToString(",").split(","))
     }
 
     private fun isBusy(): Boolean {
@@ -237,6 +238,7 @@ class EditLesson : AppCompatActivity() {
 
     private fun setValuesAndEvents(saved: Bundle?) {
         //vyplnit selekty
+        val layout = android.R.layout.simple_list_item_1
         daySel.adapter = ArrayAdapter(this, layout, Day.titles)
         startSel.adapter = ArrayAdapter(this, layout, ArrayList<String>().apply {
             for (n in Lesson.OPENING_HOURS)

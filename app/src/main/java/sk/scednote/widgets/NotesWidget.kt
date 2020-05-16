@@ -10,10 +10,10 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.RemoteViews
 import sk.scednote.R
+import sk.scednote.ScedNoteApp
 import sk.scednote.activities.NoteList
 import sk.scednote.activities.NotesWidgetConf
 import sk.scednote.adapters.NoteWidgetService
-import sk.scednote.model.Database
 import sk.scednote.model.Note
 
 /**
@@ -92,22 +92,19 @@ class NotesWidget : AppWidgetProvider() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == ACTION_DELETE) {
             val manager = AppWidgetManager.getInstance(context)
-            val ids = manager.getAppWidgetIds(ComponentName(context, NotesWidget::class.java))
+            val widgets = manager.getAppWidgetIds(ComponentName(context, NotesWidget::class.java))
             val cat = intent.getLongExtra(NotesWidgetConf.CATEGORY, Note.NO_DATA)
 
-            for (id in ids) {
-                val pref = context.getSharedPreferences(NotesWidgetConf.SHARED_PREFS + id, Activity.MODE_PRIVATE)
+            for (widget in widgets) {
+                val pref = context.getSharedPreferences(NotesWidgetConf.SHARED_PREFS + widget, Activity.MODE_PRIVATE)
                 val cat2 = pref.getLong(NotesWidgetConf.CAT_ID, Note.NO_DATA)
 
                 //kategorie sa nezhoduju, widget nezdiela ten isty obsah
                 if (cat > 0 && cat2 > 0 && cat != cat2) continue
                 intent.getLongExtra(ITEM_ID, -1).also { noteID ->
                     if (noteID > -1) {
-                        Database().apply {
-                            removeNote(noteID)
-                            close()
-                        }
-                        manager.notifyAppWidgetViewDataChanged(id, R.id.widget_note_list)
+                        ScedNoteApp.database.removeNote(noteID)
+                        manager.notifyAppWidgetViewDataChanged(widget, R.id.widget_note_list)
                     }
                 }
             }

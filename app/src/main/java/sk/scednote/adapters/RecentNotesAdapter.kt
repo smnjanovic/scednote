@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.note_item_delete_only.view.*
 import sk.scednote.R
-import sk.scednote.model.Database
+import sk.scednote.ScedNoteApp
 import sk.scednote.model.Note
 import java.util.*
 
@@ -23,7 +23,7 @@ class RecentNotesAdapter(bdl: Bundle?): RecyclerView.Adapter<RecyclerView.ViewHo
         private const val BACKUP = "BACKUP"
     }
 
-    val data = Database()
+    val data = ScedNoteApp.database
     val items: ArrayList<Note> = bdl?.getParcelableArrayList(BACKUP) ?: data.getNotes(
         Note.DEADLINE_RECENT)
 
@@ -38,18 +38,12 @@ class RecentNotesAdapter(bdl: Bundle?): RecyclerView.Adapter<RecyclerView.ViewHo
 
     // funkcia ktora presmeruje uzivatela na aktivitu so zoznamom. treba ju nastavit v aktivite
     private var redirect:(Long, Long)-> Unit = fun (_, _) {}
-    private var notifyIfEmpty: ()-> Unit = fun () {}
 
     /**
      * čo sa má stať po kliknutí na položku
      * @param fn Funkcia
      */
     fun setOnNoteNavigate(fn: (Long, Long)-> Unit) { redirect = fn }
-
-    /**
-     * čo sa stane, ak je zoznam prázdny
-     */
-    fun setOnNotifyIfEmpty(fn: ()-> Unit) { fn() }
 
     /**
      * Zálohovanie dát
@@ -90,7 +84,6 @@ class RecentNotesAdapter(bdl: Bundle?): RecyclerView.Adapter<RecyclerView.ViewHo
             data.removeNote(items[pos].id)
             items.removeAt(pos)
             notifyItemRemoved(pos)
-            notifyIfEmpty()
         }
     }
 

@@ -1,76 +1,102 @@
 package sk.scednote.scedule
 
+import android.content.Context
 import android.graphics.*
+import android.view.WindowManager
+import sk.scednote.ScedNoteApp
 import sk.scednote.model.*
+import kotlin.math.roundToInt
 
 /**
  * Trieda vytvorí tabuľku s rozvrhom vo forme bitmapy.
  */
 
 class TimetableImage {
-    private val data = Database()
-    private val oneColWidth: Int
-    private val width: Int
-    private val headingHeight = Design.dp(20)
-    private val dayHeight = Design.dp(35)
-    private val height: Int = headingHeight + dayHeight * 5
-    private val bitmap: Bitmap
-    private val canvas: Canvas
+    private lateinit var bitmap: Bitmap
+    private lateinit var canvas: Canvas
+    private lateinit var lessons: ArrayList<Lesson>
     private var px = 0
     private var py = 0
+
+    private val frmW: Int
+    private val frmH: Int get() = frmW * 16 / 33
+    private val headingHeight = Design.dp(20)
+    private lateinit var range: IntRange
+    private val colW: Int get() = frmW / range.count().coerceAtLeast(1)
+    private val colH: Int get() = (frmH - headingHeight) / Day.values().size
+
+    private lateinit var bgH: String
+    private lateinit var bgP: String
+    private lateinit var bgC: String
+
+    private lateinit var fgH: String
+    private lateinit var fgP: String
+    private lateinit var fgC: String
 
     private val border = Paint().apply {
         color = Color.BLACK
         strokeWidth = 1F
         style = Paint.Style.STROKE
     }
-    private val head = Paint().apply {
-        color = Color.parseColor(Design.hsl2hex(data.getColor(Design.bg_h)))
-        style = Paint.Style.FILL
-    }
-    private val free = Paint().apply {
-        color = Color.parseColor(Design.hsl2hex(
-            Ahsl(
-                35,
-                0,
-                0,
-                0
-            )
-        ))
-        style = Paint.Style.FILL
-    }
-    private val presentation = Paint().apply {
-        color = Color.parseColor(Design.hsl2hex(data.getColor(Design.bg_p)))
-        style = Paint.Style.FILL
-    }
-    private val course = Paint().apply {
-        color = Color.parseColor(Design.hsl2hex(data.getColor(Design.bg_c)))
-        style = Paint.Style.FILL
-    }
-
-    private val headTxt = text(14, Design.bg_h).also { it.typeface = Typeface.DEFAULT_BOLD }
-    private val presentationHeading = text(12, Design.bg_p).also { it.typeface = Typeface.DEFAULT_BOLD }
-    private val presentationRoom = text(8, Design.bg_p)
-    private val courseHeading = text(12, Design.bg_p).also { it.typeface = Typeface.DEFAULT_BOLD }
-    private val courseRoom = text(9, Design.bg_p)
+    private val free = fill(Design.hsl2hex(Ahsl(35, 0, 0, 0)))
+    private lateinit var head: Paint
+    private lateinit var headTxt: Paint
+    private lateinit var presentation: Paint
+    private lateinit var presentationHeading: Paint
+    private lateinit var presentationRoom: Paint
+    private lateinit var course: Paint
+    private lateinit var courseHeading: Paint
+    private lateinit var courseRoom: Paint
 
     init {
-        val count = data.getScedRange().count()
-        oneColWidth = 720 / count
-        width = oneColWidth * count
-        head.color = Color.parseColor(Design.hsl2hex(data.getColor(Design.bg_h)))
-        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val point = Point()
+        (ScedNoteApp.ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getRealSize(point)
+        frmW = point.x.coerceAtMost(point.y)
+    }
+
+    private fun setUp () {
+        val db = ScedNoteApp.database
+        val h = db.getColor(Design.bg_h)
+        val p = db.getColor(Design.bg_p)
+        val c = db.getColor(Design.bg_c)
+        range = db.getScedRange()
+        lessons = db.getScedule()
+
+        bgH = Design.hsl2hex(h)
+        fgH = Design.hsl2hex(Design.customizedForeground(h))
+        bgP = Design.hsl2hex(p)
+        fgP = Design.hsl2hex(Design.customizedForeground(p))
+        bgC = Design.hsl2hex(c)
+        fgC = Design.hsl2hex(Design.customizedForeground(c))
+
+        head = fill(bgH)
+        presentation = fill(bgP)
+        course = fill(bgC)
+
+        val bold = Typeface.DEFAULT_BOLD
+        val abbSize = (colH * (10 / 50F)).roundToInt()
+        val roomSize = (colH * (8 / 50F)).roundToInt()
+
+        headTxt = text(14, fgH).also { it.typeface = bold }
+        presentationHeading = text(abbSize, fgP).also { it.typeface = bold }
+        presentationRoom = text(roomSize, fgP)
+        courseHeading = text(abbSize, fgC).also { it.typeface = bold }
+        courseRoom = text(roomSize, fgC)
+
+        bitmap = Bitmap.createBitmap(frmW, frmH, Bitmap.Config.ARGB_8888)
         canvas = Canvas(bitmap)
     }
 
-    private fun text(n: Int, colorTarget: String): Paint {
-        return Paint().apply {
-            color = Color.parseColor(Design.hsl2hex(Design.customizedForeground(data.getColor(colorTarget))))
-            style = Paint.Style.FILL
-            textSize = Design.dp(n).toFloat()
-            isElegantTextHeight = true
-            textAlign = Paint.Align.CENTER
-        }
+    private fun fill(hex: String) = Paint().apply {
+        color = Color.parseColor(hex)
+        style = Paint.Style.FILL
+    }
+    private fun text(n: Int, hex: String) = Paint().apply {
+        color = Color.parseColor(hex)
+        style = Paint.Style.FILL
+        textSize = Design.dp(n).toFloat()
+        isElegantTextHeight = true
+        textAlign = Paint.Align.CENTER
     }
 
     /**
@@ -79,14 +105,12 @@ class TimetableImage {
      * @return [Bitmap] returns drawn image of scedule in the table
      */
     fun drawTable(): Bitmap {
-        with(data.getScedRange()) {
-            drawHeader(this)
-            drawBody(this)
-        }
-        data.close()
+        setUp()
+        drawHeader()
+        drawBody()
         return bitmap
     }
-    private fun drawHeader(range: IntRange) {
+    private fun drawHeader() {
         px = 0
         py = 0
         val hours = range.count()
@@ -99,7 +123,7 @@ class TimetableImage {
         }
 
         while (next <= range.last) {
-            val w = (range.last - next + 1).coerceAtMost(step) * oneColWidth
+            val w = (range.last - next + 1).coerceAtMost(step) * colW
             val right = px + w
             val bottom = py + headingHeight
             val rect = Rect(px, py, right, bottom)
@@ -112,64 +136,72 @@ class TimetableImage {
         }
         py += headingHeight
     }
-    private fun drawBody(range: IntRange) {
+    private fun drawBody() {
         px = 0
         if (range.count() == 0) return
 
-        //nekontrolujem poradie hodin. SQL ich nacitava v poradi podla stlpcov: den, hodina
-        val lessons = data.getScedule()
-        var dayOfPrevious = 0
-        var hourAfterPreviousLesson = range.first
+        if (lessons.isEmpty()) {
+            canvas.drawRect(
+                Rect(0, 0, frmW, frmW * 16 / 33),
+                fill(Design.hsl2hex(Ahsl(35, 0, 0, 0)))
+            )
+        }
+        else {
+            //nekontrolujem poradie hodin. SQL ich nacitava v poradi podla stlpcov: den, hodina
+            var dayOfPrevious = 0
+            var hourAfterPreviousLesson = range.first
 
-        for (l in lessons) {
-            //vyplnanie medzier medzi predoslou a sucasnou hodinou s dennym odstupom
-            if (l.day.position - dayOfPrevious > 0) {
-                //volny zvysok dna
-                drawVoid((hourAfterPreviousLesson..range.last).count())
-                px = 0
-                py += dayHeight
+            for (l in lessons) {
+                //vyplnanie medzier medzi predoslou a sucasnou hodinou s dennym odstupom
+                if (l.day.position - dayOfPrevious > 0) {
+                    //volny zvysok dna
+                    drawVoid((hourAfterPreviousLesson..range.last).count())
+                    px = 0
+                    py += colH
 
-                // volne cele dni medzi sucasnou a predoslou hodinou
-                for (d in dayOfPrevious + 1 until l.day.position) {
+                    // volne viacere (cele) dni medzi sucasnou a predoslou hodinou
+                    for (d in dayOfPrevious + 1 until l.day.position) {
+                        drawVoid(range.count())
+                        px = 0
+                        py += colH
+                    }
+
+                    //volno pred zaciatkom 1. hodiny
+                    drawVoid((range.first until l.time.first).count())
+                }
+                //medzera medzi 2 hodinami v rovnakom dni
+                else
+                    drawVoid((hourAfterPreviousLesson until l.time.first).count())
+
+                //pridanie hodiny
+                dayOfPrevious = l.day.position
+                drawLesson(l)
+                hourAfterPreviousLesson = l.time.last + 1
+            }
+
+            //vyplnit prazdne riadky chybajuce do konca tyzdna
+            drawVoid((hourAfterPreviousLesson .. range.last).count())
+            px = 0
+            py += colH
+            if (++dayOfPrevious < 5)
+                for (d in dayOfPrevious .. 4) {
                     drawVoid(range.count())
                     px = 0
-                    py += dayHeight
+                    py += colH
                 }
-
-                //volno pred zaciatkom 1. hodiny
-                drawVoid((range.first until l.time.first).count())
-            }
-            //medzera medzi 2 hodinami v rovnakom dni
-            else
-                drawVoid((hourAfterPreviousLesson until l.time.first).count())
-
-            //pridanie hodiny
-            dayOfPrevious = l.day.position
-            drawLesson(l)
-            hourAfterPreviousLesson = l.time.last + 1
         }
 
-        //vyplnit prazdne riadky chybajuce do konca tyzdna
-        drawVoid((hourAfterPreviousLesson .. range.last).count())
-        px = 0
-        py += dayHeight
-        if (++dayOfPrevious < 5)
-            for (d in dayOfPrevious .. 4) {
-                drawVoid(range.count())
-                px = 0
-                py += dayHeight
-            }
     }
     private fun drawVoid(span: Int) {
-        val pw = span * oneColWidth
-        val rect = Rect(px, py, px + pw, py + dayHeight)
+        val pw = span * colW
+        val rect = Rect(px, py, px + pw, py + colH)
         canvas.drawRect(rect, free)
         canvas.drawRect(rect, border)
         px += pw
     }
     private fun drawLesson(les: Lesson) {
-        val pw = les.time.count() * oneColWidth
-        val rect = Rect(px, py, px + pw, py + dayHeight)
+        val pw = les.time.count() * colW
+        val rect = Rect(px, py, px + pw, py + colH)
         val h = if (les.sort == ScedSort.COURSE) courseHeading else presentationHeading
         val r = if (les.sort == ScedSort.COURSE) courseRoom else presentationRoom
 
@@ -177,8 +209,8 @@ class TimetableImage {
         val room = shortenText(les.room, r, rect)
         canvas.drawRect(rect, if (les.sort == ScedSort.COURSE) course else presentation)
         canvas.drawRect(rect, border)
-        canvas.drawText(abb, 0, abb.length, px + pw / 2F, py + Design.dp(15).toFloat(), h )
-        canvas.drawText(room, 0, room.length, px + pw / 2F, py + dayHeight - Design.dp(5).toFloat(), r )
+        canvas.drawText(abb, 0, abb.length, px + pw / 2F, py + (colH *15F / 33F), h )
+        canvas.drawText(room, 0, room.length, px + pw / 2F, py + colH - colH * (0.1F), r )
         px += pw
     }
 

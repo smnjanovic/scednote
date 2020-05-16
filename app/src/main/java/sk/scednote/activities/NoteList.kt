@@ -1,13 +1,10 @@
 package sk.scednote.activities
-
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.notelist.*
 import sk.scednote.NoteReminder
@@ -19,7 +16,7 @@ import sk.scednote.fragments.TimeFragment
 import sk.scednote.model.Note
 import java.util.*
 
-class NoteList : AppCompatActivity() {
+class NoteList : ShakeCompatActivity() {
     companion object {
         const val OPEN_FROM_WIDGET = "OPEN FROM WIDGET"
         const val TARGET_ID = "TARGET_ID"
@@ -74,7 +71,7 @@ class NoteList : AppCompatActivity() {
         when (item.itemId) {
             R.id.today -> category = Note.DEADLINE_TODAY
             R.id.tomorrow -> category = Note.DEADLINE_TOMORROW
-            R.id.recent -> category = Note.DEADLINE_RECENT
+            R.id.recentList -> category = Note.DEADLINE_RECENT
             R.id.late -> category = Note.DEADLINE_LATE
             R.id.forever -> category = Note.DEADLINE_FOREVER
             R.id.subject_related -> {
@@ -83,6 +80,8 @@ class NoteList : AppCompatActivity() {
             }
             R.id.advance -> startActivity(Intent(this, NotificationAdvance::class.java))
         }
+        if (item.itemId != R.id.advance)
+            noteAdapt.loadData(category)
         return super.onOptionsItemSelected(item)
     }
 
@@ -97,14 +96,14 @@ class NoteList : AppCompatActivity() {
 
     /**
      * Nastavenia pred spustením aktivity
-     * @param saved záloha dát tejto aktivity, ktorú zastavil systém
+     * @param savedInstanceState záloha dát tejto aktivity, ktorú zastavil systém
      */
-    override fun onCreate(saved: Bundle?) {
-        super.onCreate(saved)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.notelist)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         NoteReminder.createNoteReminderChannel()
-        setAdapters(saved)
+        setAdapters(savedInstanceState)
         setEvents()
 
         //zapamatanie si dialogu nastavenia datumu
@@ -128,7 +127,16 @@ class NoteList : AppCompatActivity() {
      */
     override fun onResume() {
         super.onResume()
-        scrollToNote()
+        val id = intent.getLongExtra(TARGET_ID, -1)
+        if (id > 0) {
+            val pos = noteAdapt.getItemPositionById(id)
+            if (pos in 0 until noteAdapt.itemCount)
+                //operacia vo fronte
+                noteList.post {
+                    noteList.scrollToPosition(pos)
+                    intent.removeExtra(TARGET_ID)
+                }
+        }
     }
 
     /**
@@ -218,26 +226,6 @@ class NoteList : AppCompatActivity() {
                 else ->
                     Toast.makeText(this, R.string.note_not_on_list, Toast.LENGTH_SHORT).show()
             }
-        }
-    }
-
-    //ak aktivita zacala za ucelu vyhladania konkretnej poznamky
-    private fun scrollToNote() {
-        fun untilFound(n: Int) {
-            if (noteList.findViewHolderForAdapterPosition(n) == null)
-                Handler().postDelayed({untilFound(n)}, 50)
-            else
-                noteList.scrollToPosition(n)
-        }
-        intent.getLongExtra(TARGET_ID, -1).let { target ->
-            val pos = if (target > -1) noteAdapt.getItemPositionById(target) else -1
-            if (pos in 0 until noteAdapt.itemCount) {
-                untilFound(pos)
-                intent.removeExtra(TARGET_ID)
-            }
-            //ak je nastavena kategoria zoznamu podla casu a odbila polnoc alebo deadline, zaznam sa tu uz nenajde
-            else if (target > -1)
-                intent.removeExtra(TARGET_ID)
         }
     }
 }

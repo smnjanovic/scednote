@@ -9,9 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.scedule.*
 import sk.scednote.R
@@ -24,12 +22,12 @@ import kotlin.properties.Delegates
  * vkladanie a transformacia obrazku na pozadi, a vysledny obrazok mozno dat na pozadie
  */
 
-class Scedule : AppCompatActivity() {
+class Scedule : ShakeCompatActivity() {
     companion object {
         private const val recV = "recycler_view"
         private const val recP = "recycler_pos"
         private const val higL = "highlight_btn"
-        private const val DAYS = "days"
+        const val DAYS = "days"
         private const val DAY_TAB = "day_tab"
         private const val DAY_SCROLL = "day_scr"
         private const val ADDED_CHANGED = 1000
@@ -56,6 +54,17 @@ class Scedule : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.scedule)
+
+        //vopred znamy den, ktory sa zobrazi
+        intent?.extras?.getInt(DAYS)?.let {
+            val size = Day.values().size
+            with (getSharedPreferences(DAYS, Context.MODE_PRIVATE).edit()) {
+                putInt(DAY_TAB, (it + size) % size)
+                apply()
+            }
+            intent.removeExtra(DAYS)
+        }
+
         setUpRecycleView(savedInstanceState)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -86,12 +95,24 @@ class Scedule : AppCompatActivity() {
     }
 
     /**
+     * Otvorenie aktivity s presnym urcenim dna
+     */
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.extras?.getInt(DAYS)?.let {
+            val size = Day.values().size
+            changeHighlight(btns[(it + size) % size])
+            intent.removeExtra(DAYS)
+        }
+    }
+
+    /**
      * Pokračovanie
      */
     override fun onResume() {
         super.onResume()
         //Vypocet scroll pozicie oneskorim az o 0 ms ;-). Vtedy je uz GUI viditelne.
-        Handler().postDelayed({ scrollToHighLightedTab() }, 0)
+        dayTabs.post { scrollToHighLightedTab() }
     }
 
     /**
@@ -184,17 +205,19 @@ class Scedule : AppCompatActivity() {
 
     private fun scrollToHighLightedTab() {
         val view = btns[day.position]
-        if (dayTabs.width < day_tab_layout.width) {
-            if (dayTabs.scrollX > view.left)
-                dayTabs.scrollX = view.left - view.width/2
-            if(view.right > dayTabs.width + dayTabs.scrollX)
-                dayTabs.scrollX = view.right - dayTabs.width + view.width/2
-        }
-        if (dayTabs.height < day_tab_layout.height) {
-            if (dayTabs.scrollY > view.top)
-                dayTabs.scrollY = view.top - view.height/2
-            if(view.bottom > dayTabs.height + dayTabs.scrollY)
-                dayTabs.scrollY = view.bottom - dayTabs.height + view.height/2
+        dayTabs.post {
+            if (dayTabs.width < day_tab_layout.width) {
+                if (dayTabs.scrollX > view.left)
+                    dayTabs.scrollX = view.left - view.width/2
+                if(view.right > dayTabs.width + dayTabs.scrollX)
+                    dayTabs.scrollX = view.right - dayTabs.width + view.width/2
+            }
+            if (dayTabs.height < day_tab_layout.height) {
+                if (dayTabs.scrollY > view.top)
+                    dayTabs.scrollY = view.top - view.height/2
+                if(view.bottom > dayTabs.height + dayTabs.scrollY)
+                    dayTabs.scrollY = view.bottom - dayTabs.height + view.height/2
+            }
         }
     }
 }

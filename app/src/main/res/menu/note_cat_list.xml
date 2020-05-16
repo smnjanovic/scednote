@@ -13,7 +13,7 @@
         android:id="@+id/tomorrow"
         android:title="@string/tomorow" />
     <item
-        android:id="@+id/recent"
+        android:id="@+id/recentList"
         android:title="@string/this_week" />
     <item
         android:id="@+id/late"

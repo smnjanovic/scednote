@@ -6,9 +6,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.sub_edit.*
 import sk.scednote.R
+import sk.scednote.ScedNoteApp
 import sk.scednote.events.TxtValid
 import sk.scednote.fragments.Confirm
-import sk.scednote.model.Database
 import sk.scednote.model.Subject
 import java.util.*
 
@@ -34,7 +34,7 @@ class EditSubject : AppCompatActivity() {
         const val BUNDLE_FULL_ERR  = "full_err"
     }
 
-    private lateinit var data: Database
+    private var data = ScedNoteApp.database
     private var id = (-1).toLong()
 
     /**
@@ -94,7 +94,6 @@ class EditSubject : AppCompatActivity() {
             it.setDisplayHomeAsUpEnabled(true)
         }
 
-        data = Database()
         //aktivita bola spustena pri pokuse o vytvorenie hodiny. Na to vsak musi existovat predmet
         id = intent.getLongExtra(SUB_ID, -1)
 

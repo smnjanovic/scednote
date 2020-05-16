@@ -12,7 +12,6 @@ import android.graphics.Color
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,7 +19,6 @@ import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.*
 import kotlinx.android.synthetic.main.screenshot.*
@@ -36,7 +34,7 @@ import kotlin.properties.Delegates
 /**
  * Aktivita nastavuje dizajn tabulky rozvrhu a dizajn potenciálneho pozadia
  */
-class Screenshot : AppCompatActivity() {
+class Screenshot : ShakeCompatActivity() {
     companion object {
         private const val CURR_TARGET = "CURR_TARGET"
         private const val TOOLS_COLLAPSED = "COLOR_TOOLS"
@@ -265,7 +263,7 @@ class Screenshot : AppCompatActivity() {
      */
     override fun onRestoreInstanceState(saved: Bundle) {
         //ak bol predtym rozbaleny box nastaveni farieb bude otvoreny aj po otoceni displeja
-        targets.chooseTarget(CURR_TARGET)
+        targets.chooseTarget(saved.getString(CURR_TARGET))
         toolsCollapsed = saved.getBoolean(TOOLS_COLLAPSED, true)
         targets.target?.let { viewColorTools() }
     }
@@ -307,29 +305,21 @@ class Screenshot : AppCompatActivity() {
      */
     override fun onResume() {
         super.onResume()
-
-        //100 ms po skonceni tejto metody sme v stave resumed, kedy mozem upravit pozicie tabulky a obrazku
-        Handler().postDelayed({
-            //najprv roztiahnem bunky v tabulke
+        scrBox.post {
             tbleditor.scaleByWidth(timetable.measuredWidth)
             scaleFrame()
             accessPrefs  {
                 timetable.y = it.getFloat(TABLE_Y, timetable.y)
                 fit = fit
                 //ak si system pamata poslednu poziciu, tak po nacitani a zobrazeni obrazku nastavit
-                if (it.contains(IMAGE_X) && it.contains(
-                        IMAGE_Y
-                    )) {
+                if (it.contains(IMAGE_X) && it.contains(IMAGE_Y)) {
                     bgImage.postDelayed ({
-                        //atributy su nastavene, par ms vsak moze trvat, kym sa obrazok pretransformuje
-                        Handler().postDelayed({
-                            bgImage.x = it.getFloat(IMAGE_X, bgImage.x)
-                            bgImage.y = it.getFloat(IMAGE_Y, bgImage.y)
-                        }, 0)
+                        bgImage.x = it.getFloat(IMAGE_X, bgImage.x)
+                        bgImage.y = it.getFloat(IMAGE_Y, bgImage.y)
                     }, 50)
                 }
             }
-        }, 100)
+        }
     }
 
     /**
@@ -368,17 +358,17 @@ class Screenshot : AppCompatActivity() {
     /**
      * Pytanie si povolenia na pridavanie obrazku
      * @param request Kod ziadosti
-     * @param permits zoznam ziadosti o povolenie
-     * @param grantResults zoznam povoleni
+     * @param permissions zoznam ziadosti o povolenie
+     * @param granted zoznam povoleni
      */
-    override fun onRequestPermissionsResult(request: Int, permits: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(request: Int, permissions: Array<out String>, granted: IntArray) {
+        super.onRequestPermissionsResult(request, permissions, granted)
         when (request) {
             IMG_PERMISSION -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                if (granted.isNotEmpty() && granted[0] == PackageManager.PERMISSION_GRANTED)
                     attemptToPickImage()
                 else
-                    Toast.makeText(this,
-                        R.string.permission_denied, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -386,13 +376,13 @@ class Screenshot : AppCompatActivity() {
     private fun viewColorTools() {
         toolsCollapsed = false
         targets.chooseTarget(targets.button ?: bgB)
-        Handler().postDelayed({ scaleFrame() }, 0)
+        scaleFrame()
     }
 
     private fun hideColorTools() {
         toolsCollapsed = true
         targets.chooseTarget(null)
-        Handler().postDelayed({ scaleFrame() }, 0)
+        scaleFrame()
     }
 
     private fun readColor() = Ahsl(rangeA.progress, rangeH.progress, rangeS.progress, rangeL.progress)
@@ -416,11 +406,13 @@ class Screenshot : AppCompatActivity() {
 
     // prisposobenie staticky nastavenej velkosti tablky velkosti dostupneho 2D priestoru
     private fun scaleFrame() {
-        val scaleX = (container.measuredWidth + scrBox.marginStart + scrBox.marginEnd) / scrBox.measuredWidth.toFloat()
-        val scaleY = (container.measuredHeight + scrBox.marginTop + scrBox.marginBottom) / scrBox.measuredHeight.toFloat()
-        val scale = scaleX.coerceAtMost(scaleY)
-        scrBox.scaleX = scale
-        scrBox.scaleY = scale
+        scrBox.post {
+            val scaleX = (container.measuredWidth + scrBox.marginStart + scrBox.marginEnd) / scrBox.measuredWidth.toFloat()
+            val scaleY = (container.measuredHeight + scrBox.marginTop + scrBox.marginBottom) / scrBox.measuredHeight.toFloat()
+            val scale = scaleX.coerceAtMost(scaleY)
+            scrBox.scaleX = scale
+            scrBox.scaleY = scale
+        }
     }
 
     //k preferenciam mozem pristupovat kedykolvek, preco si funkcie neskratit

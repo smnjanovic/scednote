@@ -2,23 +2,21 @@ package sk.scednote.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.RotateAnimation
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.facebook.stetho.Stetho
 import kotlinx.android.synthetic.main.activity_main.*
 import sk.scednote.R
+import sk.scednote.ScedNoteApp
 import sk.scednote.adapters.RecentNotesAdapter
 import sk.scednote.fragments.Confirm
-import sk.scednote.model.Database
 import sk.scednote.scedule.TimetableBuilder
 
-class Main : AppCompatActivity() {
+class Main : ShakeCompatActivity() {
     companion object {
         private const val CLEAN_UP = "CLEAN_UP"
     }
@@ -60,13 +58,13 @@ class Main : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         parent?.finish()
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
         scedule = TimetableBuilder(timetable, frame)
         //sluzi na pristup k databaze pomocou adresy: chrome://inspect/#devices
         Stetho.initializeWithDefaults(this)
-        /**
-         * https://stackoverflow.com/questions/11026234/how-to-check-if-the-current-activity-has-a-dialog-in-front
-         */
+
+        //https://stackoverflow.com/questions/11026234/how-to-check-if-the-current-activity-has-a-dialog-in-front
         (supportFragmentManager.findFragmentByTag(CLEAN_UP) as Confirm?)?.setOnConfirm { _, _ -> cleanUp() }
         shotBtn.setOnClickListener { startActivity(Intent(this, Screenshot::class.java)) }
         scedBtn.setOnClickListener { startActivity(Intent(this, Scedule::class.java)) }
@@ -75,13 +73,13 @@ class Main : AppCompatActivity() {
                 this.duration = 750
                 it.startAnimation(this)
             }
-            Handler().postDelayed({
+            it.postOnAnimation {
                 noteAdapt.reload()
                 empty.visibility = if (noteAdapt.itemCount > 0) View.GONE else View.VISIBLE
-            }, 750)
+            }
         }
 
-        today.apply {
+        recentList.apply {
             layoutManager = LinearLayoutManager(this@Main)
             noteAdapt = RecentNotesAdapter(savedInstanceState)
             adapter = noteAdapt
@@ -90,9 +88,6 @@ class Main : AppCompatActivity() {
                     putExtra(NoteList.CATEGORY, category)
                     putExtra(NoteList.TARGET_ID, id)
                 })
-            }
-            noteAdapt.setOnNotifyIfEmpty {
-                if (noteAdapt.itemCount == 0) empty.visibility = View.GONE else View.VISIBLE
             }
         }
     }
@@ -118,20 +113,9 @@ class Main : AppCompatActivity() {
                 putExtra(EditLesson.INTENT_LESSON, it)
             })
         }
-    }
-
-    /**
-     * posledne zmeny vizoru
-     */
-    override fun onResume() {
-        super.onResume()
         shotBtn.visibility = if (scedule.empty) View.GONE else View.VISIBLE
         empty.visibility = if (noteAdapt.itemCount > 0) View.GONE else View.VISIBLE
-        /**
-         * upravi sirky stlpcov tak, aby respektovali minimalnu dlzku (aby po 8. hodine nenasledovala
-         * hned 14. ak by bol medzi nimi prazdny obsah v kazdom riadku)
-         */
-        Handler().postDelayed({ scedule.scaleByWidth(timetable.measuredWidth) }, 100)
+        frame.post { scedule.scaleByWidth(timetable.measuredWidth) }
     }
 
     /**
@@ -153,10 +137,7 @@ class Main : AppCompatActivity() {
     }
 
     private fun cleanUp() {
-        Database().apply {
-            removeObsoleteData()
-            close()
-        }
+        ScedNoteApp.database.removeObsoleteData()
         Toast.makeText(this, resources.getString(R.string.obsolete_subjects_gone), Toast.LENGTH_SHORT).show()
     }
 }

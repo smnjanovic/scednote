@@ -10,7 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.notes_widget_configure.*
 import sk.scednote.R
-import sk.scednote.model.Database
+import sk.scednote.ScedNoteApp
 import sk.scednote.model.Note
 import sk.scednote.widgets.NotesWidget
 
@@ -25,7 +25,7 @@ class NotesWidgetConf : Activity() {
     }
 
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
-    private lateinit var database: Database
+    private val database = ScedNoteApp.database
 
 
     /**
@@ -35,7 +35,6 @@ class NotesWidgetConf : Activity() {
     public override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
         setContentView(R.layout.notes_widget_configure)
-        database = Database()
 
         appWidgetId = intent?.extras?.getInt(
             AppWidgetManager.EXTRA_APPWIDGET_ID,

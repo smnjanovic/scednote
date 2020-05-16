@@ -7,8 +7,8 @@ import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import sk.scednote.R
+import sk.scednote.ScedNoteApp
 import sk.scednote.activities.NotesWidgetConf
-import sk.scednote.model.Database
 import sk.scednote.model.Note
 import sk.scednote.widgets.NotesWidget
 
@@ -29,7 +29,7 @@ class NoteWidgetService : RemoteViewsService() {
     class NoteWidgetFactory(private val context: Context, intent: Intent): RemoteViewsFactory {
         private val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
         private val category = intent.getLongExtra(NotesWidgetConf.CAT_ID, Note.NO_DATA)
-        private lateinit var data: Database
+        private val data = ScedNoteApp.database
         private lateinit var items: ArrayList<Note>
 
         /**
@@ -58,12 +58,7 @@ class NoteWidgetService : RemoteViewsService() {
             }
         }
 
-        /**
-         * Vytvorenie databázy
-         */
-        override fun onCreate() {
-            data = Database()
-        }
+        override fun onCreate() {}
 
         override fun getLoadingView(): RemoteViews? = null
 
@@ -85,12 +80,6 @@ class NoteWidgetService : RemoteViewsService() {
          */
         override fun getCount() = items.size
         override fun getViewTypeCount() = 1
-
-        /**
-         * Zavretie databázy
-         */
-        override fun onDestroy() {
-            data.close()
-        }
+        override fun onDestroy() {}
     }
 }

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.notification_advance.*
 import sk.scednote.NoteReminder
 import sk.scednote.R
-import sk.scednote.model.Database
+import sk.scednote.ScedNoteApp
 
 
 /**
@@ -17,7 +17,7 @@ class NotificationAdvance : AppCompatActivity() {
     companion object {
         private const val ADVANCE = "ADVANCE"
     }
-    private lateinit var data: Database
+    private val data = ScedNoteApp.database
 
     /**
      * Predstih upozornení v milisekundách
@@ -45,7 +45,6 @@ class NotificationAdvance : AppCompatActivity() {
      */
     override fun onCreate(saved: Bundle?) {
         super.onCreate(saved)
-        data = Database()
         setContentView(R.layout.notification_advance)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

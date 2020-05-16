@@ -64,7 +64,7 @@
                 android:textColor="#FFFFFF" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/today"
+                android:id="@+id/recentList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="4dp" />

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.les_item.view.*
 import sk.scednote.R
-import sk.scednote.model.Database
+import sk.scednote.ScedNoteApp
 import sk.scednote.model.Day
 import sk.scednote.model.Lesson
 
@@ -15,7 +15,7 @@ import sk.scednote.model.Lesson
  * @param list zoznam vyucovacich hodin.
  */
 class ScedAdapter(list: ArrayList<Lesson>? = null): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val db = Database()
+    private val db = ScedNoteApp.database
     var items = list ?: ArrayList()
     private var delete: View.OnClickListener? = null
     private var update: View.OnClickListener? = null

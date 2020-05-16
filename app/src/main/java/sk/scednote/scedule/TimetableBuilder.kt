@@ -8,7 +8,10 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.tbl_cell.view.*
 import sk.scednote.R
 import sk.scednote.ScedNoteApp
-import sk.scednote.model.*
+import sk.scednote.model.Ahsl
+import sk.scednote.model.Design
+import sk.scednote.model.Lesson
+import sk.scednote.model.ScedSort
 import java.util.*
 
 /**
@@ -19,7 +22,7 @@ import java.util.*
 
 class TimetableBuilder(private val table: LinearLayout, background: View? = null) {
     private val context = ScedNoteApp.ctx
-    private val data = Database()
+    private val data = ScedNoteApp.database
     private val groups = TreeMap<String, CellGroup>().apply {
         this[Design.bg_b] = CellGroup(Design.bg_b, data.getColor(Design.bg_b))
         this[Design.bg_h] = CellGroup(Design.bg_h, data.getColor(Design.bg_h))

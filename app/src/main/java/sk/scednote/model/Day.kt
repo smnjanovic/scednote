@@ -10,13 +10,7 @@ import sk.scednote.ScedNoteApp
 enum class Day {
     MON, TUE, WED, THU, FRI;
     companion object {
-        private val days = arrayOf(
-            MON,
-            TUE,
-            WED,
-            THU,
-            FRI
-        )
+        private val days = arrayOf(MON, TUE, WED, THU, FRI)
         private fun exp(n: Int) = "Index $n of <<enum>> Day is Out of bounds!"
 
         /**

@@ -3,7 +3,6 @@ package sk.scednote.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.subjects.*
 import sk.scednote.R
@@ -11,7 +10,7 @@ import sk.scednote.adapters.SubjectAdapter
 import sk.scednote.fragments.Confirm
 
 
-class SubList : AppCompatActivity() {
+class SubList : ShakeCompatActivity() {
     companion object {
         private const val SUBLIST = "SUBLIST"
         const val DELETE_DIALOG = "DELETE_DIALOG"
@@ -90,10 +89,10 @@ class SubList : AppCompatActivity() {
                 val result = it.getIntExtra(EditSubject.ACTION, EditSubject.CANCELED)
                 val id = it.getLongExtra(EditSubject.SUB_ID, -1)
                 when (result) {
-                    EditSubject.UPDATED -> subAdapt.updatedRecord(id)
+                    EditSubject.UPDATED -> subAdapt.updateRecord(id)
                     EditSubject.REPLACED -> subAdapt.reload()
                     EditSubject.MERGED -> subAdapt.reload()
-                    EditSubject.ADDED -> subAdapt.insertedRecord(id)
+                    EditSubject.ADDED -> subAdapt.insertRecord(id)
                     else -> {}
                 }
             }

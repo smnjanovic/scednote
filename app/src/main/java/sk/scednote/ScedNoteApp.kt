@@ -5,7 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
+import sk.scednote.model.Database
 import sk.scednote.widgets.NotesWidget
 import sk.scednote.widgets.ScedWidget
 
@@ -19,8 +19,9 @@ import sk.scednote.widgets.ScedWidget
 class ScedNoteApp: Application() {
     companion object {
         private var context: Context? = null
-        val ctx: Context get() = context!!
-        val res: Resources get() = ctx.resources
+        val ctx get() = context!!
+        val res by lazy { ctx.resources }
+        val database by lazy { Database() }
 
         /**
          * Aktualizuje widgety s tabulkou rozvrhu

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.sub_item.view.*
 import kotlinx.android.synthetic.main.tab_button.view.*
 import sk.scednote.R
-import sk.scednote.model.Database
+import sk.scednote.ScedNoteApp
 import sk.scednote.model.Subject
 
 /**
@@ -27,7 +27,7 @@ open class SubjectAdapter(private val adapterType: Int, bundle: Bundle?): Recycl
         private val HIGHLIGHT = Color.parseColor("#aaffffff")
     }
 
-    private val data = Database()
+    private val data = ScedNoteApp.database
     private var items: ArrayList<Subject> = bundle?.getParcelableArrayList(SUBJECT_LIST) ?: data.loadSubjects()
 
     var markedHolder: TabHolder? = null
@@ -82,7 +82,7 @@ open class SubjectAdapter(private val adapterType: Int, bundle: Bundle?): Recycl
      *
      * @param id id aktualizovaneho predmetu
      */
-    fun updatedRecord(id: Long) {
+    fun updateRecord(id: Long) {
         val position = getPositionById(id)
         if (position in 0 until itemCount) {
             data.getSubject(id)?.let { items[position] = it }
@@ -93,7 +93,7 @@ open class SubjectAdapter(private val adapterType: Int, bundle: Bundle?): Recycl
      * Pridany predmet sa prida do viditelneho zoznamu
      * @param id id pridaneho predmetu
      */
-    fun insertedRecord(id: Long) {
+    fun insertRecord(id: Long) {
         data.getSubject(id)?.let {
             items.add(it)
             notifyItemInserted(items.size)

@@ -1,6 +1,5 @@
 package sk.scednote.model
 
-import android.os.Handler
 import android.util.DisplayMetrics
 import android.widget.ImageView
 import androidx.core.view.updateLayoutParams
@@ -229,12 +228,10 @@ object Design {
                     this.width = this@ImageEditor.width
                     this.height = this@ImageEditor.height
                 }
-                img.postDelayed({
-                    Handler().postDelayed({
-                        img.x = frmW / 2F - width / 2F
-                        img.y = frmH / 2F - height / 2F
-                    }, 0)
-                }, 0)
+                img.post {
+                    img.x = frmW / 2F - width / 2F
+                    img.y = frmH / 2F - height / 2F
+                }
             }
         }
 

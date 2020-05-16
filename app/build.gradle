@@ -2,21 +2,20 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'org.jetbrains.dokka-android'
-
-
+apply plugin: 'org.jetbrains.dokka'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
-    dataBinding {
-        enabled = true
-    }
-
     dokka {
-        outputFormat = 'gfm'
-        outputDirectory = "$buildDir/javadoc"
+        outputFormat = 'html'
+
+        configuration {
+            skipDeprecated = true
+            reportUndocumented = true
+            skipEmptyPackages = true
+        }
     }
 
     defaultConfig {
@@ -25,7 +24,6 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -41,14 +39,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-// To inline the bytecode built with JVM target 1.8 into
-// bytecode that is being built with JVM target 1.6. (e.g. navArgs)
-
-
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
 }
 
 dependencies {
@@ -71,6 +64,10 @@ dependencies {
     implementation 'com.facebook.stetho:stetho:1.5.1'
     // https://mvnrepository.com/artifact/com.facebook.stetho/stetho-js-rhino
     implementation group: 'com.facebook.stetho', name: 'stetho-js-rhino', version: '1.5.1'
+}
 
-
+// workaround: create DocsByDokka
+task DocsByDokka (type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = "html"
+    outputDirectory = "$buildDir"
 }

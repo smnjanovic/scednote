@@ -208,13 +208,23 @@ class Database {
         val query = with(TableSet.Subjects) {"SELECT * FROM $this WHERE UPPER($ABBREVIATION)=?"}
         val arg = arrayOf(abb.toUpperCase(Locale.ROOT))
         return one(wrt.rawQuery(query, arg)) {
-            Subject(
-                it.getLong(
-                    0
-                ), it.getString(1), it.getString(2)
-            )
+            Subject(it.getLong(0), it.getString(1), it.getString(2))
         }
     }
+
+    /**
+     * Vyhlada predmet podla celeho nazvu
+     * @param fullName cely nazov údajne existujúceho predmetu
+     * @return [Subject] Predmet alebo null
+     */
+    fun getSubjectByFullName(fullName: String): Subject? {
+        val input = fullName.toLowerCase(Locale.ROOT).split("[^a-zA-Z0-9]+".toRegex()).joinToString("%")
+        val query = "SELECT * FROM ${TableSet.Subjects} WHERE LOWER(${TableSet.Subjects.FULL_NAME}) LIKE ?"
+        return one(rd.rawQuery(query, arrayOf(input))) {
+            Subject(it.getLong(0), it.getString(1), it.getString(2))
+        }
+    }
+
 
     /**
      * Ziska data o vyucovacej hodine s danym ID

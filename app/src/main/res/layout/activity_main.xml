@@ -92,7 +92,7 @@
             android:textColor="#FFFFFF" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/today"
+            android:id="@+id/recentList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal|center_vertical"
