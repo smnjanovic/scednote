@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Screenshot - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">sk.scednote.activities</a>&nbsp;/&nbsp;<a href="./index.html">Screenshot</a><br/>
+<br/>
+<h1>Screenshot</h1>
+<code><span class="keyword">class </span><span class="identifier">Screenshot</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-shake-compat-activity/index.html"><span class="identifier">ShakeCompatActivity</span></a></code>
+<p>Aktivita nastavuje dizajn tabulky rozvrhu a dizajn potenciálneho pozadia</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Aktivita nastavuje dizajn tabulky rozvrhu a dizajn potenciálneho pozadia</p>
+<code><span class="identifier">Screenshot</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="on-activity-result.html">onActivityResult</a></h4>
+</td>
+<td>
+<p>Ak fotku nie je mozne pridat, stara zostava</p>
+<code><span class="keyword">fun </span><span class="identifier">onActivityResult</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.activities.Screenshot$onActivityResult(kotlin.Int, kotlin.Int, android.content.Intent)/requestCode">requestCode</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.activities.Screenshot$onActivityResult(kotlin.Int, kotlin.Int, android.content.Intent)/resultCode">resultCode</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.activities.Screenshot$onActivityResult(kotlin.Int, kotlin.Int, android.content.Intent)/result">result</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Intent.html"><span class="identifier">Intent</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-create.html">onCreate</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onCreate</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.activities.Screenshot$onCreate(android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-create-options-menu.html">onCreateOptionsMenu</a></h4>
+</td>
+<td>
+<p>Vytvorenie tlacidla pre screenshot a vlozenie do menu</p>
+<code><span class="keyword">fun </span><span class="identifier">onCreateOptionsMenu</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.activities.Screenshot$onCreateOptionsMenu(android.view.Menu)/menu">menu</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/Menu.html"><span class="identifier">Menu</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-destroy.html">onDestroy</a></h4>
+</td>
+<td>
+<p>Zavretie databazy</p>
+<code><span class="keyword">fun </span><span class="identifier">onDestroy</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-options-item-selected.html">onOptionsItemSelected</a></h4>
+</td>
+<td>
+<p>reakcie na tuknutie na polozku menu</p>
+<code><span class="keyword">fun </span><span class="identifier">onOptionsItemSelected</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.activities.Screenshot$onOptionsItemSelected(android.view.MenuItem)/item">item</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/MenuItem.html"><span class="identifier">MenuItem</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-pause.html">onPause</a></h4>
+</td>
+<td>
+<p>Ulozenie informacii o pozicii a prisposobeni obrazka</p>
+<code><span class="keyword">fun </span><span class="identifier">onPause</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-request-permissions-result.html">onRequestPermissionsResult</a></h4>
+</td>
+<td>
+<p>Pytanie si povolenia na pridavanie obrazku</p>
+<code><span class="keyword">fun </span><span class="identifier">onRequestPermissionsResult</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.activities.Screenshot$onRequestPermissionsResult(kotlin.Int, kotlin.Array((kotlin.String)), kotlin.IntArray)/request">request</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.activities.Screenshot$onRequestPermissionsResult(kotlin.Int, kotlin.Array((kotlin.String)), kotlin.IntArray)/permissions">permissions</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><span class="keyword">out</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="sk.scednote.activities.Screenshot$onRequestPermissionsResult(kotlin.Int, kotlin.Array((kotlin.String)), kotlin.IntArray)/granted">granted</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int-array/index.html"><span class="identifier">IntArray</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-restore-instance-state.html">onRestoreInstanceState</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onRestoreInstanceState</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.activities.Screenshot$onRestoreInstanceState(android.os.Bundle)/saved">saved</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-resume.html">onResume</a></h4>
+</td>
+<td>
+<p>nastavenia velkosti a polohy obrazka a polohy tabulky podla ulozenych preferencii</p>
+<code><span class="keyword">fun </span><span class="identifier">onResume</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-save-instance-state.html">onSaveInstanceState</a></h4>
+</td>
+<td>
+<p>Ulozenie informacii o tom ci je rozbaleny panel nastrojov na zmeny farieb</p>
+<code><span class="keyword">fun </span><span class="identifier">onSaveInstanceState</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.activities.Screenshot$onSaveInstanceState(android.os.Bundle)/outState">outState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-support-navigate-up.html">onSupportNavigateUp</a></h4>
+</td>
+<td>
+<p>Krok späť
+Zdroj: https://devofandroid.blogspot.com/2018/03/add-back-button-to-action-bar-android.html</p>
+<code><span class="keyword">fun </span><span class="identifier">onSupportNavigateUp</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
