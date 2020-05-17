@@ -1,0 +1,179 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Lesson - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">sk.scednote.model</a>&nbsp;/&nbsp;<a href="./index.html">Lesson</a><br/>
+<br/>
+<h1>Lesson</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Lesson</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable.html"><span class="identifier">Parcelable</span></a></code>
+<p>Data o vyucovacej hodine</p>
+<h3>Parameters</h3>
+<p><a name="id"></a>
+<code>id</code> - ID hodiny <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></p>
+<p><a name="day"></a>
+<code>day</code> - Ďeň vyučovania <a href="../-day/index.html">Day</a></p>
+<p><a name="time"></a>
+<code>time</code> - Časový rozsah vyučovania <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html">IntRange</a></p>
+<p><a name="sort"></a>
+<code>sort</code> - Forma vyučovania <a href="../-sced-sort/index.html">ScedSort</a></p>
+<p><a name="subject"></a>
+<code>subject</code> - Predmet <a href="../-subject/index.html">Subject</a></p>
+<p><a name="room"></a>
+<code>room</code> - miestnosť <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-c-r-e-a-t-o-r/index.html">CREATOR</a></h4>
+</td>
+<td>
+<code><span class="keyword">companion</span> <span class="keyword">object </span><span class="identifier">CREATOR</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcelable/Creator.html"><span class="identifier">Creator</span></a><span class="symbol">&lt;</span><a href="./index.html"><span class="identifier">Lesson</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<code><span class="identifier">Lesson</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Lesson$<init>(android.os.Parcel)/parcel">parcel</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcel.html"><span class="identifier">Parcel</span></a><span class="symbol">)</span></code>
+<p>Data o vyucovacej hodine</p>
+<code><span class="identifier">Lesson</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Lesson$<init>(kotlin.Long, sk.scednote.model.Day, kotlin.ranges.IntRange, sk.scednote.model.ScedSort, sk.scednote.model.Subject, kotlin.String)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.model.Lesson$<init>(kotlin.Long, sk.scednote.model.Day, kotlin.ranges.IntRange, sk.scednote.model.ScedSort, sk.scednote.model.Subject, kotlin.String)/day">day</span><span class="symbol">:</span>&nbsp;<a href="../-day/index.html"><span class="identifier">Day</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.model.Lesson$<init>(kotlin.Long, sk.scednote.model.Day, kotlin.ranges.IntRange, sk.scednote.model.ScedSort, sk.scednote.model.Subject, kotlin.String)/time">time</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.model.Lesson$<init>(kotlin.Long, sk.scednote.model.Day, kotlin.ranges.IntRange, sk.scednote.model.ScedSort, sk.scednote.model.Subject, kotlin.String)/sort">sort</span><span class="symbol">:</span>&nbsp;<a href="../-sced-sort/index.html"><span class="identifier">ScedSort</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.model.Lesson$<init>(kotlin.Long, sk.scednote.model.Day, kotlin.ranges.IntRange, sk.scednote.model.ScedSort, sk.scednote.model.Subject, kotlin.String)/subject">subject</span><span class="symbol">:</span>&nbsp;<a href="../-subject/index.html"><span class="identifier">Subject</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.model.Lesson$<init>(kotlin.Long, sk.scednote.model.Day, kotlin.ranges.IntRange, sk.scednote.model.ScedSort, sk.scednote.model.Subject, kotlin.String)/room">room</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="day.html">day</a></h4>
+</td>
+<td>
+<p>Ďeň vyučovania <a href="../-day/index.html">Day</a></p>
+<code><span class="keyword">val </span><span class="identifier">day</span><span class="symbol">: </span><a href="../-day/index.html"><span class="identifier">Day</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="id.html">id</a></h4>
+</td>
+<td>
+<p>ID hodiny <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></p>
+<code><span class="keyword">val </span><span class="identifier">id</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="room.html">room</a></h4>
+</td>
+<td>
+<p>miestnosť <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></p>
+<code><span class="keyword">val </span><span class="identifier">room</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="sort.html">sort</a></h4>
+</td>
+<td>
+<p>Forma vyučovania <a href="../-sced-sort/index.html">ScedSort</a></p>
+<code><span class="keyword">val </span><span class="identifier">sort</span><span class="symbol">: </span><a href="../-sced-sort/index.html"><span class="identifier">ScedSort</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="subject.html">subject</a></h4>
+</td>
+<td>
+<p>Predmet <a href="../-subject/index.html">Subject</a></p>
+<code><span class="keyword">val </span><span class="identifier">subject</span><span class="symbol">: </span><a href="../-subject/index.html"><span class="identifier">Subject</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="time.html">time</a></h4>
+</td>
+<td>
+<p>Časový rozsah vyučovania <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html">IntRange</a></p>
+<code><span class="keyword">val </span><span class="identifier">time</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="breaks-between.html">breaksBetween</a></h4>
+</td>
+<td>
+<p>zistenie ci je medzi 2 predmetmi nejaky casovy odstup</p>
+<code><span class="keyword">fun </span><span class="identifier">breaksBetween</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Lesson$breaksBetween(sk.scednote.model.Lesson)/les">les</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Lesson</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="describe-contents.html">describeContents</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">describeContents</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="equals.html">equals</a></h4>
+</td>
+<td>
+<p>Porovnanie hodin, ci su rovnake (nie ci su v rovnakom case)</p>
+<code><span class="keyword">fun </span><span class="identifier">equals</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Lesson$equals(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="hash-code.html">hashCode</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">hashCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="write-to-parcel.html">writeToParcel</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">writeToParcel</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Lesson$writeToParcel(android.os.Parcel, kotlin.Int)/parcel">parcel</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcel.html"><span class="identifier">Parcel</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.model.Lesson$writeToParcel(android.os.Parcel, kotlin.Int)/flags">flags</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-o-p-e-n-i-n-g_-h-o-u-r-s.html">OPENING_HOURS</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">OPENING_HOURS</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="create-from-parcel.html">createFromParcel</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createFromParcel</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Lesson.CREATOR$createFromParcel(android.os.Parcel)/parcel">parcel</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Parcel.html"><span class="identifier">Parcel</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Lesson</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="new-array.html">newArray</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">newArray</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Lesson.CREATOR$newArray(kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="./index.html"><span class="identifier">Lesson</span></a><span class="symbol">?</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
