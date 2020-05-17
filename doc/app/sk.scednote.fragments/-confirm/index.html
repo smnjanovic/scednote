@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Confirm - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">sk.scednote.fragments</a>&nbsp;/&nbsp;<a href="./index.html">Confirm</a><br/>
+<br/>
+<h1>Confirm</h1>
+<code><span class="keyword">class </span><span class="identifier">Confirm</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">DialogFragment</span></code>
+<p>Dialogove okno, ktore vyskoci pred vaznym rozhodnutim uzivatela, napr. odstranenie niecoho, co vedie
+k odstraneniu cohosi dalsieho, alebo ak dojde k comukolvek nenavratnemu
+https://www.youtube.com/watch?v=r_87U6oHLFc</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Dialogove okno, ktore vyskoci pred vaznym rozhodnutim uzivatela, napr. odstranenie niecoho, co vedie
+k odstraneniu cohosi dalsieho, alebo ak dojde k comukolvek nenavratnemu
+https://www.youtube.com/watch?v=r_87U6oHLFc</p>
+<code><span class="identifier">Confirm</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="on-create-dialog.html">onCreateDialog</a></h4>
+</td>
+<td>
+<p>Priprava dialogu</p>
+<code><span class="keyword">fun </span><span class="identifier">onCreateDialog</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.fragments.Confirm$onCreateDialog(android.os.Bundle)/saved">saved</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/app/Dialog.html"><span class="identifier">Dialog</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-save-instance-state.html">onSaveInstanceState</a></h4>
+</td>
+<td>
+<p>ulozenie dat k dialogu</p>
+<code><span class="keyword">fun </span><span class="identifier">onSaveInstanceState</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.fragments.Confirm$onSaveInstanceState(android.os.Bundle)/outState">outState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-on-cancel.html">setOnCancel</a></h4>
+</td>
+<td>
+<p>udalost, ktora sa vykona ak uzivatel zrusi, to co robil</p>
+<code><span class="keyword">fun </span><span class="identifier">setOnCancel</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.fragments.Confirm$setOnCancel(kotlin.Function2((android.content.DialogInterface, kotlin.Int, kotlin.Unit)))/fn">fn</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="https://developer.android.com/reference/android/content/DialogInterface.html"><span class="identifier">DialogInterface</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-on-confirm.html">setOnConfirm</a></h4>
+</td>
+<td>
+<p>udalost, ktora sa vykona ak uzivatel potvrdi, ze chce pokracovat</p>
+<code><span class="keyword">fun </span><span class="identifier">setOnConfirm</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.fragments.Confirm$setOnConfirm(kotlin.Function2((android.content.DialogInterface, kotlin.Int, kotlin.Unit)))/fn">fn</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="https://developer.android.com/reference/android/content/DialogInterface.html"><span class="identifier">DialogInterface</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="new-instance.html">newInstance</a></h4>
+</td>
+<td>
+<p>Vytvori sa nova instancia dialogu s obsahom textu podla parametrov</p>
+<code><span class="keyword">fun </span><span class="identifier">newInstance</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.fragments.Confirm.Companion$newInstance(kotlin.String, kotlin.String, kotlin.String)/msg">msg</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.fragments.Confirm.Companion$newInstance(kotlin.String, kotlin.String, kotlin.String)/confirm">confirm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="sk.scednote.fragments.Confirm.Companion$newInstance(kotlin.String, kotlin.String, kotlin.String)/cancel">cancel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Confirm</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Movement - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">sk.scednote.events</a>&nbsp;/&nbsp;<a href="./index.html">Movement</a><br/>
+<br/>
+<h1>Movement</h1>
+<code><span class="keyword">class </span><span class="identifier">Movement</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View/OnTouchListener.html"><span class="identifier">OnTouchListener</span></a></code>
+<p>Trieda umoznuje presuvanie 2D objektov po obrazovke, kontroluje dodržanie hraníc
+posunu po vertikálnej a horizontálnej osi</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Trieda umoznuje presuvanie 2D objektov po obrazovke, kontroluje dodržanie hraníc
+posunu po vertikálnej a horizontálnej osi</p>
+<code><span class="identifier">Movement</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="mention-scale.html">mentionScale</a></h4>
+</td>
+<td>
+<p>Nastavenie pomeru zvacsenia / zmensenia rodicovskeho suboru</p>
+<code><span class="keyword">fun </span><span class="identifier">mentionScale</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.events.Movement$mentionScale(kotlin.Float)/scale">scale</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="mention-scale-x.html">mentionScaleX</a></h4>
+</td>
+<td>
+<p>Nastavenie pomeru zvacsenia / zmensenia rodicovskeho suboru na osi X</p>
+<code><span class="keyword">fun </span><span class="identifier">mentionScaleX</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.events.Movement$mentionScaleX(kotlin.Float)/scaleX">scaleX</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="mention-scale-y.html">mentionScaleY</a></h4>
+</td>
+<td>
+<p>Nastavenie pomeru zvacsenia / zmensenia rodicovskeho suboru na osi Y</p>
+<code><span class="keyword">fun </span><span class="identifier">mentionScaleY</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.events.Movement$mentionScaleY(kotlin.Float)/scaleY">scaleY</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-touch.html">onTouch</a></h4>
+</td>
+<td>
+<p>Samotne posuvanie objektu</p>
+<code><span class="keyword">fun </span><span class="identifier">onTouch</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.events.Movement$onTouch(android.view.View, android.view.MotionEvent)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.events.Movement$onTouch(android.view.View, android.view.MotionEvent)/motion">motion</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/MotionEvent.html"><span class="identifier">MotionEvent</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-bounds-x.html">setBoundsX</a></h4>
+</td>
+<td>
+<p>Zmena hranic posunu po horizontalnej osi</p>
+<code><span class="keyword">fun </span><span class="identifier">setBoundsX</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.events.Movement$setBoundsX(kotlin.ranges.ClosedFloatingPointRange((kotlin.Float)))/bounds">bounds</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-closed-floating-point-range/index.html"><span class="identifier">ClosedFloatingPointRange</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-bounds-y.html">setBoundsY</a></h4>
+</td>
+<td>
+<p>Zmena hranic posunu po vertikálnej osi</p>
+<code><span class="keyword">fun </span><span class="identifier">setBoundsY</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.events.Movement$setBoundsY(kotlin.ranges.ClosedFloatingPointRange((kotlin.Float)))/bounds">bounds</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-closed-floating-point-range/index.html"><span class="identifier">ClosedFloatingPointRange</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-up.html">setUp</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setUp</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.events.Movement$setUp(kotlin.Function1((sk.scednote.events.Movement, kotlin.Unit)))/fn">fn</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="./index.html"><span class="identifier">Movement</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Movement</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
