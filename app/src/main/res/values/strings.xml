@@ -137,4 +137,5 @@
     <string name="wait_please">Spracováva sa!</string>
     <string name="voice_inst_home">Domov</string>
     <string name="voice_inst_home_info">Prejsť na hlavné okno</string>
+    <string name="unshaken">Pre hlasové pokyny zatraste zariadením!</string>
 </resources>

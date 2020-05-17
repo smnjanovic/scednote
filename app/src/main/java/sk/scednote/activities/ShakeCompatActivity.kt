@@ -1,6 +1,7 @@
 package sk.scednote.activities
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +20,7 @@ abstract class ShakeCompatActivity: AppCompatActivity() {
     companion object {
         private const val GIMME_VOICE = 10
         private const val VOICE_FRAGMENT = "VOICE_FRAGMENT"
+        private const val UNSHAKEN = "UNSHAKEN"
     }
     private val shake = ShakeSensor()
 
@@ -30,6 +32,9 @@ abstract class ShakeCompatActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         shake.threshold = 10
         shake.setOnShake { showVoiceGUI() }
+        val unshaken = getSharedPreferences(UNSHAKEN, Context.MODE_PRIVATE).getBoolean(UNSHAKEN, true)
+        if (unshaken)
+            Toast.makeText(this, resources.getString(R.string.unshaken), Toast.LENGTH_SHORT).show()
     }
 
     /**
@@ -55,11 +60,16 @@ abstract class ShakeCompatActivity: AppCompatActivity() {
     private fun showVoiceGUI () {
         if (!SpeechRecognizer.isRecognitionAvailable(this))
             Toast.makeText(this, R.string.voice_err_unavailable, Toast.LENGTH_SHORT).show()
-        else if (supportFragmentManager.fragments.size == 0)
-            if(!checkPermission())
+        else if (supportFragmentManager.fragments.size == 0) {
+            if (!checkPermission())
                 requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), GIMME_VOICE)
             else
                 VoiceRecognitionDialog().show(supportFragmentManager, VOICE_FRAGMENT)
+            getSharedPreferences(UNSHAKEN, Context.MODE_PRIVATE).edit().also {
+                it.putBoolean(UNSHAKEN, false)
+                it.apply()
+            }
+        }
     }
 
     /**
