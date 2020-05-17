@@ -1,0 +1,135 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>RecentNotesAdapter - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">sk.scednote.adapters</a>&nbsp;/&nbsp;<a href="./index.html">RecentNotesAdapter</a><br/>
+<br/>
+<h1>RecentNotesAdapter</h1>
+<code><span class="keyword">class </span><span class="identifier">RecentNotesAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Adapter</span><span class="symbol">&lt;</span><span class="identifier">ViewHolder</span><span class="symbol">&gt;</span></code>
+<p>Adapter zobrazujuci zoznam uloh v terminoch v tomto tyzdni</p>
+<h3>Parameters</h3>
+<p><a name="bdl"></a>
+<code>bdl</code> - zalohovane dáta</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-recent-notes-holder/index.html">RecentNotesHolder</a></h4>
+</td>
+<td>
+<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">RecentNotesHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Adapter zobrazujuci zoznam uloh v terminoch v tomto tyzdni</p>
+<code><span class="identifier">RecentNotesAdapter</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.RecentNotesAdapter$<init>(android.os.Bundle)/bdl">bdl</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="data.html">data</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">data</span><span class="symbol">: </span><a href="../../sk.scednote.model/-database/index.html"><span class="identifier">Database</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="items.html">items</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">items</span><span class="symbol">: </span><a href="https://docs.oracle.com/javase/6/docs/api/java/util/ArrayList.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../../sk.scednote.model/-note/index.html"><span class="identifier">Note</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="note-redirect.html">noteRedirect</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">noteRedirect</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/view/View/OnClickListener.html"><span class="identifier">OnClickListener</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-delete.html">onDelete</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">onDelete</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/view/View/OnClickListener.html"><span class="identifier">OnClickListener</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="close.html">close</a></h4>
+</td>
+<td>
+<p>Zavrieť databázu</p>
+<code><span class="keyword">fun </span><span class="identifier">close</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-item-count.html">getItemCount</a></h4>
+</td>
+<td>
+<p>Vráti počet záznamov</p>
+<code><span class="keyword">fun </span><span class="identifier">getItemCount</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-bind-view-holder.html">onBindViewHolder</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onBindViewHolder</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.RecentNotesAdapter$onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder, kotlin.Int)/holder">holder</span><span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">, </span><span class="identifier" id="sk.scednote.adapters.RecentNotesAdapter$onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-create-view-holder.html">onCreateViewHolder</a></h4>
+</td>
+<td>
+<p>Tvorba view holdera</p>
+<code><span class="keyword">fun </span><span class="identifier">onCreateViewHolder</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.RecentNotesAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.adapters.RecentNotesAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/viewType">viewType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ViewHolder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="reload.html">reload</a></h4>
+</td>
+<td>
+<p>Načítanie čerstvých dát</p>
+<code><span class="keyword">fun </span><span class="identifier">reload</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-on-note-navigate.html">setOnNoteNavigate</a></h4>
+</td>
+<td>
+<p>čo sa má stať po kliknutí na položku</p>
+<code><span class="keyword">fun </span><span class="identifier">setOnNoteNavigate</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.RecentNotesAdapter$setOnNoteNavigate(kotlin.Function2((kotlin.Long, , kotlin.Unit)))/fn">fn</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="store-backup.html">storeBackup</a></h4>
+</td>
+<td>
+<p>Zálohovanie dát</p>
+<code><span class="keyword">fun </span><span class="identifier">storeBackup</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.RecentNotesAdapter$storeBackup(android.os.Bundle)/bdl">bdl</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

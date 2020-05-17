@@ -1,0 +1,189 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>NoteAdapter - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">sk.scednote.adapters</a>&nbsp;/&nbsp;<a href="./index.html">NoteAdapter</a><br/>
+<br/>
+<h1>NoteAdapter</h1>
+<code><span class="keyword">class </span><span class="identifier">NoteAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Adapter</span><span class="symbol">&lt;</span><span class="identifier">ViewHolder</span><span class="symbol">&gt;</span></code>
+<p>Model nacita zoznam uloh podla vybranej kategorie a vytvara pohlady (MVC).
+Komunikuje s databazou, t.j. vytvara, aktualizuje a vymazava data</p>
+<h3>Parameters</h3>
+<p><a name="cat"></a>
+<code>cat</code> - kategória alebo ID predmetu</p>
+<p><a name="bundle"></a>
+<code>bundle</code> - záloha dát</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-new-note-holder/index.html">NewNoteHolder</a></h4>
+</td>
+<td>
+<p>ViewType: NEW</p>
+<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">NewNoteHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">NoteHolder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-note-holder/index.html">NoteHolder</a></h4>
+</td>
+<td>
+<p>ViewHoldery</p>
+<code><span class="keyword">abstract</span> <span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">NoteHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-old-note-holder/index.html">OldNoteHolder</a></h4>
+</td>
+<td>
+<p>ViewType: Old
+metody a udalosti unikatne pre polozky existujucich poznamok</p>
+<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">OldNoteHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">NoteHolder</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Model nacita zoznam uloh podla vybranej kategorie a vytvara pohlady (MVC).
+Komunikuje s databazou, t.j. vytvara, aktualizuje a vymazava data</p>
+<code><span class="identifier">NoteAdapter</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter$<init>(kotlin.Long, android.os.Bundle)/cat">cat</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;Note.DEADLINE_TODAY<span class="symbol">, </span><span class="identifier" id="sk.scednote.adapters.NoteAdapter$<init>(kotlin.Long, android.os.Bundle)/bundle">bundle</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="subjects.html">subjects</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">subjects</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../../sk.scednote.model/-subject/index.html"><span class="identifier">Subject</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="backup-data.html">backupData</a></h4>
+</td>
+<td>
+<p>Zalohovanie dat (pred otocenim displeja alebo zavretim aplikacie po dlhej necinnosti)</p>
+<code><span class="keyword">fun </span><span class="identifier">backupData</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter$backupData(android.os.Bundle)/b">b</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="close.html">close</a></h4>
+</td>
+<td>
+<p>Zavretie databazy</p>
+<code><span class="keyword">fun </span><span class="identifier">close</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-item-count.html">getItemCount</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getItemCount</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-item-id.html">getItemId</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getItemId</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter$getItemId(kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-item-position-by-id.html">getItemPositionById</a></h4>
+</td>
+<td>
+<p>najde na ktorej pozicii sa predmet s danym id nachadza (zlozita funkcia O(n))</p>
+<code><span class="keyword">fun </span><span class="identifier">getItemPositionById</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter$getItemPositionById(kotlin.Long)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-item-view-type.html">getItemViewType</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getItemViewType</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter$getItemViewType(kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="load-data.html">loadData</a></h4>
+</td>
+<td>
+<p>Nacitanie dat podla novej kategorie</p>
+<code><span class="keyword">fun </span><span class="identifier">loadData</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter$loadData(kotlin.Long)/cat">cat</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-bind-view-holder.html">onBindViewHolder</a></h4>
+</td>
+<td>
+<p>Tvorba alebo zmena obsahu šablóny pre položku v indexe <a href="on-bind-view-holder.html#sk.scednote.adapters.NoteAdapter$onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder, kotlin.Int)/position">position</a></p>
+<code><span class="keyword">fun </span><span class="identifier">onBindViewHolder</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter$onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder, kotlin.Int)/holder">holder</span><span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">, </span><span class="identifier" id="sk.scednote.adapters.NoteAdapter$onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-create-view-holder.html">onCreateViewHolder</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onCreateViewHolder</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.adapters.NoteAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/viewType">viewType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ViewHolder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-date-time-change.html">onDateTimeChange</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onDateTimeChange</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter$onDateTimeChange(kotlin.Function2((sk.scednote.adapters.NoteAdapter.NoteHolder, java.util.Calendar, kotlin.Unit)))/fn">fn</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">NoteHolder</span><span class="symbol">,</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/Calendar.html"><span class="identifier">Calendar</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-l-a-s-t_-e-d-i-t.html">LAST_EDIT</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">LAST_EDIT</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-n-e-w_-i-t-e-m.html">NEW_ITEM</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">NEW_ITEM</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-r-e-s-t-o-r-e-d_-d-a-t-a.html">RESTORED_DATA</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">RESTORED_DATA</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-t-a-g_-m-i-s-s-i-n-g_-o-r_-i-n-v-a-l-i-d.html">TAG_MISSING_OR_INVALID</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">TAG_MISSING_OR_INVALID</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,130 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ScedAdapter - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">sk.scednote.adapters</a>&nbsp;/&nbsp;<a href="./index.html">ScedAdapter</a><br/>
+<br/>
+<h1>ScedAdapter</h1>
+<code><span class="keyword">class </span><span class="identifier">ScedAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Adapter</span><span class="symbol">&lt;</span><span class="identifier">ViewHolder</span><span class="symbol">&gt;</span></code>
+<p>Adapter nacitava zaznamy o vyucovacich hodinach podla vybraneho dna</p>
+<h3>Parameters</h3>
+<p><a name="list"></a>
+<code>list</code> - zoznam vyucovacich hodin.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-sced-holder/index.html">ScedHolder</a></h4>
+</td>
+<td>
+<p>Tvorba viewHoldera</p>
+<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">ScedHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Adapter nacitava zaznamy o vyucovacich hodinach podla vybraneho dna</p>
+<code><span class="identifier">ScedAdapter</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.ScedAdapter$<init>(java.util.ArrayList((sk.scednote.model.Lesson)))/list">list</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../../sk.scednote.model/-lesson/index.html"><span class="identifier">Lesson</span></a><span class="symbol">&gt;</span><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="items.html">items</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">items</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../../sk.scednote.model/-lesson/index.html"><span class="identifier">Lesson</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="close-db.html">closeDb</a></h4>
+</td>
+<td>
+<p>Zavretie databazy</p>
+<code><span class="keyword">fun </span><span class="identifier">closeDb</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-item-count.html">getItemCount</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getItemCount</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-item-id.html">getItemId</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getItemId</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.ScedAdapter$getItemId(kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="load-data.html">loadData</a></h4>
+</td>
+<td>
+<p>Nacitanie cerstvych dat</p>
+<code><span class="keyword">fun </span><span class="identifier">loadData</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.ScedAdapter$loadData(sk.scednote.model.Day)/day">day</span><span class="symbol">:</span>&nbsp;<a href="../../sk.scednote.model/-day/index.html"><span class="identifier">Day</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-bind-view-holder.html">onBindViewHolder</a></h4>
+</td>
+<td>
+<p>Vklad alebo zmena ViewHoldera</p>
+<code><span class="keyword">fun </span><span class="identifier">onBindViewHolder</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.ScedAdapter$onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder, kotlin.Int)/holder">holder</span><span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">, </span><span class="identifier" id="sk.scednote.adapters.ScedAdapter$onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-create-view-holder.html">onCreateViewHolder</a></h4>
+</td>
+<td>
+<p>Tvorba viewHoldera</p>
+<code><span class="keyword">fun </span><span class="identifier">onCreateViewHolder</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.ScedAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.adapters.ScedAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/viewType">viewType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ViewHolder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-delete.html">onDelete</a></h4>
+</td>
+<td>
+<p>Nastavenie co sa ma stat ak tuknem na ikonu odstranit</p>
+<code><span class="keyword">fun </span><span class="identifier">onDelete</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.ScedAdapter$onDelete(kotlin.Function1((android.view.View, kotlin.Unit)))/fn">fn</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-update.html">onUpdate</a></h4>
+</td>
+<td>
+<p>Nastavenie co sa ma stat ak tuknem na ikonu uprav</p>
+<code><span class="keyword">fun </span><span class="identifier">onUpdate</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.ScedAdapter$onUpdate(kotlin.Function1((android.view.View, kotlin.Unit)))/fn">fn</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-item.html">removeItem</a></h4>
+</td>
+<td>
+<p>Odstranenie polozky</p>
+<code><span class="keyword">fun </span><span class="identifier">removeItem</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.ScedAdapter$removeItem(kotlin.Int)/pos">pos</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

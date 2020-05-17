@@ -1,0 +1,74 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>NoteAdapter.NewNoteHolder - app</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">app</a>&nbsp;/&nbsp;<a href="../../index.html">sk.scednote.adapters</a>&nbsp;/&nbsp;<a href="../index.html">NoteAdapter</a>&nbsp;/&nbsp;<a href="./index.html">NewNoteHolder</a><br/>
+<br/>
+<h1>NewNoteHolder</h1>
+<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">NewNoteHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">NoteHolder</span></code>
+<p>ViewType: NEW</p>
+<p>Funkcie pre view holder vznikajucej polozky</p>
+<h3>Parameters</h3>
+<p><a name="viewItem"></a>
+<code>viewItem</code> - Priamy predok obsahujúci layout šablóny</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>ViewType: NEW</p>
+<code><span class="identifier">NewNoteHolder</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter.NewNoteHolder$<init>(android.view.View)/viewItem">viewItem</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="subject.html">subject</a></h4>
+</td>
+<td>
+<p>kontrola ci existuje predmet ku ktoremu bude nova poznamka pripnuta
+vrati null ak neexistuje a Subject ak existuje</p>
+<code><span class="keyword">val </span><span class="identifier">subject</span><span class="symbol">: </span><a href="../../../sk.scednote.model/-subject/index.html"><span class="identifier">Subject</span></a><span class="symbol">?</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="bind.html">bind</a></h4>
+</td>
+<td>
+<p>Doplnenie NoteHolder: Co sa stane ak dam zmeny potvrdit alebo stlacim ikonu odstranenia</p>
+<code><span class="keyword">fun </span><span class="identifier">bind</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="clear-input.html">clearInput</a></h4>
+</td>
+<td>
+<p>Neodstrani polozku, ktora neexistuje, iba ju ocisti od obsahu</p>
+<code><span class="keyword">fun </span><span class="identifier">clearInput</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="parse-note.html">parseNote</a></h4>
+</td>
+<td>
+<p>Iny sposob ako vytvorit poznamku na zaklade dat vo view holderi.</p>
+<code><span class="keyword">fun </span><span class="identifier">parseNote</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../../sk.scednote.model/-note/index.html"><span class="identifier">Note</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
