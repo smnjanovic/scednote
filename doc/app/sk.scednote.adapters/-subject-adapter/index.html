@@ -1,0 +1,218 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SubjectAdapter - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">sk.scednote.adapters</a>&nbsp;/&nbsp;<a href="./index.html">SubjectAdapter</a><br/>
+<br/>
+<h1>SubjectAdapter</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">SubjectAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Adapter</span><span class="symbol">&lt;</span><span class="identifier">ViewHolder</span><span class="symbol">&gt;</span></code>
+<p>Adapter na zobrazenie suborov
+Polozky mozu byt zobrazovane ako polozky menu alebo ako zoznam upravitelnych predmetov</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-item-holder/index.html">ItemHolder</a></h4>
+</td>
+<td>
+<p>Pohlad pre polozku umoznujucu upravu a odstranenie predmetu</p>
+<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">ItemHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SubjectHolder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-subject-holder/index.html">SubjectHolder</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">SubjectHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-tab-holder/index.html">TabHolder</a></h4>
+</td>
+<td>
+<p>pohlad pre neupravitelnu polozku v menu</p>
+<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">TabHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">SubjectHolder</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Adapter na zobrazenie suborov
+Polozky mozu byt zobrazovane ako polozky menu alebo ako zoznam upravitelnych predmetov</p>
+<code><span class="identifier">SubjectAdapter</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$<init>(kotlin.Int, android.os.Bundle)/adapterType">adapterType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$<init>(kotlin.Int, android.os.Bundle)/bundle">bundle</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="marked.html">marked</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">marked</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="marked-holder.html">markedHolder</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">markedHolder</span><span class="symbol">: </span><span class="identifier">TabHolder</span><span class="symbol">?</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="backup-data.html">backupData</a></h4>
+</td>
+<td>
+<p>Zalohovanie dat adaptera</p>
+<code><span class="keyword">fun </span><span class="identifier">backupData</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$backupData(android.os.Bundle)/bundle">bundle</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="close.html">close</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">close</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="delete-record.html">deleteRecord</a></h4>
+</td>
+<td>
+<p>Predmet zmizne z viditelneho zoznamu</p>
+<code><span class="keyword">fun </span><span class="identifier">deleteRecord</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$deleteRecord(kotlin.Int)/pos">pos</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-item-count.html">getItemCount</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getItemCount</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-item-id.html">getItemId</a></h4>
+</td>
+<td>
+<p>ziskanie ID záznamu v zozname</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getItemId</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$getItemId(kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-position-by-id.html">getPositionById</a></h4>
+</td>
+<td>
+<p>Ziskanie pozicie predmetu s danym id</p>
+<code><span class="keyword">fun </span><span class="identifier">getPositionById</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$getPositionById(kotlin.Long)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-subject-name-at.html">getSubjectNameAt</a></h4>
+</td>
+<td>
+<p>Ziska nazov predmetu na danej pozicii</p>
+<code><span class="keyword">fun </span><span class="identifier">getSubjectNameAt</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$getSubjectNameAt(kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="insert-record.html">insertRecord</a></h4>
+</td>
+<td>
+<p>Pridany predmet sa prida do viditelneho zoznamu</p>
+<code><span class="keyword">fun </span><span class="identifier">insertRecord</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$insertRecord(kotlin.Long)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-bind-view-holder.html">onBindViewHolder</a></h4>
+</td>
+<td>
+<p>po pridaní viewHoldera</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onBindViewHolder</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder, kotlin.Int)/holder">holder</span><span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">, </span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-create-view-holder.html">onCreateViewHolder</a></h4>
+</td>
+<td>
+<p>Tvorba ViewHoldera</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCreateViewHolder</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/viewType">viewType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ViewHolder</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-delete.html">onDelete</a></h4>
+</td>
+<td>
+<p>Co sa stane ak sa pokusim vymazat dany predmet</p>
+<code><span class="keyword">fun </span><span class="identifier">onDelete</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$onDelete(kotlin.Function1((android.view.View, kotlin.Unit)))/delete">delete</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-edit.html">onEdit</a></h4>
+</td>
+<td>
+<p>Co sa stane ak sa pokusim upravit dany predmet</p>
+<code><span class="keyword">fun </span><span class="identifier">onEdit</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$onEdit(kotlin.Function1((android.view.View, kotlin.Unit)))/edit">edit</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-switch.html">onSwitch</a></h4>
+</td>
+<td>
+<p>Nastavenie funkcie, co sa ma stat, ak sa v menu prekliknem na dalsi predmet</p>
+<code><span class="keyword">fun </span><span class="identifier">onSwitch</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$onSwitch(kotlin.Function1((android.view.View, kotlin.Unit)))/switch">switch</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="reload.html">reload</a></h4>
+</td>
+<td>
+<p>Nacitanie cerstvych dat</p>
+<code><span class="keyword">fun </span><span class="identifier">reload</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="update-record.html">updateRecord</a></h4>
+</td>
+<td>
+<p>Aktualizovany predmet sa zmeni vo viditelnom zozname</p>
+<code><span class="keyword">fun </span><span class="identifier">updateRecord</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.SubjectAdapter$updateRecord(kotlin.Long)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-a-d-a-p-t-e-r_-t-y-p-e_-i-t-e-m.html">ADAPTER_TYPE_ITEM</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">ADAPTER_TYPE_ITEM</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-a-d-a-p-t-e-r_-t-y-p-e_-t-a-b.html">ADAPTER_TYPE_TAB</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">ADAPTER_TYPE_TAB</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
