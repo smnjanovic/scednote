@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>sk.scednote.adapters - app</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">app</a>&nbsp;/&nbsp;<a href="./index.html">sk.scednote.adapters</a><br/>
+<br/>
+<h2>Package sk.scednote.adapters</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-note-adapter/index.html">NoteAdapter</a></h4>
+</td>
+<td>
+<p>Model nacita zoznam uloh podla vybranej kategorie a vytvara pohlady (MVC).
+Komunikuje s databazou, t.j. vytvara, aktualizuje a vymazava data</p>
+<code><span class="keyword">class </span><span class="identifier">NoteAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Adapter</span><span class="symbol">&lt;</span><span class="identifier">ViewHolder</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-note-widget-service/index.html">NoteWidgetService</a></h4>
+</td>
+<td>
+<p>Trieda pristupuje k vzdialenemu Adapteru pod krycim nazvom RemoteViewsFactory</p>
+<code><span class="keyword">class </span><span class="identifier">NoteWidgetService</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/RemoteViewsService.html"><span class="identifier">RemoteViewsService</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-recent-notes-adapter/index.html">RecentNotesAdapter</a></h4>
+</td>
+<td>
+<p>Adapter zobrazujuci zoznam uloh v terminoch v tomto tyzdni</p>
+<code><span class="keyword">class </span><span class="identifier">RecentNotesAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Adapter</span><span class="symbol">&lt;</span><span class="identifier">ViewHolder</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-sced-adapter/index.html">ScedAdapter</a></h4>
+</td>
+<td>
+<p>Adapter nacitava zaznamy o vyucovacich hodinach podla vybraneho dna</p>
+<code><span class="keyword">class </span><span class="identifier">ScedAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Adapter</span><span class="symbol">&lt;</span><span class="identifier">ViewHolder</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-subject-adapter/index.html">SubjectAdapter</a></h4>
+</td>
+<td>
+<p>Adapter na zobrazenie suborov
+Polozky mozu byt zobrazovane ako polozky menu alebo ako zoznam upravitelnych predmetov</p>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">SubjectAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Adapter</span><span class="symbol">&lt;</span><span class="identifier">ViewHolder</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
