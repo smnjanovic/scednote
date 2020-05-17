@@ -1,0 +1,257 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Database - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">sk.scednote.model</a>&nbsp;/&nbsp;<a href="./index.html">Database</a><br/>
+<br/>
+<h1>Database</h1>
+<code><span class="keyword">class </span><span class="identifier">Database</span></code>
+<p>Trieda manipuluje s databazou SQLite. (prijem, tvorba, aktualizacia a odstranenie dat)</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-table-set/index.html">TableSet</a></h4>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">TableSet</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Trieda manipuluje s databazou SQLite. (prijem, tvorba, aktualizacia a odstranenie dat)</p>
+<code><span class="identifier">Database</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="close.html">close</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">close</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-color.html">getColor</a></h4>
+</td>
+<td>
+<p>ziska nastavenu farbu. Prednastavena farba je v resources, takze navratova hodnota je nenullova</p>
+<code><span class="keyword">fun </span><span class="identifier">getColor</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$getColor(kotlin.String)/target">target</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-ahsl/index.html"><span class="identifier">Ahsl</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-deadlined-notes.html">getDeadlinedNotes</a></h4>
+</td>
+<td>
+<p>Ziska vsetky nadchadzajuce ulohy s deadlinom</p>
+<code><span class="keyword">fun </span><span class="identifier">getDeadlinedNotes</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-note/index.html"><span class="identifier">Note</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-free-hours.html">getFreeHours</a></h4>
+</td>
+<td>
+<p>Vrati vsetky neobsadene casy v danom dni  (obcas sa neprihliada na predmety, ktore su mozno prave teraz aktualizovane)</p>
+<code><span class="keyword">fun </span><span class="identifier">getFreeHours</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$getFreeHours(kotlin.Int, kotlin.Long)/day">day</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.model.Database$getFreeHours(kotlin.Int, kotlin.Long)/exception">exception</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;-1<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int-array/index.html"><span class="identifier">IntArray</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-lesson.html">getLesson</a></h4>
+</td>
+<td>
+<p>Ziska data o vyucovacej hodine s danym ID</p>
+<code><span class="keyword">fun </span><span class="identifier">getLesson</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$getLesson(kotlin.Long)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-lesson/index.html"><span class="identifier">Lesson</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-notes.html">getNotes</a></h4>
+</td>
+<td>
+<p>Vrati zoznam dat</p>
+<code><span class="keyword">fun </span><span class="identifier">getNotes</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$getNotes(kotlin.Long)/sub_id">sub_id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-note/index.html"><span class="identifier">Note</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-sced-range.html">getScedRange</a></h4>
+</td>
+<td>
+<p>Zisti najskorsi cas zaciatku vyucovania a najneskorsi cas konca vyucovania</p>
+<code><span class="keyword">fun </span><span class="identifier">getScedRange</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-scedule.html">getScedule</a></h4>
+</td>
+<td>
+<p>Vrati vsetky vyucivacie hodiny v tabulke, prip. hodiny z konkretneho dna</p>
+<code><span class="keyword">fun </span><span class="identifier">getScedule</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$getScedule(sk.scednote.model.Day)/day">day</span><span class="symbol">:</span>&nbsp;<a href="../-day/index.html"><span class="identifier">Day</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-lesson/index.html"><span class="identifier">Lesson</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-subject.html">getSubject</a></h4>
+</td>
+<td>
+<p>Vyhlada konkretny predmet podla jeho ID</p>
+<code><span class="keyword">fun </span><span class="identifier">getSubject</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$getSubject(kotlin.Long)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-subject/index.html"><span class="identifier">Subject</span></a><span class="symbol">?</span></code>
+<p>Vyhlada konkretny predmet podla jeho skratky</p>
+<code><span class="keyword">fun </span><span class="identifier">getSubject</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$getSubject(kotlin.String)/abb">abb</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-subject/index.html"><span class="identifier">Subject</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get-subject-by-full-name.html">getSubjectByFullName</a></h4>
+</td>
+<td>
+<p>Vyhlada predmet podla celeho nazvu</p>
+<code><span class="keyword">fun </span><span class="identifier">getSubjectByFullName</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$getSubjectByFullName(kotlin.String)/fullName">fullName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-subject/index.html"><span class="identifier">Subject</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="insert-note.html">insertNote</a></h4>
+</td>
+<td>
+<p>Vlozi novu poznamku k predmetu</p>
+<code><span class="keyword">fun </span><span class="identifier">insertNote</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$insertNote(sk.scednote.model.Note)/note">note</span><span class="symbol">:</span>&nbsp;<a href="../-note/index.html"><span class="identifier">Note</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="insert-or-update-lesson.html">insertOrUpdateLesson</a></h4>
+</td>
+<td>
+<p>Vlozi alebo aktualizuje vyucovaciu hodinu a zluci po sebe iduce duplicity</p>
+<code><span class="keyword">fun </span><span class="identifier">insertOrUpdateLesson</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$insertOrUpdateLesson(sk.scednote.model.Lesson)/les">les</span><span class="symbol">:</span>&nbsp;<a href="../-lesson/index.html"><span class="identifier">Lesson</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="insert-subject.html">insertSubject</a></h4>
+</td>
+<td>
+<p>Vlozi novy predmet do databazy</p>
+<code><span class="keyword">fun </span><span class="identifier">insertSubject</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$insertSubject(kotlin.String, kotlin.String)/abb">abb</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.model.Database$insertSubject(kotlin.String, kotlin.String)/full">full</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="is-subject-obsolete.html">isSubjectObsolete</a></h4>
+</td>
+<td>
+<p>Zisti, ci je k predmetu pripnuta poznamka, alebo ci sa v nejakom case vyucuje</p>
+<code><span class="keyword">fun </span><span class="identifier">isSubjectObsolete</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$isSubjectObsolete(kotlin.Long)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="load-subjects.html">loadSubjects</a></h4>
+</td>
+<td>
+<p>Nacita zoznam predmetov</p>
+<code><span class="keyword">fun </span><span class="identifier">loadSubjects</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../-subject/index.html"><span class="identifier">Subject</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="merge-subjects.html">mergeSubjects</a></h4>
+</td>
+<td>
+<p>Zluci 2 duplicitne predmety, ak po sebe nasleduju</p>
+<code><span class="keyword">fun </span><span class="identifier">mergeSubjects</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$mergeSubjects(sk.scednote.model.Subject, sk.scednote.model.Subject)/updatingSub">updatingSub</span><span class="symbol">:</span>&nbsp;<a href="../-subject/index.html"><span class="identifier">Subject</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.model.Database$mergeSubjects(sk.scednote.model.Subject, sk.scednote.model.Subject)/validSub">validSub</span><span class="symbol">:</span>&nbsp;<a href="../-subject/index.html"><span class="identifier">Subject</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="put-lessons-together.html">putLessonsTogether</a></h4>
+</td>
+<td>
+<p>hodiny s rovnakymi vlastnostami iduce po sebe bez prestavky sa zlucia dokopy</p>
+<code><span class="keyword">fun </span><span class="identifier">putLessonsTogether</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$putLessonsTogether(sk.scednote.model.Day)/day">day</span><span class="symbol">:</span>&nbsp;<a href="../-day/index.html"><span class="identifier">Day</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-lesson.html">removeLesson</a></h4>
+</td>
+<td>
+<p>odstranit konkretnu hodinu ak existuje</p>
+<code><span class="keyword">fun </span><span class="identifier">removeLesson</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$removeLesson(kotlin.Long)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-note.html">removeNote</a></h4>
+</td>
+<td>
+<p>Odstranit konkretnu poznamku ak existuje</p>
+<code><span class="keyword">fun </span><span class="identifier">removeNote</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$removeNote(kotlin.Long)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-obsolete-data.html">removeObsoleteData</a></h4>
+</td>
+<td>
+<p>Odstrani nadbytocne data
+Nevyuzite predmety (ani v rozvrhu ani poznamka)</p>
+<code><span class="keyword">fun </span><span class="identifier">removeObsoleteData</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-subject.html">removeSubject</a></h4>
+</td>
+<td>
+<p>Odstranit predmet</p>
+<code><span class="keyword">fun </span><span class="identifier">removeSubject</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$removeSubject(kotlin.Long)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-color.html">setColor</a></h4>
+</td>
+<td>
+<p>Nastavi alebo zmeni farbu pre dany ciel</p>
+<code><span class="keyword">fun </span><span class="identifier">setColor</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$setColor(kotlin.String, sk.scednote.model.Ahsl)/target">target</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.model.Database$setColor(kotlin.String, sk.scednote.model.Ahsl)/ahsl">ahsl</span><span class="symbol">:</span>&nbsp;<a href="../-ahsl/index.html"><span class="identifier">Ahsl</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="update-note.html">updateNote</a></h4>
+</td>
+<td>
+<p>Aktualizuje ulohu pripnutu k predmetu</p>
+<code><span class="keyword">fun </span><span class="identifier">updateNote</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$updateNote(sk.scednote.model.Note)/note">note</span><span class="symbol">:</span>&nbsp;<a href="../-note/index.html"><span class="identifier">Note</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="update-subject.html">updateSubject</a></h4>
+</td>
+<td>
+<p>Aktualizuje data o predmete</p>
+<code><span class="keyword">fun </span><span class="identifier">updateSubject</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$updateSubject(kotlin.Long, kotlin.String, kotlin.String)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.model.Database$updateSubject(kotlin.Long, kotlin.String, kotlin.String)/abb">abb</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.model.Database$updateSubject(kotlin.Long, kotlin.String, kotlin.String)/full">full</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-d-a-t-a-b-a-s-e_-n-a-m-e.html">DATABASE_NAME</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DATABASE_NAME</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-d-a-t-a-b-a-s-e_-v-e-r-s-i-o-n.html">DATABASE_VERSION</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DATABASE_VERSION</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

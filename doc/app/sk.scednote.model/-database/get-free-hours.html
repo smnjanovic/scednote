@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Database.getFreeHours - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">sk.scednote.model</a>&nbsp;/&nbsp;<a href="index.html">Database</a>&nbsp;/&nbsp;<a href="./get-free-hours.html">getFreeHours</a><br/>
+<br/>
+<h1>getFreeHours</h1>
+<a name="sk.scednote.model.Database$getFreeHours(kotlin.Int, kotlin.Long)"></a>
+<code><span class="keyword">fun </span><span class="identifier">getFreeHours</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.model.Database$getFreeHours(kotlin.Int, kotlin.Long)/day">day</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.model.Database$getFreeHours(kotlin.Int, kotlin.Long)/exception">exception</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;-1<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int-array/index.html"><span class="identifier">IntArray</span></a></code>
+<p>Vrati vsetky neobsadene casy v danom dni  (obcas sa neprihliada na predmety, ktore su mozno prave teraz aktualizovane)</p>
+<h3>Parameters</h3>
+<p><a name="day"></a>
+<code>day</code> - poradie dna v tyzdni</p>
+<p><a name="exception"></a>
+<code>exception</code> - ID predmetu, pre ktorý platí vínimka (Ak sa aktualizuje, sam seba neobsadi)</p>
+<p><strong>Return</strong><br/>
+<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int-array/index.html">IntArray</a> Vrati mnozstvo zatial neobsadenych hodin</p>
+</BODY>
+</HTML>
