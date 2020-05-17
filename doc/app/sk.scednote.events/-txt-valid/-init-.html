@@ -1,0 +1,30 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>TxtValid.<init> - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">sk.scednote.events</a>&nbsp;/&nbsp;<a href="index.html">TxtValid</a>&nbsp;/&nbsp;<a href="./-init-.html">&lt;init&gt;</a><br/>
+<br/>
+<h1>&lt;init&gt;</h1>
+<a name="sk.scednote.events.TxtValid$&lt;init&gt;(android.widget.EditText, kotlin.String, kotlin.ranges.IntRange, android.view.View, kotlin.Function0((kotlin.Boolean)))"></a>
+<code><span class="identifier">TxtValid</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.events.TxtValid$<init>(android.widget.EditText, kotlin.String, kotlin.ranges.IntRange, android.view.View, kotlin.Function0((kotlin.Boolean)))/txt">txt</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/EditText.html"><span class="identifier">EditText</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="sk.scednote.events.TxtValid$<init>(android.widget.EditText, kotlin.String, kotlin.ranges.IntRange, android.view.View, kotlin.Function0((kotlin.Boolean)))/regex">regex</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="sk.scednote.events.TxtValid$<init>(android.widget.EditText, kotlin.String, kotlin.ranges.IntRange, android.view.View, kotlin.Function0((kotlin.Boolean)))/rng">rng</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="sk.scednote.events.TxtValid$<init>(android.widget.EditText, kotlin.String, kotlin.ranges.IntRange, android.view.View, kotlin.Function0((kotlin.Boolean)))/btn">btn</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="sk.scednote.events.TxtValid$<init>(android.widget.EditText, kotlin.String, kotlin.ranges.IntRange, android.view.View, kotlin.Function0((kotlin.Boolean)))/fn">fn</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;defaultFn<span class="symbol">)</span></code>
+<p>Posluchac textoveho vstupu, ktory ma pristup k tlacidlu, ktore odosiela formular moze kontrolovat
+stav viacerych textovych vstupov sucasne. Ak ktorykolvek z textovych poli nesplna svoje stanovene
+podmienky, tlacidlo sa zablokuje a formulár nie je možné odoslať. Ak tlacidlo nie je definovane,
+vykona sa kontrola len obycajna kontrola textu</p>
+<h3>Parameters</h3>
+<p><a name="txt"></a>
+<code>txt</code> - textove pole ktoreho vstup sa kontroluje. Moze byt null</p>
+<p><a name="regex"></a>
+<code>regex</code> - povolene znaky alebo kombinacie znakom stylom regular expression. Moze byt null</p>
+<p><a name="rng"></a>
+<code>rng</code> - povolena dlzka textu. Moze byt null</p>
+<p><a name="btn"></a>
+<code>btn</code> - tlacidlo, ktore je aktivne ak je format textu spravny a dlzka primerana. Moze byt null</p>
+<p><a name="fn"></a>
+<code>fn</code> - funkcia, ktora sa vykona navyse, pokial kontrola prebehla uspesne (trebars je k dispozicii
+viac textovych poli, ktore vo funkcii treba kontrolovať, ci su bez chýb. Až potom sa tlačidlo uvolní)</p>
+</BODY>
+</HTML>

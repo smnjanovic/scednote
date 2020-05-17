@@ -1,0 +1,121 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>NoteReminder - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">sk.scednote</a>&nbsp;/&nbsp;<a href="./index.html">NoteReminder</a><br/>
+<br/>
+<h1>NoteReminder</h1>
+<code><span class="keyword">class </span><span class="identifier">NoteReminder</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/BroadcastReceiver.html"><span class="identifier">BroadcastReceiver</span></a></code>
+<p>K úloham pripnutých k predmetom sa vzťahuju notifikácie na bežiace na pozadí</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>K úloham pripnutých k predmetom sa vzťahuju notifikácie na bežiace na pozadí</p>
+<code><span class="identifier">NoteReminder</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="on-receive.html">onReceive</a></h4>
+</td>
+<td>
+<p>Metoda na zaklade vstupu rozhodne aku (s akym obsahom) notifikaciu zobrazi</p>
+<code><span class="keyword">fun </span><span class="identifier">onReceive</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.NoteReminder$onReceive(android.content.Context, android.content.Intent)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.NoteReminder$onReceive(android.content.Context, android.content.Intent)/intent">intent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Intent.html"><span class="identifier">Intent</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-c-h-a-n-n-e-l_-i-d.html">CHANNEL_ID</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">CHANNEL_ID</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="enabled.html">enabled</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">enabled</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="reminder-advance.html">reminderAdvance</a></h4>
+</td>
+<td>
+<p>predstih v upozorneniach</p>
+<code><span class="keyword">var </span><span class="identifier">reminderAdvance</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="cancel-reminder.html">cancelReminder</a></h4>
+</td>
+<td>
+<p>Zrusit notifikaciu</p>
+<code><span class="keyword">fun </span><span class="identifier">cancelReminder</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.NoteReminder.Companion$cancelReminder(sk.scednote.model.Note)/note">note</span><span class="symbol">:</span>&nbsp;<a href="../../sk.scednote.model/-note/index.html"><span class="identifier">Note</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="create-note-reminder-channel.html">createNoteReminderChannel</a></h4>
+</td>
+<td>
+<p>Vytvorí sa kanál, v ktorom budu zoskupene notifikácie na úlohy</p>
+<code><span class="keyword">fun </span><span class="identifier">createNoteReminderChannel</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="disable-reminders.html">disableReminders</a></h4>
+</td>
+<td>
+<p>vypnut vsetky notifikacie</p>
+<code><span class="keyword">fun </span><span class="identifier">disableReminders</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.NoteReminder.Companion$disableReminders(java.util.ArrayList((sk.scednote.model.Note)))/notes">notes</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../../sk.scednote.model/-note/index.html"><span class="identifier">Note</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="enable-reminders.html">enableReminders</a></h4>
+</td>
+<td>
+<p>Upravit vsetky notifikacie</p>
+<code><span class="keyword">fun </span><span class="identifier">enableReminders</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.NoteReminder.Companion$enableReminders(java.util.ArrayList((sk.scednote.model.Note)))/notes">notes</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-array-list/index.html"><span class="identifier">ArrayList</span></a><span class="symbol">&lt;</span><a href="../../sk.scednote.model/-note/index.html"><span class="identifier">Note</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="note-id-to-int.html">noteIdToInt</a></h4>
+</td>
+<td>
+<p>Prevod ID Poznamky typu long na ID notifikacie typu Int. Aky pretecie kapacita, pocita sa
+znova od 0.</p>
+<code><span class="keyword">fun </span><span class="identifier">noteIdToInt</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.NoteReminder.Companion$noteIdToInt(kotlin.Long)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-reminder.html">setReminder</a></h4>
+</td>
+<td>
+<p>Nastavit notifikaciu</p>
+<code><span class="keyword">fun </span><span class="identifier">setReminder</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.NoteReminder.Companion$setReminder(sk.scednote.model.Note)/note">note</span><span class="symbol">:</span>&nbsp;<a href="../../sk.scednote.model/-note/index.html"><span class="identifier">Note</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

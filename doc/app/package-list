@@ -1,0 +1,12 @@
+$dokka.format:html
+$dokka.linkExtension:html
+
+sk.scednote
+sk.scednote.activities
+sk.scednote.adapters
+sk.scednote.events
+sk.scednote.fragments
+sk.scednote.model
+sk.scednote.scedule
+sk.scednote.sensors
+sk.scednote.widgets

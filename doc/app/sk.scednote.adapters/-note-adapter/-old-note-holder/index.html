@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>NoteAdapter.OldNoteHolder - app</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">app</a>&nbsp;/&nbsp;<a href="../../index.html">sk.scednote.adapters</a>&nbsp;/&nbsp;<a href="../index.html">NoteAdapter</a>&nbsp;/&nbsp;<a href="./index.html">OldNoteHolder</a><br/>
+<br/>
+<h1>OldNoteHolder</h1>
+<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">OldNoteHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">NoteHolder</span></code>
+<p>ViewType: Old
+metody a udalosti unikatne pre polozky existujucich poznamok</p>
+<h3>Parameters</h3>
+<p><a name="viewItem"></a>
+<code>viewItem</code> - priamy predok obsahujúci tento layout</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>ViewType: Old
+metody a udalosti unikatne pre polozky existujucich poznamok</p>
+<code><span class="identifier">OldNoteHolder</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter.OldNoteHolder$<init>(android.view.View)/viewItem">viewItem</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="bind.html">bind</a></h4>
+</td>
+<td>
+<p>Doplnenie NoteHolder: Co sa stane ak dam zmeny potvrdit alebo stlacim ikonu pre odstranenie suboru</p>
+<code><span class="keyword">fun </span><span class="identifier">bind</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-set-deadline.html">onSetDeadline</a></h4>
+</td>
+<td>
+<p>Ak existujuca poznamka nie je v rezime uprav, okamzite po zmene datumu sa zmena prejavi
+aj v databaze</p>
+<code><span class="keyword">fun </span><span class="identifier">onSetDeadline</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter.OldNoteHolder$onSetDeadline(java.util.Calendar)/calendar">calendar</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/Calendar.html"><span class="identifier">Calendar</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-unset-deadline.html">onUnsetDeadline</a></h4>
+</td>
+<td>
+<p>Ak existujuca poznamka nie je v rezime uprav, okamzite po odstraneni datumu sa zmena prejavi
+aj v databaze</p>
+<code><span class="keyword">fun </span><span class="identifier">onUnsetDeadline</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

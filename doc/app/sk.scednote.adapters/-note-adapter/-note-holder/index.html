@@ -1,0 +1,133 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>NoteAdapter.NoteHolder - app</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">app</a>&nbsp;/&nbsp;<a href="../../index.html">sk.scednote.adapters</a>&nbsp;/&nbsp;<a href="../index.html">NoteAdapter</a>&nbsp;/&nbsp;<a href="./index.html">NoteHolder</a><br/>
+<br/>
+<h1>NoteHolder</h1>
+<code><span class="keyword">abstract</span> <span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">NoteHolder</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span></code>
+<p>ViewHoldery</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>ViewHoldery</p>
+<code><span class="identifier">NoteHolder</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter.NoteHolder$<init>(android.view.View)/viewItem">viewItem</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="btn-delete.html">btnDelete</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">btnDelete</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/widget/ImageButton.html"><span class="identifier">ImageButton</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="btn-save.html">btnSave</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">btnSave</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/widget/ImageButton.html"><span class="identifier">ImageButton</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="datetime.html">datetime</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">datetime</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/widget/TextView.html"><span class="identifier">TextView</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="detail-edit.html">detailEdit</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">detailEdit</span><span class="symbol">: </span><span class="identifier">TextInputEditText</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="detail-read.html">detailRead</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">detailRead</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/widget/TextView.html"><span class="identifier">TextView</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="edit-mode.html">editMode</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">editMode</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="read-mode.html">readMode</a></h4>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">readMode</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="sub.html">sub</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">sub</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/widget/TextView.html"><span class="identifier">TextView</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="sub-choice.html">subChoice</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">subChoice</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/widget/Spinner.html"><span class="identifier">Spinner</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="bind.html">bind</a></h4>
+</td>
+<td>
+<p>Vytvori 2D pohlad pre novy záznam, vyplní dáta, nastaví udalosti spolocne pre obidva
+typy ViewHoldera (novy na vytvorenie / stary na upravu).</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">bind</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-set-deadline.html">onSetDeadline</a></h4>
+</td>
+<td>
+<p>nastavi a zobrazi datum v danej polozke</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onSetDeadline</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.adapters.NoteAdapter.NoteHolder$onSetDeadline(java.util.Calendar)/calendar">calendar</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/Calendar.html"><span class="identifier">Calendar</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-unset-deadline.html">onUnsetDeadline</a></h4>
+</td>
+<td>
+<p>odstrani datum v danej polozke</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onUnsetDeadline</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="parse-note.html">parseNote</a></h4>
+</td>
+<td>
+<p>z dat z viewholdera vytvorim novy objekt Note</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">parseNote</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../../sk.scednote.model/-note/index.html"><span class="identifier">Note</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

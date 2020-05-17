@@ -1,0 +1,96 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>DateFragment - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">sk.scednote.fragments</a>&nbsp;/&nbsp;<a href="./index.html">DateFragment</a><br/>
+<br/>
+<h1>DateFragment</h1>
+<code><span class="keyword">class </span><span class="identifier">DateFragment</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">DialogFragment</span><span class="symbol">, </span><a href="https://developer.android.com/reference/android/app/DatePickerDialog/OnDateSetListener.html"><span class="identifier">OnDateSetListener</span></a></code>
+<p>Trieda zobrazuje dialog na nastavenie dátumu. Pred zobrazením do nej možno vložiť predpripravený dátum na úpravu</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Trieda zobrazuje dialog na nastavenie dátumu. Pred zobrazením do nej možno vložiť predpripravený dátum na úpravu</p>
+<code><span class="identifier">DateFragment</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="data.html">data</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">data</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="on-create-dialog.html">onCreateDialog</a></h4>
+</td>
+<td>
+<p>Vytvorenie dialogoveho okna, aplikovanie menitelnej udalosti</p>
+<code><span class="keyword">fun </span><span class="identifier">onCreateDialog</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.fragments.DateFragment$onCreateDialog(android.os.Bundle)/saved">saved</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/app/Dialog.html"><span class="identifier">Dialog</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-date-set.html">onDateSet</a></h4>
+</td>
+<td>
+<p>pokus o nastavenie datumu</p>
+<code><span class="keyword">fun </span><span class="identifier">onDateSet</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.fragments.DateFragment$onDateSet(android.widget.DatePicker, kotlin.Int, kotlin.Int, kotlin.Int)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/widget/DatePicker.html"><span class="identifier">DatePicker</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="sk.scednote.fragments.DateFragment$onDateSet(android.widget.DatePicker, kotlin.Int, kotlin.Int, kotlin.Int)/year">year</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.fragments.DateFragment$onDateSet(android.widget.DatePicker, kotlin.Int, kotlin.Int, kotlin.Int)/month">month</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="sk.scednote.fragments.DateFragment$onDateSet(android.widget.DatePicker, kotlin.Int, kotlin.Int, kotlin.Int)/day">day</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="on-save-instance-state.html">onSaveInstanceState</a></h4>
+</td>
+<td>
+<p>po otoceni displeja dialog ostane viditelny</p>
+<code><span class="keyword">fun </span><span class="identifier">onSaveInstanceState</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.fragments.DateFragment$onSaveInstanceState(android.os.Bundle)/outState">outState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="put-calendar.html">putCalendar</a></h4>
+</td>
+<td>
+<p>Odlozenie nastavenia daneho datumu</p>
+<code><span class="keyword">fun </span><span class="identifier">putCalendar</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.fragments.DateFragment$putCalendar(java.util.Calendar)/cal">cal</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/Calendar.html"><span class="identifier">Calendar</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="set-on-choice.html">setOnChoice</a></h4>
+</td>
+<td>
+<p>Udalost nastavitelna zvonka</p>
+<code><span class="keyword">fun </span><span class="identifier">setOnChoice</span><span class="symbol">(</span><span class="identifier" id="sk.scednote.fragments.DateFragment$setOnChoice(kotlin.Function1((java.util.Calendar, kotlin.Unit)))/fn">fn</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><a href="https://docs.oracle.com/javase/6/docs/api/java/util/Calendar.html"><span class="identifier">Calendar</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-c-a-l.html">CAL</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">CAL</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
