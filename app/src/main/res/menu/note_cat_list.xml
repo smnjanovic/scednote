@@ -11,7 +11,7 @@
         android:title="@string/today" />
     <item
         android:id="@+id/tomorrow"
-        android:title="@string/tomorow" />
+        android:title="@string/tomorrow" />
     <item
         android:id="@+id/recentList"
         android:title="@string/this_week" />

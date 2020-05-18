@@ -17,7 +17,7 @@ data class Note (val id: Long, val sub: Subject, val info: String, var deadline:
     companion object CREATOR : Parcelable.Creator<Note> {
         const val DEADLINE_TODAY: Long = 0
         const val DEADLINE_TOMORROW: Long = -1
-        const val DEADLINE_RECENT: Long = -2
+        const val DEADLINE_THIS_WEEK: Long = -2
         const val DEADLINE_LATE: Long = -3
         const val DEADLINE_FOREVER: Long = -4
         const val NO_DATA: Long = -5

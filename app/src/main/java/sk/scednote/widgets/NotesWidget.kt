@@ -36,10 +36,10 @@ class NotesWidget : AppWidgetProvider() {
          * @param category kategoria zoznamu, ktory sa zobrazi vo widgete
          * @param title Titulok widgetu
          */
-        fun confirmUpdate (ctx: Context, widget: Int, manager: AppWidgetManager, category: Long, title: String) {
+        fun createOrUpdateWidget (ctx: Context, widget: Int, manager: AppWidgetManager, category: Long, title: String) {
             val adapterIntent = Intent(ctx, NoteWidgetService::class.java).apply {
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widget)
-                putExtra(NotesWidgetConf.CAT_ID, category)
+                putExtra(NotesWidgetConf.CATEGORY, category)
                 data = Uri.parse(toUri(Intent.URI_INTENT_SCHEME))
             }
             val deleteIntent = Intent(ctx, NotesWidget::class.java).let {
@@ -77,10 +77,10 @@ class NotesWidget : AppWidgetProvider() {
             val category: Long
 
             context.getSharedPreferences(NotesWidgetConf.SHARED_PREFS + appWidgetId, Activity.MODE_PRIVATE).apply {
-                title = getString(NotesWidgetConf.CATEGORY, "") ?: ""
-                category = getLong(NotesWidgetConf.CAT_ID, Note.NO_DATA)
+                title = getString(NotesWidgetConf.LABEL, "") ?: ""
+                category = getLong(NotesWidgetConf.CATEGORY, Note.NO_DATA)
             }
-            confirmUpdate(context, appWidgetId, appWidgetManager, category, title)
+            createOrUpdateWidget(context, appWidgetId, appWidgetManager, category, title)
         }
     }
 
@@ -93,11 +93,11 @@ class NotesWidget : AppWidgetProvider() {
         if (intent.action == ACTION_DELETE) {
             val manager = AppWidgetManager.getInstance(context)
             val widgets = manager.getAppWidgetIds(ComponentName(context, NotesWidget::class.java))
-            val cat = intent.getLongExtra(NotesWidgetConf.CATEGORY, Note.NO_DATA)
+            val cat = intent.getLongExtra(NotesWidgetConf.LABEL, Note.NO_DATA)
 
             for (widget in widgets) {
                 val pref = context.getSharedPreferences(NotesWidgetConf.SHARED_PREFS + widget, Activity.MODE_PRIVATE)
-                val cat2 = pref.getLong(NotesWidgetConf.CAT_ID, Note.NO_DATA)
+                val cat2 = pref.getLong(NotesWidgetConf.CATEGORY, Note.NO_DATA)
 
                 //kategorie sa nezhoduju, widget nezdiela ten isty obsah
                 if (cat > 0 && cat2 > 0 && cat != cat2) continue

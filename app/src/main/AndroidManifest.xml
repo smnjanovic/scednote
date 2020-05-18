@@ -40,7 +40,9 @@
                 android:resource="@xml/sced_widget_info" />
         </receiver>
 
-        <activity android:name=".activities.NotesWidgetConf">
+        <activity android:name=".activities.NotesWidgetConf"
+            android:label="@string/note_tit"
+            android:theme="@style/NoteTheme">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

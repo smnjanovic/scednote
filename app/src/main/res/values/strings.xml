@@ -88,7 +88,7 @@
     <!--Úlohy-->
     <string name="subject_related">Predmet</string>
     <string name="today">Dnes</string>
-    <string name="tomorow">Zajtra</string>
+    <string name="tomorrow">Zajtra</string>
     <string name="forever">Bez termínu</string>
     <string name="late">Oneskrené</string>
     <string name="time_out">Čas vypršal</string>

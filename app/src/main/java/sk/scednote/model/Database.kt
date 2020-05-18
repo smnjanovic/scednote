@@ -351,8 +351,8 @@ class Database {
         val where = when (sub_id) {
             Note.DEADLINE_TODAY -> "${TableSet.Notes.DEADLINE} BETWEEN $currMillis AND $midnight"
             Note.DEADLINE_TOMORROW -> "${TableSet.Notes.DEADLINE} BETWEEN $midnight AND ${midnight + day}"
-            Note.DEADLINE_RECENT -> "${TableSet.Notes.DEADLINE} BETWEEN $currMillis AND $currMillis+${7*day}"
-            Note.DEADLINE_LATE -> "deadline < $$currMillis"
+            Note.DEADLINE_THIS_WEEK -> "${TableSet.Notes.DEADLINE} BETWEEN $currMillis AND $currMillis+${7*day}"
+            Note.DEADLINE_LATE -> "deadline < $currMillis"
             Note.DEADLINE_FOREVER -> "${TableSet.Notes.DEADLINE} IS NULL"
             else -> "${TableSet.Notes.SUBJECT} = $sub_id"
         }

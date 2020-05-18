@@ -132,7 +132,7 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
 
         if (subjects.size > 0) {
             when(category) {
-                 Note.DEADLINE_TODAY, Note.DEADLINE_TOMORROW, Note.DEADLINE_RECENT, Note.DEADLINE_FOREVER ->
+                 Note.DEADLINE_TODAY, Note.DEADLINE_TOMORROW, Note.DEADLINE_THIS_WEEK, Note.DEADLINE_FOREVER ->
                     add(Subject(-1, "", ""))
                  else -> if (category > 0) data.getSubject(category)?.let { add(it) }
             }
@@ -167,7 +167,7 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
                     it.timeInMillis in tomorrowStart.timeInMillis until tomorrowStart.apply { add(Calendar.DAY_OF_MONTH, 1) }.timeInMillis
                 } ?: false
             }
-            Note.DEADLINE_RECENT -> {
+            Note.DEADLINE_THIS_WEEK -> {
                 note.deadline?.let{
                     with (getInstance()) {
                         it.timeInMillis in this.timeInMillis until this.apply { add(Calendar.DAY_OF_MONTH, 7) }.timeInMillis

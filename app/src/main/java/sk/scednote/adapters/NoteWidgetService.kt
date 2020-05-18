@@ -28,7 +28,7 @@ class NoteWidgetService : RemoteViewsService() {
      */
     class NoteWidgetFactory(private val context: Context, intent: Intent): RemoteViewsFactory {
         private val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
-        private val category = intent.getLongExtra(NotesWidgetConf.CAT_ID, Note.NO_DATA)
+        private val category = intent.getLongExtra(NotesWidgetConf.CATEGORY, Note.NO_DATA)
         private val data = ScedNoteApp.database
         private lateinit var items: ArrayList<Note>
 
@@ -53,7 +53,7 @@ class NoteWidgetService : RemoteViewsService() {
                 deleteIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
                 deleteIntent.putExtra(NotesWidget.ITEM_POSITION, position)
                 deleteIntent.putExtra(NotesWidget.ITEM_ID, items[position].id)
-                deleteIntent.putExtra(NotesWidgetConf.CATEGORY, category)
+                deleteIntent.putExtra(NotesWidgetConf.LABEL, category)
                 remote.setOnClickFillInIntent(R.id.delete, deleteIntent)
             }
         }

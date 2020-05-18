@@ -36,8 +36,8 @@ class NoteList : ShakeCompatActivity() {
             supportActionBar?.let {
                 it.title = when (id) {
                     Note.DEADLINE_TODAY -> resources.getString(R.string.today)
-                    Note.DEADLINE_TOMORROW -> resources.getString(R.string.tomorow)
-                    Note.DEADLINE_RECENT -> resources.getString(R.string.this_week)
+                    Note.DEADLINE_TOMORROW -> resources.getString(R.string.tomorrow)
+                    Note.DEADLINE_THIS_WEEK -> resources.getString(R.string.this_week)
                     Note.DEADLINE_LATE -> resources.getString(R.string.late)
                     Note.DEADLINE_FOREVER -> resources.getString(R.string.forever)
                     else -> {
@@ -74,7 +74,7 @@ class NoteList : ShakeCompatActivity() {
         when (item.itemId) {
             R.id.today -> category = Note.DEADLINE_TODAY
             R.id.tomorrow -> category = Note.DEADLINE_TOMORROW
-            R.id.recentList -> category = Note.DEADLINE_RECENT
+            R.id.recentList -> category = Note.DEADLINE_THIS_WEEK
             R.id.late -> category = Note.DEADLINE_LATE
             R.id.forever -> category = Note.DEADLINE_FOREVER
             R.id.subject_related -> {

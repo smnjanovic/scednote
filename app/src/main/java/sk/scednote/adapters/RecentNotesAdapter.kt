@@ -25,14 +25,14 @@ class RecentNotesAdapter(bdl: Bundle?): RecyclerView.Adapter<RecyclerView.ViewHo
 
     val data = ScedNoteApp.database
     val items: ArrayList<Note> = bdl?.getParcelableArrayList(BACKUP) ?: data.getNotes(
-        Note.DEADLINE_RECENT)
+        Note.DEADLINE_THIS_WEEK)
 
     /**
      * Načítanie čerstvých dát
      */
     fun reload() {
         items.clear()
-        items.addAll(data.getNotes(Note.DEADLINE_RECENT))
+        items.addAll(data.getNotes(Note.DEADLINE_THIS_WEEK))
         notifyDataSetChanged()
     }
 
