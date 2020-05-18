@@ -83,13 +83,6 @@ class ScedAdapter(list: ArrayList<Lesson>? = null): RecyclerView.Adapter<Recycle
     }
 
     /**
-     * Zavretie databazy
-     */
-    fun closeDb() {
-        db.close()
-    }
-
-    /**
      * Tvorba viewHoldera
      * @param itemView Template ViewHoldera
      */

@@ -164,14 +164,6 @@ class EditLesson : AppCompatActivity() {
         }
     }
 
-    /**
-     * Zavretie databáz
-     */
-    override fun onDestroy() {
-        data.close()
-        super.onDestroy()
-    }
-
     private fun parseSubjects(): ArrayList<String> {
         return ArrayList<String>().apply {
             for (s in subjects)

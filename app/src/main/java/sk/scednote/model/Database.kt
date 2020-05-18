@@ -128,7 +128,7 @@ class Database {
         val ret = ArrayList<T>()
         while (curs.moveToNext())
             fn(ret, curs)
-        close()
+        curs.close()
         return ret
     }
     private fun <T> one(curs: Cursor, fn: (Cursor)->T): T? {

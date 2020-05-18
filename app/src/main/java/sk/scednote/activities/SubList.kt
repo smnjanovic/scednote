@@ -111,14 +111,6 @@ class SubList : ShakeCompatActivity() {
         outState.putLong(DELETE_DIALOG, removalId)
     }
 
-    /**
-     * Zavretie databazy
-     */
-    override fun onDestroy() {
-        subAdapt.close()
-        super.onDestroy()
-    }
-
     private fun customizeSubject(id: Long? = null) {
         startActivityForResult(Intent(this@SubList, EditSubject::class.java).apply {
             id?.let{ putExtra(EditSubject.SUB_ID, it) }

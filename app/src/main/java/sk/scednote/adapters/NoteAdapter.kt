@@ -260,13 +260,6 @@ class NoteAdapter(cat: Long = Note.DEADLINE_TODAY, bundle: Bundle?) : RecyclerVi
     }
 
     /**
-     * Zavretie databazy
-     */
-    fun close() {
-        data.close()
-    }
-
-    /**
      * kod adapteru
      */
 

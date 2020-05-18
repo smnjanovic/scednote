@@ -221,11 +221,4 @@ class TimetableBuilder(private val table: LinearLayout, background: View? = null
     fun getHsl(target: String): Ahsl? {
         return groups[target]?.getHsl()
     }
-
-    /**
-     * uzavrie databazu
-     */
-    fun close() {
-        data.close()
-    }
 }

@@ -110,13 +110,6 @@ class RecentNotesAdapter(bdl: Bundle?): RecyclerView.Adapter<RecyclerView.ViewHo
         (holder as RecentNotesHolder).bind()
     }
 
-    /**
-     * Zavrieť databázu
-     */
-    fun close() {
-        data.close()
-    }
-
     inner class RecentNotesHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val sub: TextView = itemView.abb
         private val date: TextView = itemView.datetime

@@ -130,15 +130,6 @@ class Main : ShakeCompatActivity() {
         noteAdapt.storeBackup(outState)
     }
 
-    /**
-     *  zavretie bežiacej databázy
-     */
-    override fun onDestroy() {
-        scedule.close()
-        noteAdapt.close()
-        super.onDestroy()
-    }
-
     private fun cleanUp() {
         ScedNoteApp.database.removeObsoleteData()
         Toast.makeText(this, resources.getString(R.string.obsolete_subjects_gone), Toast.LENGTH_SHORT).show()

@@ -338,14 +338,6 @@ class Screenshot : ShakeCompatActivity() {
     }
 
     /**
-     * Zavretie databazy
-     */
-    override fun onDestroy() {
-        tbleditor.close()
-        super.onDestroy()
-    }
-
-    /**
      * Ulozenie informacii o tom ci je rozbaleny panel nastrojov na zmeny farieb
      * @param outState zaloha
      */

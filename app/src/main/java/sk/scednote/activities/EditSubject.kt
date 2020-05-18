@@ -196,12 +196,4 @@ class EditSubject : AppCompatActivity() {
         txt_abb.error = if (abbErr.isNotEmpty()) inState.getString(BUNDLE_ABB_ERR) else null
         txt_full.error = if (fullErr.isNotEmpty()) inState.getString(BUNDLE_FULL_ERR) else null
     }
-
-    /**
-     * Zavretie databaz
-     */
-    override fun onDestroy() {
-        data.close()
-        super.onDestroy()
-    }
 }

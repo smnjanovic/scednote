@@ -137,14 +137,6 @@ class Scedule : ShakeCompatActivity() {
     }
 
     /**
-     * Zavretie databáz
-     */
-    override fun onDestroy() {
-        lesAdapt.closeDb()
-        super.onDestroy()
-    }
-
-    /**
      * Prepinanie sa medzi dnami alebo pridanie hodiny
      * @view Tlačidlo na ktoré sa kliklo
      */

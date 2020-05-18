@@ -77,12 +77,4 @@ class NotificationAdvance : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putInt(ADVANCE, millis)
     }
-
-    /**
-     * Zavretie databázy
-     */
-    override fun onDestroy() {
-        data.close()
-        super.onDestroy()
-    }
 }

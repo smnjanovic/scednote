@@ -139,10 +139,6 @@ open class SubjectAdapter(private val adapterType: Int, bundle: Bundle?): Recycl
      */
     fun getSubjectNameAt(position: Int) = items[position].full
 
-    fun close() {
-        data.close()
-    }
-
     /**
      * Tvorba ViewHoldera
      * @param parent v com sa viewHolder nachadza

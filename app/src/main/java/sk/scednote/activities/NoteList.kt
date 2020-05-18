@@ -142,14 +142,6 @@ class NoteList : ShakeCompatActivity() {
         }
     }
 
-    /**
-     * Zavriem vsetko co je otvorene (Databazu)
-     */
-    override fun onDestroy() {
-        super.onDestroy()
-        subAdapt.close()
-        noteAdapt.close()
-    }
     //nastavenie adapterov
     private fun setAdapters(saved: Bundle?) {
         subAdapt = SubjectAdapter(SubjectAdapter.ADAPTER_TYPE_TAB, saved)
